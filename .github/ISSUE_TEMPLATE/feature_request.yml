@@ -1,0 +1,17 @@
+name: Feature request
+description: Suggest an improvement
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: Proposed change
+  - type: markdown
+    attributes:
+      value: "AEGIS is human-supervised decision support. Requests for targeting, weapon control or automated action are out of scope and will be closed."

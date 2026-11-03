@@ -1,0 +1,37 @@
+name: Bug report
+description: Something does not work as documented
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: "Security problem? Do not open an issue -- see SECURITY.md for private reporting. Never paste real data, secrets or tokens."
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: "1. Sign in as analyst\n2. Open ...\n3. ..."
+    validations:
+      required: true
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where
+      options: [Local development, Public demo container, Docker Compose deployment, Other]
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions (commit or release, OS, Python, Node, browser)
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or request id
+      description: The request_id from an error message helps. Remove anything sensitive.
+      render: text

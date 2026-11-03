@@ -1,0 +1,60 @@
+@import 'leaflet/dist/leaflet.css' layer(base);
+@import 'tailwindcss';
+
+@theme {
+  --color-navy-600: #283248;
+  --color-navy-700: #1d2538;
+  --color-navy-800: #151b2b;
+  --color-navy-900: #0f1420;
+  --color-navy-950: #0a0e17;
+
+  --color-charcoal-600: #333947;
+  --color-charcoal-700: #242832;
+  --color-charcoal-800: #1a1d24;
+  --color-charcoal-900: #111317;
+
+  --color-accent-400: #60a5fa;
+  --color-accent-500: #3b82f6;
+
+  --color-status-good: #22c55e;
+  --color-status-warning: #eab308;
+  --color-status-serious: #f97316;
+  --color-status-critical: #ef4444;
+
+  --font-sans: Inter, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  @apply bg-navy-950 text-slate-200 antialiased;
+}
+
+::selection {
+  @apply bg-accent-500/40;
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+}

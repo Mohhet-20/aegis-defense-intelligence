@@ -1,0 +1,45 @@
+fastapi==0.143.0
+uvicorn[standard]==0.53.0
+sqlalchemy==2.1.4
+alembic==1.20.0
+pydantic==2.13.5
+pydantic-settings==2.15.0
+# PyJWT replaces python-jose (PYSEC-2026-4298 / CVE-2026-85394: HMAC key-type confusion, no fixed
+# python-jose release). HS256 only, algorithms pinned in app/core/security.py.
+PyJWT==2.15.0
+bcrypt==5.0.0
+python-multipart==0.0.32
+slowapi==0.1.10
+email-validator==2.3.0
+# Postgres driver -- only loaded if DATABASE_URL points at postgresql+psycopg2://.
+# SQLite (the default) needs no extra driver. See docker-compose.yml, which
+# runs the backend against a real Postgres to exercise this path.
+psycopg2-binary==2.9.11
+pytest==9.1.1
+pytest-cov==7.1.0
+httpx==0.28.1
+
+# --- Phase 4 (computer vision infrastructure) ---------------------
+# opencv-python-headless (not the GUI `opencv-python` package -- this
+# server has no display) backs both the real OpenCVHOGPersonAdapter
+# (app/cv/adapters/opencv_hog_adapter.py) and the tested NMS/video-
+# decode primitives used throughout app/cv/. See docs/ml/
+# MODEL_ADAPTERS.md for why this project does not depend on
+# torch/ultralytics in this environment.
+pillow==13.0.0
+numpy==2.5.4
+# Pinned to the 4.x line deliberately: opencv-python-headless 5.0.0
+# REMOVED the classical cv2.HOGDescriptor/CascadeClassifier objdetect
+# bindings from its Python API entirely (confirmed in this session --
+# `cv2.HOGDescriptor` raises AttributeError under 5.0.0.93). 4.14.0
+# still ships them and is otherwise current as of this phase.
+opencv-python-headless==4.14.0.94
+
+# --- Phase 5 (object tracking) -------------------------------------
+# scipy.optimize.linear_sum_assignment (the Hungarian algorithm) backs
+# the real detection-to-track association in app/tracking/association.py
+# -- a tested library implementation, not hand-rolled greedy matching.
+# Already present transitively (via opencv/numpy's own dependency
+# chain) in this environment, but pinned explicitly here now that this
+# project depends on it directly and by name.
+scipy==1.18.1

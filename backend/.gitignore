@@ -1,0 +1,22 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.db
+*.db-journal
+*.log
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg-info/
+.env
+
+# Private media/report storage (never commit uploaded evidence)
+media_storage/
+coverage.xml
+.ruff_cache/
+
+# Pretrained weights and evaluation datasets (downloaded by scripts/fetch_models.py and
+# scripts/fetch_eval_data.py; large, third-party licensed -- never commit)
+model_artifacts/
+eval_data/
