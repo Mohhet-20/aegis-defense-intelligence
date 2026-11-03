@@ -1,0 +1,29 @@
+# Root-level ignores. Backend- and frontend-specific ignores live in
+# backend/.gitignore and frontend/.gitignore respectively.
+
+# Never commit real secrets or local env overrides.
+.env
+*.env.local
+
+# OS / editor noise
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# This project's own working data/log files that should never be
+# committed as "real" data (the seeded SQLite DB and server logs).
+backend/aegis.db
+backend/*.log
+backend/uvicorn.log
+frontend/vite.log
+
+# Python caches and coverage anywhere in the repo (backend/.gitignore covers backend/ only)
+__pycache__/
+*.py[cod]
+.coverage
+coverage.xml
+htmlcov/
+
+# Frontend test/coverage output
+frontend/coverage/

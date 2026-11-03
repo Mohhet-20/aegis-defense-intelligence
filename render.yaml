@@ -1,0 +1,23 @@
+# Render Blueprint for the one-container public demo (free plan).
+# Render dashboard -> New -> Blueprint -> pick this repository. See docs/operations/PUBLIC_DEMO.md.
+# Free web services sleep after ~15 idle minutes; the next visit wakes the container, which then
+# rebuilds the demo data (about a minute). Nothing persists between restarts -- by design.
+services:
+  - type: web
+    name: aegis-demo
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/v1/health/live
+    autoDeploy: true
+    envVars:
+      # Render's proxy appends the client address to X-Forwarded-For (one trusted hop).
+      - key: TRUSTED_PROXY_HOPS
+        value: "1"
+      # Not embedded in another site on Render.
+      - key: FRONTEND_FRAME_ANCESTORS
+        value: ""
+      # Optional: a fixed signing key keeps visitors signed in across restarts.
+      - key: SECRET_KEY
+        generateValue: true

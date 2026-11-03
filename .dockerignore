@@ -1,0 +1,24 @@
+# Build context for the root Dockerfile (the one-container public demo).
+.git
+.github
+.ruff_cache
+docs
+**/__pycache__
+**/*.pyc
+**/.env
+**/.env.*
+!**/.env.example
+**/*.db
+**/*.sqlite3
+**/*.log
+backend/.venv
+backend/venv
+backend/tests
+backend/.pytest_cache
+backend/media_storage
+backend/model_artifacts
+backend/eval_data
+backend/.coverage
+frontend/node_modules
+frontend/dist
+frontend/coverage
