@@ -6,7 +6,7 @@ pydantic==2.13.5
 pydantic-settings==2.15.0
 # PyJWT replaces python-jose (PYSEC-2026-4298 / CVE-2026-85394: HMAC key-type confusion, no fixed
 # python-jose release). HS256 only, algorithms pinned in app/core/security.py.
-PyJWT==2.15.0
+PyJWT==2.15.1
 bcrypt==5.0.0
 python-multipart==0.0.32
 slowapi==0.1.10
