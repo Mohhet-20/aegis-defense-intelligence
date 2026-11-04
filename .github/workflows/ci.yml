@@ -55,7 +55,7 @@ jobs:
           DATABASE_URL=sqlite:///./ci_migrate.db alembic check          # ORM and migrations agree
       - name: Tests (workflows, sweeps, contract, backup/restore, bootstrap, config)
         run: python -m pytest -q --cov=app --cov-report=term --cov-report=xml
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always() && matrix.python == '3.13'
         with:
           name: backend-coverage
@@ -146,7 +146,7 @@ jobs:
         run: |
           ! grep -rlE "https?://(localhost|127\.0\.0\.1):[0-9]+" dist/assets
           ! ls dist/assets | grep -E "\.map$"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: frontend-dist
           path: frontend/dist
