@@ -25,7 +25,7 @@ RUN npm run build \
  && node --input-type=module -e "import {previewCsp} from './deploy/csp.mjs'; process.stdout.write(previewCsp('nginx.conf', process.env.VITE_MAP_TILE_URL))" > /web/csp.txt
 
 # ---- 2. backend + built frontend ---------------------------------------------------------
-FROM python:3.13-slim-bookworm
+FROM python:3.15-slim-bookworm
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1 PIP_DISABLE_PIP_VERSION_CHECK=1
 
 # Hugging Face Spaces run containers as uid 1000.
