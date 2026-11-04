@@ -33,7 +33,7 @@ numpy==2.5.4
 # bindings from its Python API entirely (confirmed in this session --
 # `cv2.HOGDescriptor` raises AttributeError under 5.0.0.93). 4.14.0
 # still ships them and is otherwise current as of this phase.
-opencv-python-headless==4.14.0.94
+opencv-python-headless==5.0.0.93
 
 # --- Phase 5 (object tracking) -------------------------------------
 # scipy.optimize.linear_sum_assignment (the Hungarian algorithm) backs
