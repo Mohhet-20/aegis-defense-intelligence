@@ -12,7 +12,7 @@ review a real object detector, build investigations from evidence, and report on
 ![PostgreSQL 16](https://img.shields.io/badge/PostgreSQL-16-4169E1?logo=postgresql&logoColor=white)
 ![Tests](https://img.shields.io/badge/tests-1%2C400%2B%20backend%20%C2%B7%2059%20frontend-success)
 
-**[▶ Live demo](https://aegis-demo-blr2.onrender.com)** (one-click sign-in, synthetic data; free tier, so allow about a minute for the first load) ·
+**[▶ Live demo](https://aegis-demo-blr2.onrender.com)** (*Explore the live demo* starts a guest session; synthetic data; free tier, so allow about a minute for the first load) ·
 [Features](#features) · [Run it in one command](#run-it-in-one-command) · [Real detection](#real-object-detection) ·
 [Architecture](#architecture) · [Engineering](#engineering-highlights) · [Free hosting](#host-a-free-public-demo) · [Docs](#documentation)
 
@@ -45,7 +45,7 @@ inference, high availability ([roadmap](docs/implementation/MASTER_ROADMAP.md)).
 | Model evaluation on real photos | Interactive map | Investigation workspace |
 |---|---|---|
 | ![Evaluation](docs/images/model-evaluation.png) | ![Map](docs/images/map.jpg) | ![Investigation](docs/images/investigation.png) |
-| **One-click demo sign-in** | **Executive dashboard** | **Phone layout** |
+| **Sign-in with guest access** | **Executive dashboard** | **Phone layout** |
 | ![Sign-in](docs/images/login-demo.png) | ![Executive dashboard](docs/images/executive-dashboard.png) | ![Events on a phone](docs/images/mobile-events.png) |
 
 *Screenshots of the actual application running as the public demo, with synthetic data. The detection
@@ -131,9 +131,11 @@ Leaflet · Vitest · Testing Library -- PostgreSQL 16 / SQLite · nginx · Docke
 ## Host a free public demo
 
 The root [`Dockerfile`](Dockerfile) packages frontend and backend into one container that runs free on
-**Hugging Face Spaces** (Docker) or a **Render** free web service. In demo mode, visitors sign in with
-one click as any role. The shared accounts cannot be locked or changed, and all data resets every
-6 hours. Step-by-step: [`docs/operations/PUBLIC_DEMO.md`](docs/operations/PUBLIC_DEMO.md).
+a **Render** free web service. In demo mode, visitors choose *Explore the live demo*, which opens a guest session as
+the analyst (ingest data, run the detector, write assessments; no user or security administration) without any
+password. Before the site is announced ready, every seeded account gets a random password nobody knows, so the
+development password in this repository can't be used against it; the owner's administrator comes from hosting
+secrets (`AEGIS_ADMIN_USERNAME`, `AEGIS_ADMIN_PASSWORD`). All data resets every 6 hours. Step-by-step: [`docs/operations/PUBLIC_DEMO.md`](docs/operations/PUBLIC_DEMO.md).
 
 For a real deployment (PostgreSQL, nginx, persistent volumes, TLS) see
 [`DEPLOYMENT_GUIDE.md`](docs/operations/DEPLOYMENT_GUIDE.md) and `docker-compose.yml`.
@@ -161,7 +163,7 @@ npm run dev                                              # http://localhost:5173
 ```
 
 Sign in as `admin`, `analyst`, `investigator` or `viewer` with password `DevPassword123!`
-(development accounts created by `seed.py`). Load a full demo data set with
+(local development accounts created by `seed.py`; the public demo replaces these passwords with random ones). Load a full demo data set with
 `python scripts/demo_walkthrough.py`. Details and troubleshooting:
 [`docs/guides/LOCAL_DEVELOPMENT.md`](docs/guides/LOCAL_DEVELOPMENT.md).
 

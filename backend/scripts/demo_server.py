@@ -160,6 +160,8 @@ def main() -> int:
                 load_real_detector_showcase(base, eval_dir)
             except Exception as exc:  # noqa: BLE001 -- optional extra; the demo runs without it
                 log(f"real-detector showcase skipped: {exc.__class__.__name__}")
+            # The documented seed password has done its job; nobody can use it once the demo is public.
+            run([sys.executable, "scripts/secure_demo_accounts.py"], env)
             log(f"ready on port {port}")
             if settings.DEMO_RESET_HOURS <= 0:
                 return proc.wait()

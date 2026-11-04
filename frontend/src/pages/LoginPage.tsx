@@ -5,7 +5,7 @@ import { api, ApiError, type DemoInfo } from '../api/client'
 import { Button, inputClass } from '../components/ui/Primitives'
 
 export function LoginPage() {
-  const { user, login, loading } = useAuth()
+  const { user, login, exploreDemo, loading } = useAuth()
   const navigate = useNavigate()
   const [usernameOrEmail, setUsernameOrEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -29,6 +29,19 @@ export function LoginPage() {
       navigate('/')
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'Unable to sign in right now.')
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  async function startDemo() {
+    setError(null)
+    setSubmitting(true)
+    try {
+      await exploreDemo()
+      navigate('/')
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : 'The demo is not available right now.')
     } finally {
       setSubmitting(false)
     }
@@ -77,8 +90,8 @@ export function LoginPage() {
               {submitting ? 'Signing in…' : 'Sign in'}
             </Button>
           </form>
-          {demo?.enabled && demo.accounts && demo.password ? (
-            <DemoAccounts demo={demo} disabled={submitting} onPick={(name) => void signIn(name, demo.password!)} />
+          {demo?.enabled ? (
+            <DemoAccess resetHours={demo.reset_hours ?? null} disabled={submitting} onStart={() => void startDemo()} />
           ) : import.meta.env.DEV ? (
             <p className="mt-5 text-center text-[11px] text-slate-500">
               Development accounts (from scripts/seed.py): admin / analyst / investigator / viewer
@@ -90,40 +103,22 @@ export function LoginPage() {
   )
 }
 
-const ROLE_HINTS: Record<string, string> = {
-  administrator: 'Everything, including users and security settings',
-  analyst: 'Ingest data, review detections, write assessments',
-  investigator: 'Run cases: evidence, timelines, notes',
-  viewer: 'Read-only',
-}
-
-function DemoAccounts({ demo, disabled, onPick }: { demo: DemoInfo; disabled: boolean; onPick: (username: string) => void }) {
+function DemoAccess({ resetHours, disabled, onStart }: { resetHours: number | null; disabled: boolean; onStart: () => void }) {
   return (
-    <div className="mt-6 border-t border-charcoal-600/60 pt-5">
-      <h2 className="text-sm font-semibold text-slate-100">Public demo -- sign in with one click</h2>
+    <section aria-label="Live demo" className="mt-6 border-t border-charcoal-600/60 pt-5">
+      <h2 className="text-sm font-semibold text-slate-100">New to AEGIS?</h2>
       <p className="mt-1 text-xs text-slate-400">
-        Synthetic data only{demo.reset_hours ? `; everything resets every ${demo.reset_hours} h` : ''}. Shared accounts
-        cannot be locked or changed.
+        Explore the platform as a guest analyst: ingest data, run the object detector on your own photos and build
+        assessments. Synthetic data only{resetHours ? `; it resets every ${resetHours} h` : ''}.
       </p>
-      <ul className="mt-3 space-y-2">
-        {demo.accounts!.map((a) => (
-          <li key={a.username}>
-            <button
-              type="button"
-              disabled={disabled}
-              onClick={() => onPick(a.username)}
-              className="w-full rounded-md border border-charcoal-600/60 bg-navy-950/60 px-3 py-2 text-left transition hover:border-accent-500/60 hover:bg-charcoal-700/60 disabled:opacity-50"
-            >
-              <span className="block text-sm font-medium capitalize text-slate-100">{a.role}</span>
-              <span className="block text-[11px] text-slate-400">{ROLE_HINTS[a.role] ?? ''}</span>
-            </button>
-          </li>
-        ))}
-      </ul>
-      <p className="mt-3 text-[11px] text-slate-500">
-        Or type a username above ({demo.accounts!.map((a) => a.username).join(', ')}) with password{' '}
-        <code className="text-slate-400">{demo.password}</code>.
-      </p>
-    </div>
+      <button
+        type="button"
+        disabled={disabled}
+        onClick={onStart}
+        className="mt-3 w-full rounded-md border border-accent-500/60 bg-accent-500/10 px-3 py-2 text-sm font-medium text-slate-100 transition hover:bg-accent-500/20 disabled:opacity-50"
+      >
+        Explore the live demo
+      </button>
+    </section>
   )
 }

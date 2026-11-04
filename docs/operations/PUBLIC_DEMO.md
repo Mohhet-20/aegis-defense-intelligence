@@ -13,15 +13,15 @@ persistent volumes): [`DEPLOYMENT_GUIDE.md`](DEPLOYMENT_GUIDE.md).
 
 | | |
 |---|---|
-| Sign-in page | One-click buttons for administrator, analyst, investigator and viewer (from `GET /api/v1/demo`) |
-| Shared accounts | Cannot be locked out by failed logins; their password, role, status and sessions cannot be changed (HTTP 403). Visitors can create their own users and change those freely |
+| Sign-in page | *Explore the live demo* calls `POST /api/v1/demo/session`: a guest session as the analyst, no password. `GET /api/v1/demo` returns only `enabled` and `reset_hours` |
+| Seeded accounts | `scripts/secure_demo_accounts.py` gives each a random, unknown password before the site is announced ready (the startup walkthrough is the last thing to use the development password). They cannot be locked out or changed (HTTP 403) |
+| Owner administrator | Created from `AEGIS_ADMIN_USERNAME` / `AEGIS_ADMIN_PASSWORD` (hosting secrets) when both are set; otherwise there is no administrator a visitor could reach |
 | Data | Synthetic only; wiped and rebuilt on every start and every `DEMO_RESET_HOURS` |
 | Security | Same as production: Secure HttpOnly cookies, CSP, `ENVIRONMENT=production` start-up checks. The signing key is generated per start unless `SECRET_KEY` is set |
 | Rate limits | Per visitor address read from `X-Forwarded-For` (`TRUSTED_PROXY_HOPS` entries from the right); login limit 30/minute |
 | API docs | On (`/api/docs`) so reviewers can browse the API |
 
-Never set `DEMO_MODE=true` on a deployment with real data: it publishes the demo password on the
-sign-in page. `scripts/demo_server.py` also refuses anything but a SQLite file it may delete.
+Never set `DEMO_MODE=true` on a deployment with real data: it lets anyone open a guest analyst session. `scripts/demo_server.py` also refuses anything but a SQLite file it may delete.
 
 ## Option A -- Hugging Face Spaces (recommended)
 

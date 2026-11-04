@@ -8,6 +8,8 @@ export interface AuthState {
   user: CurrentUser | null
   loading: boolean
   login: (usernameOrEmail: string, password: string) => Promise<void>
+  /** Public demo only: a guest session as the analyst account, no password involved. */
+  exploreDemo: () => Promise<void>
   logout: () => void
 }
 

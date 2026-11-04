@@ -17,7 +17,7 @@ pretrained object detector (SSD-MobileNet, evaluated on COCO photos), build inve
 evidence, and report on it.
 
 **Sign in with one click** as administrator, analyst, investigator or viewer. All data is
-**synthetic** and resets every 6 hours; shared demo accounts cannot be locked or changed.
+**synthetic** and resets every 6 hours; visitors enter through *Explore the live demo* (a guest analyst session, no password).
 Decision-support demonstration only: no targeting, weapon-control or automated-action capability.
 
 Source code, documentation and tests: __GITHUB_URL__

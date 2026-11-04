@@ -3,8 +3,9 @@ import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/re
 import { MemoryRouter } from 'react-router-dom'
 
 const login = vi.hoisted(() => vi.fn(() => Promise.resolve()))
+const exploreDemo = vi.hoisted(() => vi.fn(() => Promise.resolve()))
 vi.mock('../context/auth', () => ({
-  useAuth: () => ({ user: null, loading: false, login, logout: () => undefined }),
+  useAuth: () => ({ user: null, loading: false, login, exploreDemo, logout: () => undefined }),
 }))
 import { LoginPage } from './LoginPage'
 
@@ -12,6 +13,7 @@ afterEach(() => {
   cleanup()
   vi.unstubAllGlobals()
   login.mockClear()
+  exploreDemo.mockClear()
 })
 
 function stubDemo(body: unknown) {
@@ -20,22 +22,24 @@ function stubDemo(body: unknown) {
 
 const renderPage = () => render(<MemoryRouter><LoginPage /></MemoryRouter>)
 
-describe('LoginPage demo accounts', () => {
-  it('offers one-click sign-in for each shared account in a public demo', async () => {
-    stubDemo({ enabled: true, password: 'Shared-Pass-1!', reset_hours: 6, // pragma: allowlist secret
-               accounts: [{ username: 'admin', role: 'administrator' }, { username: 'viewer', role: 'viewer' }] })
-    renderPage()
-    const viewer = await screen.findByRole('button', { name: /viewer/i })
+describe('LoginPage public demo', () => {
+  it('offers a guest session without showing any account or password', async () => {
+    stubDemo({ enabled: true, reset_hours: 6 })
+    const { container } = renderPage()
+    const explore = await screen.findByRole('button', { name: 'Explore the live demo' })
     expect(screen.getByText(/resets every 6 h/)).toBeTruthy()
-    fireEvent.click(viewer)
-    await waitFor(() => expect(login).toHaveBeenCalledWith('viewer', 'Shared-Pass-1!'))
+    expect(container.textContent).not.toMatch(/passwords*[:=]|DevPassword/i)
+    expect(screen.queryByRole('button', { name: /administrator/i })).toBeNull()
+    fireEvent.click(explore)
+    await waitFor(() => expect(exploreDemo).toHaveBeenCalledTimes(1))
+    expect(login).not.toHaveBeenCalled()
   })
 
   it('shows no demo panel and no password when the deployment is not a demo', async () => {
     stubDemo({ enabled: false })
     const { container } = renderPage()
     await waitFor(() => expect(fetch).toHaveBeenCalled())
-    expect(screen.queryByText(/Public demo/)).toBeNull()
+    expect(screen.queryByRole('button', { name: 'Explore the live demo' })).toBeNull()
     expect(container.textContent).not.toContain('DevPassword')
   })
 })

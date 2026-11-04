@@ -21,3 +21,8 @@ services:
       # Optional: a fixed signing key keeps visitors signed in across restarts.
       - key: SECRET_KEY
         generateValue: true
+      # Your private administrator account (normal sign-in form). Set both in the dashboard; never commit them.
+      - key: AEGIS_ADMIN_USERNAME
+        sync: false
+      - key: AEGIS_ADMIN_PASSWORD
+        sync: false

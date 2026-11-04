@@ -27,11 +27,45 @@ def test_demo_endpoint_reveals_nothing_outside_demo_mode(client):
     assert client.get(f"{API}/demo").json() == {"enabled": False}
 
 
-def test_demo_endpoint_lists_shared_accounts_in_demo_mode(client, demo_mode):
+def test_demo_endpoint_never_reveals_accounts_or_passwords(client, demo_mode):
     body = client.get(f"{API}/demo").json()
-    assert body["enabled"] is True and body["reset_hours"] == 6
-    assert {a["username"] for a in body["accounts"]} == {"admin", "analyst", "investigator", "viewer"}
-    assert body["password"]
+    assert body == {"enabled": True, "reset_hours": 6}
+
+
+# --- guest session ---------------------------------------------------------------
+
+def test_demo_session_is_404_outside_demo_mode(client, seeded_users):
+    assert client.post(f"{API}/demo/session").status_code == 404
+
+
+def test_demo_session_signs_in_as_the_guest_analyst_without_a_password(client, seeded_users, demo_mode):
+    r = client.post(f"{API}/demo/session")
+    assert r.status_code == 200, r.text
+    me = client.get(f"{API}/auth/me", headers={"Authorization": f"Bearer {r.json()['access_token']}"}).json()
+    assert me["username"] == "analyst" and me["role"] == "analyst"
+
+
+def test_demo_guest_cannot_administer(client, seeded_users, demo_mode):
+    token = client.post(f"{API}/demo/session").json()["access_token"]
+    new_user = {"username": "intruder", "email": "intruder@test.example.com", "display_name": "Intruder",
+                "password": "Intruder-Pass-123!", "role": "administrator"}  # pragma: allowlist secret
+    assert client.post(f"{API}/users", json=new_user, headers={"Authorization": f"Bearer {token}"}).status_code == 403
+
+
+def test_lockdown_script_replaces_shared_passwords_and_creates_the_owner(client, seeded_users, demo_mode, test_password,
+                                                                         monkeypatch, SessionLocalForTest):
+    import scripts.secure_demo_accounts as lockdown
+
+    monkeypatch.setattr(lockdown, "SessionLocal", SessionLocalForTest)
+    monkeypatch.setenv("AEGIS_ADMIN_USERNAME", "owner")
+    monkeypatch.setenv("AEGIS_ADMIN_PASSWORD", "Owner-Private-Pass-2026!")  # pragma: allowlist secret
+    assert lockdown.main() == 0
+    for name in ("admin", "analyst", "investigator", "viewer"):
+        r = client.post(f"{API}/auth/login", json={"username_or_email": name, "password": test_password})
+        assert r.status_code == 401, f"{name} still accepts the documented password"
+    r = client.post(f"{API}/auth/login", json={"username_or_email": "owner", "password": "Owner-Private-Pass-2026!"})  # pragma: allowlist secret
+    assert r.status_code == 200
+    assert client.post(f"{API}/demo/session").status_code == 200  # the guest entry still works afterwards
 
 
 # --- account protection ----------------------------------------------------------

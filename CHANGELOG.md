@@ -5,6 +5,16 @@ schema changes that need operator action beyond `alembic upgrade head`, MINOR fo
 PATCH for fixes. Pre-releases use `-rc.N`. The version lives in `frontend/package.json` and in
 the release tag. Each entry says whether a database migration is required.
 
+
+## [Unreleased]
+
+### Changed
+- Public demo access: *Explore the live demo* (`POST /api/v1/demo/session`) opens a guest analyst session with no
+  password; `GET /api/v1/demo` no longer returns accounts or a password, and the sign-in page no longer offers
+  one-click sign-in as every role. `scripts/secure_demo_accounts.py` gives every seeded account a random password
+  before the demo is announced ready and creates the owner's administrator from `AEGIS_ADMIN_USERNAME` /
+  `AEGIS_ADMIN_PASSWORD`.
+
 ## [1.0.0-rc.3] -- 2026-10-19
 
 Public-showcase release. Not yet tagged or pushed. No database migration (head `c16r3p0rt01`).

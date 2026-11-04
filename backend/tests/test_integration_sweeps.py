@@ -28,6 +28,7 @@ PUBLIC_OPS = {
     # Tells the sign-in page whether this is a public demo; returns {"enabled": false} and
     # nothing else unless DEMO_MODE is on (tests/test_demo_mode.py).
     ("GET", "/demo"),
+    ("POST", "/demo/session"),  # public-demo guest entry; 404 outside DEMO_MODE (tests/test_demo_mode.py)
 }
 # Reviewed: device-facing routes authenticate with X-Device-Id / X-Device-Api-Key (require_device_auth), never a user JWT.
 DEVICE_OPS = {("POST", "/edge/sync/batch"), ("POST", "/edge/sync/health"), ("POST", "/edge/presence/heartbeat")}

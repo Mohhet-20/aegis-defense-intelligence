@@ -42,11 +42,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(me)
   }, [])
 
+  const exploreDemo = useCallback(async () => {
+    const tokens = await api.auth.demoSession()
+    setAccessToken(tokens.access_token)
+    const me = await api.auth.me()
+    setUser(me)
+  }, [])
+
   const logout = useCallback(() => {
     clearTokens()
     setUser(null)
     api.auth.logout().catch(() => undefined) // best effort: clear the refresh cookie on the server
   }, [])
 
-  return <AuthContext.Provider value={{ user, loading, login, logout }}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={{ user, loading, login, exploreDemo, logout }}>{children}</AuthContext.Provider>
 }

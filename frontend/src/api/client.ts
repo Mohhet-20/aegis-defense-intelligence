@@ -262,8 +262,6 @@ export function tryRefresh(): Promise<boolean> {
 
 export interface DemoInfo {
   enabled: boolean
-  password?: string
-  accounts?: { username: string; role: string }[]
   reset_hours?: number | null
 }
 
@@ -278,8 +276,14 @@ export const api = {
     /** Clears the refresh cookie on the server. */
     logout: () => fetch(`${API_BASE}/auth/logout`, { method: 'POST', credentials: 'same-origin' }).then(() => undefined),
     me: () => request<CurrentUser>('/auth/me'),
-    /** Public: whether this deployment is a public demo, and which shared accounts it offers. */
+    /** Public: whether this deployment is a public demo. It never returns an account or a password. */
     demo: () => request<DemoInfo>('/demo'),
+    /** Public demo only: starts a guest session (the analyst account) with no password. */
+    demoSession: () =>
+      request<{ access_token: string; refresh_token: string | null; token_type: string }>('/demo/session', {
+        method: 'POST',
+        headers: SESSION_MODE_HEADERS,
+      }),
   },
   health: {
     ready: () => request<ReadinessResponse>('/health/ready'),
