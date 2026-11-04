@@ -3,7 +3,7 @@ uvicorn[standard]==0.53.0
 sqlalchemy==2.1.4
 alembic==1.20.0
 pydantic==2.13.5
-pydantic-settings==2.15.0
+pydantic-settings==2.16.2
 # PyJWT replaces python-jose (PYSEC-2026-4298 / CVE-2026-85394: HMAC key-type confusion, no fixed
 # python-jose release). HS256 only, algorithms pinned in app/core/security.py.
 PyJWT==2.15.0
