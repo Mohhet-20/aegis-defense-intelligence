@@ -12,7 +12,7 @@ review a real object detector, build investigations from evidence, and report on
 ![PostgreSQL 16](https://img.shields.io/badge/PostgreSQL-16-4169E1?logo=postgresql&logoColor=white)
 ![Tests](https://img.shields.io/badge/tests-1%2C400%2B%20backend%20%C2%B7%2059%20frontend-success)
 
-<!-- After deploying (docs/operations/PUBLIC_DEMO.md), add:  **[▶ Live demo](https://YOUR-SPACE.hf.space)** · -->
+**[▶ Live demo](https://aegis-demo-blr2.onrender.com)** (one-click sign-in, synthetic data; free tier, so allow about a minute for the first load) ·
 [Features](#features) · [Run it in one command](#run-it-in-one-command) · [Real detection](#real-object-detection) ·
 [Architecture](#architecture) · [Engineering](#engineering-highlights) · [Free hosting](#host-a-free-public-demo) · [Docs](#documentation)
 
