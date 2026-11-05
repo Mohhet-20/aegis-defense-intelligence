@@ -1,4 +1,4 @@
-"""Browser + API end-to-end check for Phase 16 (needs: backend on :8000 with seeded DB, vite on :5173, playwright+chromium). See docs/implementation/history/PHASE_16_FINAL_REPORT.md."""
+"""Browser + API end-to-end check for reporting (needs: backend on :8000 with seeded DB, vite on :5173, playwright+chromium)."""
 import os
 import json, sys, hashlib, requests
 from playwright.sync_api import sync_playwright

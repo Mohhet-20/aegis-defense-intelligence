@@ -1,4 +1,4 @@
-"""Phase 4, Section 3/17: secure media ingestion. Every test here
+"""/17: secure media ingestion. Every test here
 exercises app/services/media_service.py (and the app/cv/media_validation.py
 + app/cv/storage.py it calls) directly against a real file-signature
 check, a real size/dimension check, and real content-addressed storage

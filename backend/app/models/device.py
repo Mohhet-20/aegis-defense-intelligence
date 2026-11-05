@@ -1,5 +1,5 @@
-"""Edge device registry (Phase 1 placeholder, extended for real use in
-Phase 8 -- Section 3). A `Device` is an edge node's IDENTITY and
+"""Edge device registry (placeholder, extended for real use in
+Section 3). A `Device` is an edge node's IDENTITY and
 LIFECYCLE record: who it is, what it can do, and whether it is allowed
 to sync anything. It is deliberately separate from `Sensor`,
 `Asset`, `Observation`, and `Event` -- a device is the thing that
@@ -28,10 +28,10 @@ from sqlalchemy.orm import Mapped, mapped_column
 from app.db.base import Base, OrgScopedMixin, TimestampMixin, UUIDPrimaryKeyMixin
 from app.db.types import UTCDateTime
 
-# Device-level rollup, same vocabulary Phase 1 already shipped --
+# Device-level rollup, same vocabulary already shipped --
 # recomputed live from SyncRecord rows by device_service, never trusted
 # as a stale write-once column (the same "compute live" discipline
-# Phase 7 established for location_validation_status). Kept as a
+# Established for location_validation_status). Kept as a
 # column anyway so a direct DB read/export has a reasonable last-known
 # value even before any service call recomputes it.
 DEVICE_SYNC_STATUSES = ("never_synced", "synced", "pending", "conflict")
@@ -41,18 +41,18 @@ DEVICE_SYNC_STATUSES = ("never_synced", "synced", "pending", "conflict")
 # administrative access"). "pending" is the only status a freshly
 # registered device starts in.
 #
-# Phase 9, Section 8 extends this with two more explicit-only states,
-# mirroring exactly how Sensor.lifecycle_status (Phase 6) added
+#, Section 8 extends this with two more explicit-only states,
+# mirroring exactly how Sensor.lifecycle_status added
 # "maintenance"/"retired" as states reachable ONLY by deliberate
 # analyst action, never inferred from data:
 #   "maintenance"     -- a temporary, explicit administrative pause
-#                         distinct from "suspended" (Phase 8: suspected
+#                         distinct from "suspended" (the edge-sync layer: suspected
 #                         credential/security issue) -- maintenance is
 #                         planned, routine, and always reversible back
 #                         to "active."
 #   "decommissioned"   -- a permanent administrative retirement BEFORE
 #                         credential revocation; distinct from "revoked"
-#                         (Phase 8: credential invalidated, security
+#                         (the edge-sync layer: credential invalidated, security
 #                         event) -- decommissioning is the normal
 #                         end-of-life path for hardware that is simply
 #                         being retired, not a security response. A
@@ -68,7 +68,7 @@ DEVICE_CONNECTIVITY_STATES = ("online", "offline", "unknown")
 
 
 class Device(Base, UUIDPrimaryKeyMixin, TimestampMixin, OrgScopedMixin):
-    """Real registry + lifecycle + credential record as of Phase 8.
+    """Real registry + lifecycle + credential record.
     See docs/architecture/EDGE_ARCHITECTURE.md Section 3 and
     docs/security/EDGE_DEVICE_SECURITY.md for the full field-by-field
     rationale."""

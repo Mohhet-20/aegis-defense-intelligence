@@ -171,7 +171,7 @@ export function EdgeDeviceListPage() {
     <div>
       <PageHeader
         title="Edge Devices"
-        description="The device registry for Phase 8's offline-first edge AI fleet -- registration, lifecycle, connectivity, and pending sync/conflict counts. This is the human/admin surface only; devices themselves submit over a separate device-authenticated protocol."
+        description="The device registry for the offline-first edge AI fleet -- registration, lifecycle, connectivity, and pending sync/conflict counts. This is the human/admin surface only; devices themselves submit over a separate device-authenticated protocol."
         actions={
           canManageDevices && (
             <Button onClick={() => setShowRegister(true)}>Register device</Button>

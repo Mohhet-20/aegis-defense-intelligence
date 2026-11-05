@@ -1,5 +1,4 @@
-"""Tests for app/services/spatial_relationship_service.py (Phase 7,
-Section 11 "Spatial relationships")."""
+"""Tests for app/services/spatial_relationship_service.py (Section 11 "Spatial relationships")."""
 from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone

@@ -1,6 +1,6 @@
 """Device presence/connectivity derivation.
 
-Binding instruction from the prompt: reuse Phase 8's synchronization
+Binding instruction from the prompt: reuse the synchronization
 status and health information rather than building a second heartbeat
 system from scratch. This module does exactly that -- it derives
 `presence_state` purely from `Device.last_seen_at` (already updated by
@@ -9,7 +9,7 @@ request: a sync batch, a health report, or the lightweight heartbeat
 endpoint below all count as "the device was just seen"), never from a
 new, parallel tracking table.
 
-`connectivity_state` (Phase 8's own column, device-self-reported) and
+`connectivity_state` (the own column, device-self-reported) and
 `presence_state` (this module, server-computed from receipt time) are
 DELIBERATELY different concepts -- a device can self-report
 "connectivity_state": "online" in a stale health report that is, from

@@ -1,4 +1,4 @@
-"""Evidence (Phase 3, Section 3B). A generic, auditable reference to a
+"""Evidence (Section 3B). A generic, auditable reference to a
 piece of supporting material an analyst or the fusion pipeline wants to
 cite: an existing Event (observation), a RawRecord, a sensor
 Observation, or an analyst-authored note/report/document reference.
@@ -36,7 +36,7 @@ EVIDENCE_TYPES = (
     "analyst_note",       # a short analyst note
     "document",           # a reference to an external document
     "media_reference",    # a reference to an external image/video
-    # Phase 11: references to platform records (aegis://<type>/<id> URI)
+    # References to platform records (aegis://<type>/<id> URI)
     "media_asset",
     "detection",
     "track",
@@ -102,7 +102,7 @@ class Evidence(Base, UUIDPrimaryKeyMixin, TimestampMixin, OrgScopedMixin):
         String(36), ForeignKey("detection_results.id", ondelete="SET NULL"), nullable=True, index=True
     )
 
-    # Phase 11 additions. All nullable/defaulted; unknown stays NULL.
+    # Additions. All nullable/defaulted; unknown stays NULL.
     access_classification: Mapped[str] = mapped_column(String(20), nullable=False, default="internal")
     review_status: Mapped[str] = mapped_column(String(20), nullable=False, default="unreviewed", index=True)
     captured_at: Mapped[Optional[datetime]] = mapped_column(UTCDateTime(), nullable=True)

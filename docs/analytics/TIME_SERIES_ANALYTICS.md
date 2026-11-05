@@ -1,4 +1,4 @@
-# Time-Series Query, Downsampling, and Descriptive Statistics (Phase 6, Sections 7-8)
+# Time-Series Query, Downsampling, and Descriptive Statistics (Sections 7-8)
 
 ## Status
 

@@ -7,7 +7,7 @@ shapes even when both arrive as JSON or CSV.
 
 No HTTP sensor connector is registered here ("do not add
 unrestricted network access or arbitrary remote URL fetching" -- this
-phase adds no new network egress; a future HTTP sensor source can
+layer adds no new network egress; a future HTTP sensor source can
 reuse app.connectors.http_connector.HttpApiConnector's existing
 SSRF-hardened fetch path, but wiring one up is deferred, see
 docs/architecture/SENSOR_DATA_ARCHITECTURE.md)."""

@@ -1,4 +1,4 @@
-"""Phase 15 end-to-end workflow: register -> evaluate -> metrics + reproducibility
+"""End-to-end workflow: register -> evaluate -> metrics + reproducibility
 -> baseline comparison -> threshold breach signal -> acknowledge -> resolve (audited)
 -> approve. Plus the unavailable-artifact failure scenario."""
 from __future__ import annotations

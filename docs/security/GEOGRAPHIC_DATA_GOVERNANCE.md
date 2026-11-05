@@ -1,12 +1,12 @@
-# Geographic Data Governance (Phase 7)
+# Geographic Data Governance
 
 **Status: IMPLEMENTED.**
 
 ## 1. Permission model
 
 Three new permissions in `app/core/security.py`'s `Permission` enum,
-following the same least-privilege-per-role discipline every prior
-phase used:
+following the same least-privilege-per-role discipline used
+throughout the platform:
 
 | Permission | Administrator | Analyst | Investigator | Viewer |
 |---|---|---|---|---|
@@ -30,9 +30,9 @@ trigger a new generation run or bulk-export located records.
 
 Every geospatial service function requires `organization_id` as a
 non-optional parameter, and every SQL statement in this subsystem
-filters on it explicitly -- the same per-call discipline every prior
-phase's service functions use (Phase 1's documented, not-yet-
-framework-enforced tenant model; Phase 14's eventual job to enforce
+filters on it explicitly -- the same per-call discipline the other
+modules' service functions use (the documented, not-yet-
+framework-enforced tenant model; the eventual job to enforce
 this at a framework/middleware level). Every route resolves
 `organization_id` exclusively from `current_user.organization_id`
 (the authenticated session's own claim), never from a client-supplied
@@ -49,10 +49,10 @@ Every successful GeoJSON/CSV export calls
 organization_id=..., target_type="geospatial_export",
 target_id=result.format, context_metadata={format, feature_count,
 truncated, filters})` before committing -- the same audit discipline
-Phase 2's `export_service.py` established for its own tabular export.
+the `export_service.py` established for its own tabular export.
 Read-only queries (viewport, radius, timeline, quality, relationship
 listing) are not individually audit-logged, consistent with how every
-other read-only query endpoint in this codebase behaves (Phase 1-6).
+other read-only query endpoint in this codebase behaves.
 Spatial-relationship candidate generation is not separately
 audit-logged beyond the standard request logging middleware every
 route already goes through -- its effect (new `EvidenceRelationship`
@@ -61,7 +61,7 @@ rows) is itself a durable, queryable record.
 ## 4. CSV-injection safety
 
 `geo_export_service.py` reuses the **identical** formula-prefix guard
-Phase 2's `export_service.py` already established
+the `export_service.py` already established
 (`_FORMULA_PREFIXES`, `_csv_safe()`): any CSV cell value beginning with
 `=`, `+`, `-`, `@`, tab, or carriage return is prefixed with a leading
 single-quote before being written, neutralizing a formula-injection
@@ -71,7 +71,7 @@ application. Verified by
 
 ## 5. No live/real-time position exposure
 
-This phase introduces no streaming, push, or "live tracking" surface
+This layer introduces no streaming, push, or "live tracking" surface
 -- every query is a bounded, point-in-time read of already-stored
 data. There is no capability anywhere in this subsystem that could
 expose a real-time device or asset position to an unauthorized party,
@@ -86,7 +86,7 @@ frontend's `DataOriginBadge` renders this visibly on every page that
 shows record detail (Overview's recent-records list, Map Explorer's
 popups) -- synthetic demo data is never presented as though it were a
 real observation. This governance rule is binding project-wide (not
-new to Phase 7) but is repeated here because geospatial data is
+new to the geospatial layer) but is repeated here because geospatial data is
 exactly the category most easily mistaken for operationally real
 information if mislabeled.
 
@@ -94,13 +94,13 @@ information if mislabeled.
 
 - No field-level redaction or classification-marking system (e.g.
   "SECRET"/"UNCLASSIFIED" banners) -- out of this project's scope
-  entirely, not just this phase's.
+  entirely, not just this layer's.
 - No geofencing or access restriction based on a user's own location
   -- access control here is purely role/permission-based, identical
   in kind to every other subsystem in this codebase.
 - No data-retention or automatic-purge policy specific to location
-  data -- retention policy in general remains Phase 14/15's job,
-  unchanged from every prior phase's own statement of scope.
+  data -- retention policy in general remains the job,
+  unchanged from each layer's own statement of scope.
 - No rate limiting specific to the export endpoints beyond the
   per-call result-size bound (`GEOSPATIAL_MAX_EXPORT_FEATURES`) --
-  no new throttling middleware was introduced this phase.
+  no new throttling middleware was introduced this layer.

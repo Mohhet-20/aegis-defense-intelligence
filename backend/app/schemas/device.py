@@ -48,7 +48,7 @@ class DeviceResponse(BaseModel):
     created_at: datetime
 
     # Live-computed, never read off a stale column (same discipline
-    # Phase 7 established for location validation) -- how many
+    # Established for location validation) -- how many
     # SyncRecord rows for this device are currently queued, syncing, or
     # retryable_failure right now.
     pending_sync_count: int = 0

@@ -1,5 +1,4 @@
-"""Advisory review-priority scoring for an assessment (Phase 10,
-Section 5). Gathers what the assessment actually cites, applies a
+"""Advisory review-priority scoring for an assessment (Section 5). Gathers what the assessment actually cites, applies a
 documented rule from app/analytics/scoring.py, and appends an immutable
 AssessmentScoreSnapshot. Model confidence, evidence quality, source
 reliability and uncertainty are reported beside the score as separate

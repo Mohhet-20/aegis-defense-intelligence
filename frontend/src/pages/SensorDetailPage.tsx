@@ -27,7 +27,7 @@ const QUALITY_STATUS_COLOR: Record<string, string> = {
 }
 
 // Hand-rolled SVG time-series chart -- no charting library is installed
-// in this project (same constraint Phase 5's TrajectoryPlot in
+// in this project (same constraint the TrajectoryPlot in
 // TrackDetailPage.tsx worked under). Every point is colored by its own
 // validation_status, so a quality issue is visible on the chart itself,
 // not hidden behind an aggregate. Deterministic stride-downsampling (if

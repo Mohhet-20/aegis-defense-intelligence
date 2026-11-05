@@ -1,5 +1,5 @@
 """IoUHungarianTracker. The one baseline tracker
-this phase ships: per-frame IoU computed between every active track's
+this layer ships: per-frame IoU computed between every active track's
 last known box and every current detection, assigned via the Hungarian
 algorithm (app/tracking/association.py), with explicit, configurable
 lifecycle rules layered on top of the raw assignment.
@@ -28,7 +28,7 @@ track IDs appear on screen"):
   docs/ml/TRACK_LIFECYCLE.md) -- a track's "last known box" is its most
   recent OBSERVED box, never a predicted position, so a fast-moving
   object that leaves its own IoU neighborhood between sampled frames
-  (Phase 4's video sampling is itself sparse, by design) may fail to
+  (the video sampling is itself sparse, by design) may fail to
   re-associate and will instead end one track and start a new one.
 """
 from __future__ import annotations

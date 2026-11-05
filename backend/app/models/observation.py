@@ -13,7 +13,7 @@ from app.models.mixins import GeoLocationMixin
 OBSERVATION_PROCESSING_STATUSES = ("ingested", "associated", "archived")
 OBSERVATION_DATA_ORIGINS = ("synthetic_demo", "user_upload")
 
-# Phase 6 canonical validation/quality classification.
+# Canonical validation/quality classification.
 # Deliberately a flat, documented set rather than a single pass/fail
 # bit -- "Valid with warnings" and "stale" are NOT the same thing as
 # "invalid" (a validation failure vs. an unusual-but-maybe-valid
@@ -36,16 +36,16 @@ SENSOR_OBSERVATION_SCHEMA_VERSION = "1.0"
 
 
 class Observation(Base, UUIDPrimaryKeyMixin, TimestampMixin, OrgScopedMixin, GeoLocationMixin):
-    """Canonical sensor observation (Phase 1 storage shape, extended in
-    Phase 6 per docs/data/CANONICAL_SENSOR_OBSERVATION.md).
+    """Canonical sensor observation (storage shape, extended in
+    Per docs/data/CANONICAL_SENSOR_OBSERVATION.md).
 
     `observation_type` doubles as the measurement type identifier for
-    numeric telemetry (e.g. "temperature_c") -- Phase 6 does not add a
+    numeric telemetry (e.g. "temperature_c") -- does not add a
     second, redundant "measurement_type" column; the existing column is
     reused and documented. `payload` remains the generic structured
-    value (used as-is by Phase 1's non-numeric "detection_summary"
+    value (used as-is by the non-numeric "detection_summary"
     rows); `measurement_value`/`unit` below are the EXPLICIT numeric
-    fields the Phase 6 statistics/anomaly engines operate on -- they
+    fields the statistics/anomaly engines operate on -- they
     are None for a structured-only observation, never a fabricated 0.
 
     Event time (`observed_at`) and ingestion time (`ingested_at`) are
@@ -67,10 +67,10 @@ class Observation(Base, UUIDPrimaryKeyMixin, TimestampMixin, OrgScopedMixin, Geo
     processing_status: Mapped[str] = mapped_column(String(20), nullable=False, default="ingested")
     data_origin: Mapped[str] = mapped_column(String(30), nullable=False)
 
-    # --- Phase 6 additions (canonical observation schema) -
+    # --- Additions (canonical observation schema) -
 
     # Ingestion time, distinct from observed_at above. Nullable at the
-    # DB level only so the three Phase-1 seed rows (predating this
+    # DB level only so the three original seed rows (predating this
     # column) remain valid without a backfill migration; the ingestion
     # service ALWAYS sets this for every row it creates.
     ingested_at: Mapped[Optional[datetime]] = mapped_column(UTCDateTime(), nullable=True, index=True)
@@ -84,8 +84,8 @@ class Observation(Base, UUIDPrimaryKeyMixin, TimestampMixin, OrgScopedMixin, Geo
     quality_flags: Mapped[list] = mapped_column(JSON, default=list)
 
     # The RawRecord this canonical observation was normalized from.
-    # NULL for the three Phase-1 seed rows (created directly, not via
-    # the Phase 6 ingestion pipeline) and for any future hand-created
+    # NULL for the three original seed rows (created directly, not via
+    # the ingestion pipeline) and for any future hand-created
     # observation -- Section 4 requires PRESERVING the source record
     # when one exists, not requiring one to exist.
     source_record_id: Mapped[Optional[str]] = mapped_column(String(36), ForeignKey("raw_records.id", ondelete="SET NULL"), nullable=True, index=True)

@@ -1,4 +1,4 @@
-"""Typed contracts shared by every connector (Section 4 of the Phase 2
+"""Typed contracts shared by every connector (Section 4
 spec). A connector's job is narrow: produce `RawRecord`s (or report why
 it couldn't) from whatever it's configured to read. It never touches
 the database, never normalizes, never deduplicates -- that happens in

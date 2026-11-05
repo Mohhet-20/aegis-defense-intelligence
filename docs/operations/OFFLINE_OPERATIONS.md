@@ -1,4 +1,4 @@
-# Offline Operations (Phase 8)
+# Offline Operations
 
 **Status: IMPLEMENTED, tested in SIMULATION ONLY.** This document describes
 operational behavior for a device that has lost, or never had, connectivity
@@ -25,7 +25,7 @@ Every call to `SimulatedEdgeNode.capture()` enqueues a record into
 `LocalEdgeStore` immediately and durably, regardless of current
 connectivity -- capture and connectivity are completely decoupled. A device
 can capture an arbitrary number of records (bounded only by local storage,
-which this phase does not itself cap -- see
+which this layer does not itself cap -- see
 `docs/operations/LOCAL_STORAGE_AND_RETENTION.md`) while offline, and nothing
 is lost: durability was proven by closing and reopening the same SQLite
 file. `LocalEdgeStore.stats()`'s `queue_depth`/`pending_sync_count` give the
@@ -34,7 +34,7 @@ device's own honest view of how much is backed up locally.
 ## 3. Reconnect and backlog flush
 
 On reconnect (`go_online()`), nothing flushes automatically inside this
-phase's model -- a caller invokes `flush_once()` (one batch) or
+layer's model -- a caller invokes `flush_once()` (one batch) or
 `run_until_drained()` (repeated `flush_once()` calls, bounded by
 `max_cycles`, default 20, until the local queue is empty or an attempt
 doesn't even get attempted). Each `flush_once()` call:
@@ -70,7 +70,7 @@ Two independent, separately-tested sweeps:
   `retryable_failure`/`permanent_failure`.
 
 **Neither sweep runs on a timer.** There is no background scheduler
-anywhere in this project -- every phase so far, including this one, is
+anywhere in this project -- every component so far is
 request/response only. The central sweep is exposed as an explicit API
 endpoint, `POST /api/v1/edge/sync/recover-stale` (`EDGE_SYNC_MANAGE`),
 meant to be triggered by an operator or an external cron hitting the API.
@@ -106,7 +106,7 @@ operator-facing version of this same point.
 
 ## 6. Known gaps
 
-- No automatic flush-on-reconnect trigger exists in this phase -- a real
+- No automatic flush-on-reconnect trigger exists -- a real
   device integration would need to call `flush_once()`/`run_until_drained()`
   itself on a timer or on a connectivity-change callback; nothing in
   `app/edge/` does this automatically.

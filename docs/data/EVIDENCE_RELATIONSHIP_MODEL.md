@@ -1,6 +1,6 @@
 # Evidence & Evidence Relationship Model
 
-Phase 3, Sections 3B/3D/11. Two new tables: `evidence_items`
+B/3D/11. Two new tables: `evidence_items`
 (`app/models/evidence.py`) and `evidence_relationships`
 (`app/models/evidence_relationship.py`). Read
 `docs/architecture/INTELLIGENCE_FUSION_ARCHITECTURE.md` first for why
@@ -46,9 +46,9 @@ it (`evidence_service.update_evidence_content()` raises if asked to set
 
 The module docstring in `evidence_relationship.py` states this
 explicitly, and it's worth repeating here since it's the single most
-important distinction in this phase:
+important distinction:
 
-| | `EventCorrelation` (Phase 2) | `EvidenceRelationship` (Phase 3) |
+| | `EventCorrelation` | `EvidenceRelationship` |
 |---|---|---|
 | Endpoints | event <-> event only | event<->event, event<->evidence, evidence<->evidence |
 | Who creates it | only `correlation_service.recompute()` | `fusion_service` (rule_based) OR an analyst via `POST /relationships` (analyst_created); `model_assisted` is a reserved, documented, currently-unused value |
@@ -62,7 +62,7 @@ important distinction in this phase:
 
 `RELATIONSHIP_ORIGINS`: `rule_based` (written only by
 `fusion_service.py`'s future candidate-generation extension points --
-nothing in THIS phase's fusion run actually writes an
+nothing in the fusion run actually writes an
 `EvidenceRelationship`; it writes `EventCorrelation`/`Conflict` rows,
 so every relationship that exists today came through the analyst API),
 `model_assisted` (reserved, unused -- see
@@ -115,7 +115,7 @@ documentation shared with `Conflict`.
 
 No evidence item ever stores the bytes of a document or image it
 references -- `external_reference_uri` is a pointer this platform
-never fetches (no SSRF surface here, unlike Phase 2's `http_connector`).
+never fetches (no SSRF surface here, unlike the `http_connector`).
 No relationship can be created between two records in different
 organizations -- every lookup is organization-scoped. No relationship
 is ever silently auto-confirmed; `review_status` only ever changes

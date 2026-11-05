@@ -38,4 +38,4 @@ class OrgScopedMixin:
     organization. See docs/architecture/ARCHITECTURE_DECISIONS.md
     "Tenant isolation: modeled, not yet enforced" -- the organization_id
     column exists on each concrete model, but no query filters by it
-    yet. That enforcement is Phase 14's job."""
+    yet. That enforcement is the job."""

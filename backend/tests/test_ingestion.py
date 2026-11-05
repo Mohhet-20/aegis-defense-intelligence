@@ -79,7 +79,7 @@ def test_record_with_out_of_range_coordinate_is_rejected_not_fatal(client, seede
 
 def test_intra_batch_duplicate_external_id_is_reported_not_a_500(client, seeded_users, tokens, source, auth_header):
     """Regression test for the exact bug found and fixed in this
-    phase: a single upload containing the same external_id twice must
+    layer: a single upload containing the same external_id twice must
     be reported as accepted=1, duplicate=1 -- never a 500."""
     content = b"""[
         {"event_type": "test_event", "title": "First", "observed_at": "2026-01-01T00:00:00Z", "external_id": "dup-1"},

@@ -1,4 +1,4 @@
-"""phase 11 investigation workspace evidence provenance
+"""Investigation workspace evidence provenance
 
 Revision ID: 6e2842cef39a
 Revises: 75b9cd8a733e

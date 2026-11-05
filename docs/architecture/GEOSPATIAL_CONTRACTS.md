@@ -1,11 +1,11 @@
-# Geospatial Contracts — Planned (Phase 7)
+# Geospatial Contracts — Planned
 
 **Status: PLANNED. No map rendering, spatial query, or clustering code
 exists yet.** `Event`, `Asset`, and `Sensor` already carry optional
-`latitude`/`longitude` columns in Phase 1's schema specifically so
-Phase 7 doesn't need a migration just to have coordinates to query.
+`latitude`/`longitude` columns in the schema specifically so
+Doesn't need a migration just to have coordinates to query.
 
-## What Phase 1 actually ships
+## What actually ships
 
 - Nullable `latitude: float` / `longitude: float` columns on `Event`,
   `Asset`, and `Sensor`, each validated at the schema layer (Pydantic)
@@ -15,7 +15,7 @@ Phase 7 doesn't need a migration just to have coordinates to query.
   Explorer shows latitude/longitude as plain numeric columns when
   present, not a map.
 
-## What Phase 7 will add
+## What will add
 
 - **Interactive maps** (frontend) rendering events/assets/sensors with
   coordinates, using a geospatial mapping library (Section 5 reserves
@@ -25,16 +25,16 @@ Phase 7 doesn't need a migration just to have coordinates to query.
   filters — which will need either a real spatial index (PostGIS, if
   the deployment is on Postgres) or an accepted-as-documented
   non-indexed fallback for SQLite deployments. That trade-off gets
-  decided and written down when Phase 7 actually needs the query, not
+  decided and written down when actually needs the query, not
   guessed now.
 - **Spatial clustering** of nearby events for dense-area visualization.
-- **Track visualization** once Phase 5 produces real tracks to draw.
+- **Track visualization** once produces real tracks to draw.
 
-## Binding principles (apply from Phase 7 onward)
+## Binding principles (apply onward)
 
 - A **missing** coordinate is `None` — never `(0.0, 0.0)` (a real,
   valid coordinate off the coast of West Africa). This is already true
-  of every location field in Phase 1's schema and must stay true.
+  of every location field in the schema and must stay true.
 - Coordinate reference system must be stated, not assumed — every
   coordinate in this system today is WGS84 decimal degrees; if a future
   source reports in a different CRS, it must be converted explicitly
@@ -43,7 +43,7 @@ Phase 7 doesn't need a migration just to have coordinates to query.
   box, time window) in its response, not just return points with no
   context for how they were selected.
 
-## What Phase 1 does NOT do
+## What does NOT do
 
 No map component exists in the frontend. No spatial query endpoint
 exists in the backend. No coordinate conversion logic exists (nothing

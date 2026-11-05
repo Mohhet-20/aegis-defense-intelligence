@@ -1,6 +1,6 @@
 """Central settings, read from environment / .env (see .env.example).
 DATABASE_URL defaults to a local SQLite file so the project runs with
-zero external setup (Section 5 of the Phase 1 spec explicitly allows
+zero external setup (Section 5 spec explicitly allows
 this); set it to a postgresql+psycopg2://... URL for a real deployment
 -- no code changes needed, see docs/architecture/ARCHITECTURE_DECISIONS.md."""
 from __future__ import annotations
@@ -114,7 +114,7 @@ class Settings(BaseSettings):
     RETRIEVAL_TOMBSTONE_DAYS: int = 30
     RETRIEVAL_MAX_INDEX_RECORDS: int = 5000
 
-    # Phase 13: scenario simulation limits (all enforced server-side)
+    # Scenario simulation limits (all enforced server-side)
     SCENARIO_MAX_RUN_SECONDS: float = 20.0       # wall-clock budget per simulation run
     SCENARIO_MAX_SWEEP_SECONDS: float = 45.0     # budget for a whole sensitivity sweep
     SCENARIO_STALE_RUN_SECONDS: int = 300        # 'running' rows older than this are failed
@@ -138,7 +138,7 @@ class Settings(BaseSettings):
     # settings rather than scattered hard-coded constants." These are
     # fusion_service.py's/graph_service.py's defaults; every one of them
     # can still be overridden per-call (e.g. a specific /fusion/run
-    # request), same as Phase 2's correlation_service already allowed.
+    # request), same as the correlation_service already allowed.
     FUSION_TIME_WINDOW_SECONDS_DEFAULT: int = 30 * 60  # 30 minutes
     # Per-event-type overrides layered on top of the default above --
     # JSON object string, e.g. '{"sensor_offline": 3600}'. An event type
@@ -188,7 +188,7 @@ class Settings(BaseSettings):
     CV_VIDEO_MAX_FRAMES_PER_JOB: int = 30
     CV_MAX_VIDEO_DURATION_SECONDS: float = 600.0  # 10 minutes
     # Detection postprocessing/validation defaults -- always
-    # overridable per inference-job request, same pattern Phase 3's
+    # overridable per inference-job request, same pattern the
     # FUSION_* defaults already established.
     CV_DEFAULT_CONFIDENCE_THRESHOLD: float = 0.35
     CV_DEFAULT_NMS_IOU_THRESHOLD: float = 0.45
@@ -304,7 +304,7 @@ class Settings(BaseSettings):
     # records are considered "within a documented distance threshold" by
     # spatial_relationship_service -- same default as
     # correlation_service.DEFAULT_SPATIAL_THRESHOLD_METERS, kept as its
-    # own setting since Phase 7's candidates are not limited to events.
+    # own setting since the candidates are not limited to events.
     GEOSPATIAL_RELATIONSHIP_DISTANCE_METERS: float = 500.0
     # the time window (seconds) within which two spatially
     # close records are also considered "temporally associated" -- same
@@ -404,7 +404,7 @@ class Settings(BaseSettings):
     # never silently treated as current.
     FLEET_CAPABILITY_RECENTLY_VERIFIED_WINDOW_SECONDS: float = 3600.0
 
-    # --- Phase 15: MLOps, model lifecycle, experiment tracking, observability -------
+    # --- MLOps, model lifecycle, experiment tracking, observability -------
     # See docs/ml/MLOPS_ARCHITECTURE.md. Thresholds here are DEFAULTS that surface
     # review signals; none of them triggers an automatic operational action.
     APP_GIT_COMMIT: str = ""  # optional; recorded in experiment reproducibility metadata when set
@@ -435,7 +435,7 @@ class Settings(BaseSettings):
     MLOPS_JOB_MIN_SAMPLES: int = 10
     MLOPS_MONITOR_FRESHNESS_DAYS: int = 7
 
-    # Phase 16 (analytics and reporting)
+    # Analytics and reporting
     ANALYTICS_MAX_WINDOW_DAYS: int = 366
     ANALYTICS_DEFAULT_WINDOW_DAYS: int = 7
     ANALYTICS_MAX_ROWS: int = 20000  # bound for any analysis that must read rows (percentiles); sets `truncated`

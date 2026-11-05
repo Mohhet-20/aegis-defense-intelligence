@@ -1,4 +1,4 @@
-"""Phase 5, Section 6/16: explicit track lifecycle states. Pure, DB-free
+"""/16: explicit track lifecycle states. Pure, DB-free
 tests of `IoUHungarianTracker` -- the project's single tracker
 implementation, serving as both its deterministic test fixture and its
 baseline algorithm (app/tracking/trackers/iou_tracker.py).

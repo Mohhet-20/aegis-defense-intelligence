@@ -21,7 +21,7 @@ class ObservationResponse(GeoLocationResponseFields):
     created_at: datetime
     updated_at: datetime
 
-    # --- Phase 6 additions --------------------------------
+    # --- Additions --------------------------------
     ingested_at: Optional[datetime]
     measurement_value: Optional[float]
     unit: Optional[str]

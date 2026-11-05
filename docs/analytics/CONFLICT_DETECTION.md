@@ -1,6 +1,6 @@
 # Conflict Detection
 
-Phase 3, Section 9. Implemented in `app/services/conflict_service.py`,
+Implemented in `app/services/conflict_service.py`,
 model `app/models/conflict.py`. Read this before touching either file --
 the single most important constraint here is that conflict detection is
 NEVER an independent scan of the dataset.
@@ -15,8 +15,8 @@ This is deliberate and tested directly:
 two events whose fields genuinely disagree but which were never
 correlated (observed 5 hours apart, outside the correlation window) --
 `detect_conflicts()` reports `pairs_considered == 0`, proving the
-disagreement is never even looked at. Correlation (Phase 2) decides
-WHAT is related; conflict detection (Phase 3) only ever asks "given
+disagreement is never even looked at. Correlation decides
+WHAT is related; conflict detection only ever asks "given
 that these two are already thought to be related, do they actually
 agree?"
 

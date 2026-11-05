@@ -1,4 +1,4 @@
-"""phase 12 retrieval index and copilot conversations
+"""Retrieval index and copilot conversations
 
 Revision ID: 96f00457bcd4
 Revises: 6e2842cef39a

@@ -1,4 +1,4 @@
-"""Phase 5, Section 9/16: persistence of tracking runs. Exercises
+"""/16: persistence of tracking runs. Exercises
 `tracking_service.submit_tracking_job()` against real, persisted
 MediaAsset/InferenceJob/DetectionResult rows (via the
 `tracking_source_factory` fixture -- see conftest.py for why this is

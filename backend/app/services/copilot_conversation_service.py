@@ -1,4 +1,4 @@
-"""Phase 12: per-user copilot conversations.
+"""Per-user copilot conversations.
 
 * A conversation belongs to exactly one user; others (including administrators)
   get the same 404 as for a missing one.

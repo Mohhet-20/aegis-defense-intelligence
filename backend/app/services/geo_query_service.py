@@ -6,7 +6,7 @@ this module never fabricates a position for a record that lacks one.
 
 Why validation is computed HERE, on every fetch, rather than read off
 a stored `location_validation_status` column: that column exists on
-every table (Phase 7's migration), but no pre-Phase-7 write path
+every table (the migration), but no pre-original write path
 (event/sensor/observation ingestion, asset creation) has ever
 populated it -- it is NULL on every row created before this service
 existed, and would stay NULL on ordinary new rows unless every one of

@@ -1,4 +1,4 @@
-# Fleet Operations Guide (Phase 9)
+# Fleet Operations Guide
 
 **Status: IMPLEMENTED, tested, SIMULATION ONLY** (no physical edge
 hardware -- see `docs/architecture/EDGE_ARCHITECTURE.md` Section 18).
@@ -11,7 +11,7 @@ of the lifecycle actions described here, see
 `docs/security/DEVICE_LIFECYCLE_SECURITY.md`.
 
 **Frontend note, stated honestly:** the Fleet Operations Center's
-frontend was built this phase and independently verified via a clean
+frontend was built this layer and independently verified via a clean
 `tsc`/`build`/`lint` pass. `frontend/src/pages/fleet/` contains
 `FleetOverviewPage.tsx`, `FleetSitesPage.tsx`, and
 `FleetAlertCenterPage.tsx`, routed at `/fleet/overview`, `/fleet/sites`,
@@ -21,7 +21,7 @@ views described below. This guide describes the operator workflow the
 backend API is designed to support end to end; it does not claim a
 live browser click-through was performed -- see
 `docs/testing/FLEET_TESTING.md` Section 4 for the exact boundary of
-what was and was not tested this phase.
+what was and was not tested this layer.
 
 ## 1. Fleet Overview page
 
@@ -31,11 +31,11 @@ single-screen snapshot: total device count, a breakdown by
 `administrative_status`, how many devices have *any* configuration
 baseline assigned (and what percentage that is of the fleet), open
 alerts broken down by severity, and the fleet-wide unresolved
-sync-conflict count (Phase 8's `SyncConflict`, reused). Everything on
+sync-conflict count (the `SyncConflict`, reused). Everything on
 this page is computed live at the moment of the request -- there is no
 "last updated" staleness to worry about, and no stored trend line: this
 page answers "what is true right now," never "how has this changed
-over time" (that is explicitly out of scope this phase -- see
+over time" (that is explicitly out of scope this layer -- see
 `docs/architecture/FLEET_MANAGEMENT.md` Section 1).
 
 ## 2. Fleet Sites page
@@ -77,8 +77,8 @@ waiting on the next health report -- see
 ## 4. Device detail: capability, config, and lifecycle tabs
 
 Per-device operator actions all live under
-`/api/v1/devices/{device_id}/*` (`edge_devices.py`, extending Phase
-8's device registry API):
+`/api/v1/devices/{device_id}/*` (`edge_devices.py`, extending
+the edge-sync layer's device registry API):
 
 - **Capabilities** -- `GET /devices/{device_id}/capabilities`
   (`DEVICE_READ`) lists every `(capability_key)` row for the device
@@ -131,15 +131,15 @@ Per-device operator actions all live under
 
 ## 5. The administrative lifecycle: maintenance vs. suspended vs. decommissioned vs. revoked
 
-Phase 8 already gave every device `pending`/`active`/`suspended`/
-`revoked`. This phase adds two more explicit-only states:
+Already gave every device `pending`/`active`/`suspended`/
+`revoked`. This layer adds two more explicit-only states:
 
 | State | Meaning | When an operator should use it |
 |---|---|---|
-| `suspended` (Phase 8) | A **security-suspicion** pause -- something about this device's behavior or credential looked wrong. | A device is behaving suspiciously, a credential may be compromised, or you need to pause it pending investigation. Reversible back to `active`. |
+| `suspended` | A **security-suspicion** pause -- something about this device's behavior or credential looked wrong. | A device is behaving suspiciously, a credential may be compromised, or you need to pause it pending investigation. Reversible back to `active`. |
 | `maintenance` (new) | A **planned, routine, explicit** administrative pause -- nothing wrong with the device, it is simply being serviced. | You are physically servicing the device, swapping hardware, or doing planned downtime, and want it cleanly blocked from syncing/heartbeating in the meantime without implying anything was wrong with it. Reversible back to `active`, or it can proceed to `decommissioned`/`revoked` directly from `maintenance`. |
 | `decommissioned` (new) | A **permanent, planned end-of-life** -- this device's hardware is being retired, normally, not as a security response. | The device is being taken out of service for good (replaced, retired, no longer needed) and this is *not* a security event. Historical sync/health/audit rows are **never deleted** -- a decommissioned device's full history stays queryable. |
-| `revoked` (Phase 8) | A **permanent security response** -- the device's credential is invalidated immediately and it can never be reactivated; re-enrollment requires a brand-new device row. | The device's credential is known or suspected compromised, or this is the terminal security action after suspension/decommission. |
+| `revoked` | A **permanent security response** -- the device's credential is invalidated immediately and it can never be reactivated; re-enrollment requires a brand-new device row. | The device's credential is known or suspected compromised, or this is the terminal security action after suspension/decommission. |
 
 **The short version an operator needs:** reach for `maintenance` when
 nothing is wrong and you expect the device back in service.

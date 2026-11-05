@@ -13,7 +13,7 @@ const qs = (params: Record<string, string | number | undefined | null>) => {
   return out ? `?${out}` : ''
 }
 
-/** Phase 15 MLOps API. Every call hits a real backend route; permissions are enforced server-side. */
+/** The MLOps layer MLOps API. Every call hits a real backend route; permissions are enforced server-side. */
 export const mlopsApi = {
   families: (q = '', page = 1) => request<Page<ModelFamily>>(`/mlops/families${qs({ q, page, page_size: 50 })}`),
   versions: (f: { q?: string; task?: string; lifecycle_state?: string; family?: string }, page = 1, pageSize = 25) =>

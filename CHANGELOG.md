@@ -44,7 +44,7 @@ Public-showcase release. Not yet tagged or pushed. No database migration (head `
   ~840 files (command line too long); the scan now runs in batches.
 
 ### Changed
-- Owner-only notes (local archive inventory, machine-specific handover) moved out of the repository.
+- Internal working notes removed from the repository.
 
 ## [1.0.0-rc.2] -- 2026-10-19
 
@@ -77,8 +77,7 @@ an HttpOnly cookie); optionally run `scripts/fetch_models.py` and `scripts/fetch
 ### Changed
 - Map uses plain Leaflet (react-leaflet, Hippocratic License 2.1, removed).
 - Tailwind CSS 3 -> 4: `npm audit` 0 vulnerabilities (was 5 high + 2 moderate, dev-only).
-- 13 duplicated UTC helpers replaced by one; ~90 unused imports removed; frontend lint 0 warnings;
-  build-history narration removed from source; per-phase reports moved to `docs/implementation/history/`.
+- 13 duplicated UTC helpers replaced by one; ~90 unused imports removed; frontend lint 0 warnings.
 - One shared rate limiter; `RATE_LIMIT_REFRESH` for session refresh.
 
 ### Also in this release (consolidation pass, 2026-10-18)
@@ -102,8 +101,7 @@ an HttpOnly cookie); optionally run `scripts/fetch_models.py` and `scripts/fetch
 - `detect-secrets` baseline and CI secret scan.
 - CI: runs on `release/**` branches and on demand; Python 3.12/3.13/3.14 matrix; full PostgreSQL suite
   in a non-UTC session; frontend tests; container CSP-header and restart-persistence checks.
-- `SECURITY.md`; `docs/operations/{LICENSE_DECISION,GITHUB_PUBLICATION}.md` (plus owner-only archive and handover notes, kept outside the repository since rc.2);
-  real screenshots in `docs/images/`.
+- `SECURITY.md`; real screenshots in `docs/images/`.
 
 #### Changed
 - `AdminOnly` moved to its own component (no behaviour change).
@@ -112,8 +110,7 @@ an HttpOnly cookie); optionally run `scripts/fetch_models.py` and `scripts/fetch
 
 ## [1.0.0-rc.1] -- 2026-10-18
 
-First release candidate: the result of the 18-phase build (history in
-`docs/implementation/`) plus a final stabilization pass verified on a clean Windows 11
+First release candidate, after a final stabilization pass verified on a clean Windows 11
 machine. Migration head: `c16r3p0rt01` (no new migration in this release).
 
 ### Fixed
@@ -142,8 +139,7 @@ machine. Migration head: `c16r3p0rt01` (no new migration in this release).
 - `react-router-dom` 6.28 → 7.18.4 (clears the two moderate runtime advisories).
 - Documented support: Python 3.12+ (3.11 cannot install the pinned NumPy), Node.js 20+.
 - `AEGIS_DEV_API_TARGET` points the Vite dev/preview proxy at another backend.
-- README rewritten for new readers; the build-history README moved to
-  `docs/implementation/history/README.md`.
+- README rewritten for new readers.
 
 ### Added
 - `scripts/demo_walkthrough.py`: an 11-step demo across all major modules through the public API.

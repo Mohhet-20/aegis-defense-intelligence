@@ -1,16 +1,16 @@
 """Capability discovery. See
 app/models/device_capability.py for the five-state rationale.
 
-Ingestion sources (deliberately reusing Phase 8's existing data, never
+Ingestion sources (deliberately reusing the existing data, never
 a new parallel reporting channel -- Part 3's "reuse" instruction
 applies here too):
-  - `Device.capabilities` (Phase 8, self-reported at registration/
+  - `Device.capabilities` (self-reported at registration/
     update) is this device's declared SUPPORTED set.
-  - `HealthReportRequest.runtime_capabilities` (Phase 8's existing
+  - `HealthReportRequest.runtime_capabilities` (the existing
     health-report field, a list of capability keys the device
     considers currently installed and ready to run) drives INSTALLED
     and AVAILABLE_AND_READY.
-  - `HealthReportRequest.model_status` (Phase 8's existing free-form
+  - `HealthReportRequest.model_status` (the existing free-form
     health-report field, shaped `{capability_key: {"healthy": bool}}`)
     drives HEALTHY and LAST_VERIFIED_AT -- computed by the server from
     the device's own accumulated health-report history, not re-derived
@@ -66,9 +66,9 @@ def sync_from_device_capabilities(db: Session, device: Device) -> None:
 
 
 def sync_from_health_report(db: Session, device: Device, health_report: DeviceHealthReport) -> None:
-    """Called immediately after a health report is persisted (Phase 8's
+    """Called immediately after a health report is persisted (the
     existing `edge_sync_service.process_health_report`) -- see Section
-    7's "reuse Phase 8's... health information" instruction."""
+    7's "reuse the... health information" instruction."""
     for key in health_report.runtime_capabilities or []:
         row = _get_or_create(db, device, key)
         row.installed = True

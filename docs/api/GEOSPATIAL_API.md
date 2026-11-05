@@ -1,8 +1,8 @@
-# Geospatial API (Phase 7)
+# Geospatial API
 
 **Status: IMPLEMENTED.** 13 endpoints, 4 route files, all under
 `/api/v1/geospatial/...`, all authenticated (bearer JWT, unchanged
-auth from Phase 1) and permission-gated. Confirmed registered via
+auth) and permission-gated. Confirmed registered via
 `TestClient(app).get('/api/openapi.json')` and 18 passing route-level
 tests in `tests/test_geospatial_api.py`.
 
@@ -62,7 +62,7 @@ headers={"Content-Disposition": 'attachment; filename="..."'})`
 -- a real downloadable file, matching how a browser or the frontend's
 own `fetchGeoExport()` client helper expects an attachment to behave.
 Every successful export is also recorded via `audit_service.record(action="geospatial.export", ...)`
-and committed, mirroring Phase 2's `export_service` audit discipline.
+and committed, mirroring the `export_service` audit discipline.
 
 ## Response envelope conventions
 

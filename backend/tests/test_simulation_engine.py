@@ -1,4 +1,4 @@
-"""Phase 13: pure simulation engine (no database): parameter validation,
+"""Pure simulation engine (no database): parameter validation,
 deterministic synthetic generation, simulator correctness, statistics edge
 cases, comparison attribution rules and sensitivity bounds."""
 from __future__ import annotations

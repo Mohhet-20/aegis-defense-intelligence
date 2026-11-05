@@ -1,11 +1,11 @@
-# Location Provenance and Uncertainty (Phase 7)
+# Location Provenance and Uncertainty
 
 **Status: IMPLEMENTED.**
 
 ## 1. Validation is computed live, not read off the stored column
 
 Every table's `location_validation_status` column (added by this
-phase's migration) exists, but **no query, quality-report, or map
+layer's migration) exists, but **no query, quality-report, or map
 endpoint in this codebase reads it.** Instead, every one of
 `geo_query_service.to_located_record()`, `location_quality_service`,
 and `spatial_relationship_service` calls
@@ -14,8 +14,8 @@ and `spatial_relationship_service` calls
 current `latitude`/`longitude`/`coordinate_reference_system`.
 
 This is deliberate, not an oversight: the stored column is NULL on
-every row written before this phase's services existed (no
-pre-Phase-7 write path -- event/sensor/observation ingestion, asset
+every row written beforehand's services existed (no
+pre-original write path -- event/sensor/observation ingestion, asset
 creation -- has ever populated it), and would stay NULL on an ordinary
 new row created through any of those unmodified paths today, since
 none of them were changed to write it either. Recomputing live from
@@ -76,7 +76,7 @@ a defect in the application.
 ## 4. Uncertainty: never invented
 
 `location_uncertainty_m` is written only when a source or a documented
-computation actually supplies a figure. No service in this phase
+computation actually supplies a figure. No service
 computes or backfills a fabricated uncertainty value for a record that
 lacks one -- `FINDING_UNCERTAINTY_UNAVAILABLE` exists specifically so
 "unknown" is always visibly distinguishable from "zero/perfect"
@@ -109,7 +109,7 @@ discipline.
 - No automatic promotion of a `source_reported` location to
   `validated` -- `location_origin` is written once at creation time
   (`source_reported` for every real write path today) and nothing in
-  this phase changes it afterward.
+  this layer changes it afterward.
 - No conflicting-source-coordinate detection as a single-record
   finding -- comparing two independent sources' coordinates for the
   *same* real-world thing is a cross-record concern, explicitly

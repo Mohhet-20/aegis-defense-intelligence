@@ -1,4 +1,4 @@
-"""Security-configuration report (Phase 14, Phase I/J).
+"""Security-configuration report (/J).
 
 `evaluate()` inspects the live Settings and returns findings. It NEVER
 returns a secret value -- only booleans ("is a key configured") and

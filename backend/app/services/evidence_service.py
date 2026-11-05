@@ -1,4 +1,4 @@
-"""Evidence CRUD (Phase 3, Section 3B). Every row must reference
+"""Evidence CRUD (Section 3B). Every row must reference
 something real -- enforced here BEFORE the DB's own CHECK constraint
 ever gets a chance to reject it, so the caller gets a clear 400 instead
 of a raw IntegrityError. See app/models/evidence.py for the full

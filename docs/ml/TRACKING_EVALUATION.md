@@ -1,4 +1,4 @@
-# Tracking Evaluation (Phase 5, Section 13)
+# Tracking Evaluation (Section 13)
 
 ## Why custom metrics, and not HOTA/IDF1/MOTA
 
@@ -32,8 +32,8 @@ sequences (no `random`, no wall-clock input -- identical output on every run, ev
   track's recent history.
 
 Every `TrackingEvaluationRun` stamps `is_synthetic=True`, `dataset_name=
-"synthetic_parallel_and_crossing_fixture"` -- the same honesty-by-construction pattern Phase
-4's `ModelEvaluationRun` already established.
+"synthetic_parallel_and_crossing_fixture"` -- the same honesty-by-construction pattern
+the computer-vision layer's `ModelEvaluationRun` already established.
 
 ## Metric definitions (exactly as implemented, in `app/tracking/evaluation.py`)
 

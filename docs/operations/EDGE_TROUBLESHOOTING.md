@@ -1,9 +1,9 @@
-# Edge Troubleshooting (Phase 8)
+# Edge Troubleshooting
 
 **Status: IMPLEMENTED.** Common issues an operator or developer may hit
 with edge device registration, sync, and conflict resolution, and their
 real causes -- written from what was actually observed exercising this
-phase, not speculative.
+layer, not speculative.
 
 ## Device can't authenticate
 
@@ -91,7 +91,7 @@ broken -- it is the expected steady state.
 
 ## The SQLite migration gotcha (for anyone re-running or adapting this migration)
 
-Migration `f7c55967f675_phase8_edge_sync_offline_operation` needed two
+Migration `f7c55967f675_edge_sync_offline_operation` needed two
 SQLite-specific fixes, both already applied in the committed migration:
 
 1. **`batch_alter_table` for a new foreign key on an existing table.**
@@ -125,7 +125,7 @@ database -- not merely written and assumed correct.
   queries; use those, or the admin API, not the raw column, for anything
   that matters).
 - `retryable_failure` on the central side being rare/hard to reproduce
-  under live load is expected in this phase's architecture (Section 8 of
+  under live load is expected's architecture (Section 8 of
   `docs/architecture/EDGE_ARCHITECTURE.md`) -- it is not evidence the
   retry path is broken; it is covered by fault-injection unit tests
   instead.

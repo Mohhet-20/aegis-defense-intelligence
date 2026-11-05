@@ -55,7 +55,7 @@ export function ModelRegistryPage() {
     <div>
       <PageHeader
         title="Model Registry"
-        description="Extends the Phase 1 ModelRecord table -- never a parallel CVModel entity. adapter_key names a key in a fixed, closed allow-list (app/cv/adapters/registry.py); it can never cause arbitrary code to run. See docs/ml/MODEL_REGISTRY.md."
+        description="Extends the core ModelRecord table -- never a parallel CVModel entity. adapter_key names a key in a fixed, closed allow-list (app/cv/adapters/registry.py); it can never cause arbitrary code to run. See docs/ml/MODEL_REGISTRY.md."
       />
 
       {canManage && (

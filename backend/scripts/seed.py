@@ -178,10 +178,10 @@ def main() -> None:
             db.add_all(observations)
             db.flush()
 
-        # Phase 6: give the environmental sensor real registry metadata
+        # Give the environmental sensor real registry metadata
         # (category/measurement_types/units/operating_range) -- nullable
         # fields an analyst would configure, never guessed for a sensor
-        # that didn't have them before Phase 6 existed.
+        # that didn't have them existed.
         env_sensor = sensors[2]
         if not env_sensor.measurement_types:
             env_sensor.category = "environmental"
@@ -193,7 +193,7 @@ def main() -> None:
             db.add(env_sensor)
             db.flush()
 
-        # Phase 6: run one deterministic synthetic batch through the
+        # Run one deterministic synthetic batch through the
         # REAL ingestion pipeline (app/services/sensor_ingestion_service.py)
         # -- not hand-inserted rows -- so the seeded demo data exercises
         # the same quality/validation code path a live batch would. A
@@ -248,7 +248,7 @@ def main() -> None:
             db.add(model_record)
             db.flush()
 
-        # Phase 4: two real, runnable CV model registry rows -- the
+        # Two real, runnable CV model registry rows -- the
         # deterministic mock adapter (works in any environment) and the
         # real OpenCV HOG person detector (works wherever
         # opencv-python-headless does, which is this environment). Both
@@ -303,7 +303,7 @@ def main() -> None:
             db.add_all(assessments)
             db.flush()
 
-        # Phase 7 (geospatial intelligence): a handful of additional
+        # Geospatial intelligence: a handful of additional
         # synthetic Event rows specifically chosen to exercise the
         # Geospatial Intelligence Workspace's own tabs -- a pair close
         # enough in space+time to produce a real "spatially_associated"
@@ -316,12 +316,12 @@ def main() -> None:
             geo_event_rows = [
                 Event(
                     organization_id=org.id, source_id=source.id, external_id=f"seed-geo-event-{i}",
-                    event_type=etype, title=title, description="Synthetic demo event (Phase 7 geospatial seed).",
+                    event_type=etype, title=title, description="Synthetic demo event (geospatial seed).",
                     observed_at=now - timedelta(minutes=offset_min), ingested_at=now - timedelta(minutes=offset_min) + timedelta(seconds=15),
                     latitude=lat, longitude=lon, coordinate_reference_system=crs,
                     source_severity="low", priority="normal", confidence=0.5,
                     attributes={"demo_index": i}, classification="unclassified",
-                    provenance={"generator": "scripts/seed.py", "note": "synthetic demonstration record -- Phase 7 geospatial seed"},
+                    provenance={"generator": "scripts/seed.py", "note": "synthetic demonstration record -- geospatial seed"},
                     processing_status="ingested", data_origin="synthetic_demo",
                 )
                 for i, (etype, title, lat, lon, crs, offset_min) in enumerate([

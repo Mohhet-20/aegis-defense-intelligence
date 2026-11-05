@@ -1,4 +1,4 @@
-"""Phase 18: backup -> verify -> restore into an isolated location, then prove
+"""Backup -> verify -> restore into an isolated location, then prove
 the application can read the restored records AND their private files.
 Everything lives under tmp_path; no real database or media is touched."""
 from __future__ import annotations

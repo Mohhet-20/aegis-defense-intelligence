@@ -1,4 +1,4 @@
-"""Security / abuse-resistance tests for Phase 2's new surface
+"""Security abuse-resistance tests for the new surface
 : SSRF end-to-end through the real API (not just the
 url_safety unit), CSV export formula-injection guarding, export size
 bounding, and permission gates on the newly-added sensitive endpoints.

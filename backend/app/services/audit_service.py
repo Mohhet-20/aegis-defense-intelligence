@@ -85,7 +85,7 @@ def record(
 
 def list_for_target(db: Session, organization_id: str, *, target_type: str, target_id: str) -> list[AuditRecord]:
     """The review-history view for a single relationship/conflict/
-    assessment row (Phase 3, Section 11: "preserve historical
+    assessment row (Section 11: "preserve historical
     decisions"). Deliberately reuses this append-only table rather than
     a parallel per-domain history log -- every analyst review action
     already calls `record()` above with the acting user, the prior/new

@@ -1,4 +1,4 @@
-# Edge Synchronization Protocol (Phase 8)
+# Edge Synchronization Protocol
 
 **Status: IMPLEMENTED.** Version string: `EDGE_SYNC_PROTOCOL_VERSION =
 "edge_sync_v1"` (`app/schemas/edge_sync.py`). These Pydantic models **are**
@@ -104,7 +104,7 @@ deliberately sub-second-precise rather than rounded).
 `SyncBatchResponse` -- one per batch request: `protocol_version`,
 `batch_id`, `accepted_count`, `conflict_count`, `quarantined_count`,
 `rejected_count` (everything not accepted/conflicted/quarantined --
-in this phase's synchronous architecture, that is effectively zero in
+in this layer's synchronous architecture, that is effectively zero in
 normal operation, since the only other terminal-this-request outcomes are
 quarantine or conflict; see
 `docs/architecture/EDGE_ARCHITECTURE.md` Section 8), `results` (the list of

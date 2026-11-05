@@ -1,8 +1,8 @@
 # Architecture Decisions — AEGIS
 
-Decisions made during Phase 1 and the reasoning behind them. Written as
-a living record — later phases append to this file rather than
-replacing it, and a later phase that reverses a decision here should
+Decisions made and the reasoning behind them. Written as
+a living record — later work append to this file rather than
+replacing it, and later work that reverses a decision here should
 say so explicitly rather than silently contradicting it.
 
 ## Modular monolith, not microservices
@@ -10,11 +10,11 @@ say so explicitly rather than silently contradicting it.
 One FastAPI process, one database, one React SPA. Section 5 explicitly
 rules out Kubernetes/Kafka/Redis/vector databases/microservices "before
 a concrete implementation requirement justifies them," and there is no
-such requirement at Phase 1. Module boundaries inside the monolith
+such requirement at the foundation. Module boundaries inside the monolith
 (Section 6) are enforced by convention — separate files, explicit
 imports, no module reaching into another's internals — not by process
-isolation. If a later phase needs a genuinely separate process (e.g. a
-compute-heavy inference worker in Phase 4), that's a deliberate decision
+isolation. If later work needs a genuinely separate process (e.g. a
+compute-heavy inference worker), that's a deliberate decision
 to be made then, with a reason recorded here, not a default.
 
 ## SQLite by default, Postgres-capable by configuration
@@ -27,7 +27,7 @@ to Postgres with no code changes. The schema is written to avoid
 SQLite-incompatible constructs (no Postgres-only column types, no
 features that would make the Alembic migration chain fork by database
 backend), so the same migration history applies to both. If a later
-phase introduces a genuinely Postgres-only feature, that constraint gets
+work introduces a genuinely Postgres-only feature, that constraint gets
 written down here and in `docs/project/limitations.md`, not discovered
 by a confused user later.
 
@@ -36,8 +36,7 @@ by a confused user later.
 Models use SQLAlchemy 2.0's `Mapped[...]`/`mapped_column()` typed style.
 Alembic is wired up from the very first schema, not added retroactively
 — `alembic upgrade head` against a fresh database is part of this
-phase's actual verification (see `PROJECT_STATUS.md` "Commands
-executed"), not a promise to add later.
+layer's actual verification , not a promise to add later.
 
 ## JWT bearer tokens, not server-side sessions
 
@@ -87,9 +86,9 @@ only.
 `Organization` exists and every org-scoped model carries an
 `organization_id` column, but Section 7 says explicitly: "only
 introduce tenant isolation if it is actually enforced across data
-access and authorization." Phase 1 ships a single default organization
+access and authorization." the foundation ships a single default organization
 and does **not** yet filter every query by the caller's
-`organization_id` — that enforcement is Phase 14's job (Security and
+`organization_id` — that enforcement is the job (Security and
 Governance), and claiming it exists now would violate Rule 3 (no fake
 functionality). This is recorded here and in
 `docs/project/limitations.md` rather than silently implied by the

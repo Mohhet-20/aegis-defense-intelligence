@@ -1,4 +1,4 @@
-"""Phase 16 migration: report_runs + analytics indexes; ORM parity; round trip with existing data."""
+"""Migration: report_runs + analytics indexes; ORM parity; round trip with existing data."""
 from __future__ import annotations
 
 import sqlite3

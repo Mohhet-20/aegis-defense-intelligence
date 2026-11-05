@@ -1,4 +1,4 @@
-"""Browser checks for Phase 18 frontend behaviour (needs backend on :8000 with a seeded DEVELOPMENT database,
+"""Browser checks frontend behaviour (needs backend on:8000 with a seeded DEVELOPMENT database,
 vite on :5173, playwright + chromium): session expiry returns to /login, a render crash is contained by the
 error boundary, and unknown routes do not white-screen. Demo password is from scripts/seed.py."""
 import os

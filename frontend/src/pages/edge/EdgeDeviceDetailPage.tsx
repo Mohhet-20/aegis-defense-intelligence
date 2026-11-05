@@ -111,9 +111,9 @@ const LIFECYCLE_META: Record<LifecycleTarget, { title: string; verb: string; var
 }
 
 // Fetches a read-only lifecycle-preview before letting the operator
-// confirm a (possibly consequential) transition -- Phase 9, Section 8.
+// confirm a (possibly consequential) transition --.
 // Applies to every lifecycle button on this page, not just the two new
-// Phase 9 actions.
+// Actions.
 function LifecyclePreviewDialog({
   deviceId,
   target,

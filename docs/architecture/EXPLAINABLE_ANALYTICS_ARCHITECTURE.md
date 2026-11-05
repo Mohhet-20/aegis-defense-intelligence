@@ -1,14 +1,14 @@
-# Explainable Analytics Architecture (Phase 10 / Phase 10)
+# Explainable Analytics Architecture
 
-Phase 10 adds an explainable, reviewable analytics layer **on top of** the
-Phase 1-9 records. It does not replace the model registry, evidence system,
+Adds an explainable, reviewable analytics layer **on top of** the
+Records. It does not replace the model registry, evidence system,
 assessment model or audit log; it reads and extends them.
 
 ## Implementation plan that was followed (based on the inspected repository)
 
 | Need | Existing component found | Decision |
 |---|---|---|
-| Model registry | `ModelRecord` (Phase 1/4) | Reused unchanged. Evaluations reference it by id and record the version. |
+| Model registry | `ModelRecord` | Reused unchanged. Evaluations reference it by id and record the version. |
 | Model outputs | `DetectionResult` (P4), `RiskAssessment` (P1) | Reused. A **read-only** normalizer maps them to one shared schema; nothing is copied to a new table. |
 | Evaluation | `ModelEvaluationRun` (P4, detection), `TrackingEvaluationRun` (P5) | Reused and surfaced in the overview. New `ClassificationEvaluationRun` added for classification/probability metrics, which had no home. |
 | Assessments, versions | `Assessment`, `AssessmentRevision`, `AssessmentEvidenceLink` (P3) | Reused unchanged (no column added to `assessments`). |

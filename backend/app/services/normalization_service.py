@@ -9,7 +9,7 @@ ordinary "this value doesn't normalize cleanly" case; a caller
 a value that fails to normalize. The one exception is
 `normalize_coordinates`, which raises ValueError for an out-of-range
 pair -- a deliberate signal that the caller must turn into a rejection,
-mirroring the Phase 1 contract this was extracted from.
+mirroring the contract this was extracted from.
 
 See docs/data/CANONICAL_EVENT_SCHEMA.md for the schema this produces.
 """
@@ -37,7 +37,7 @@ NORMALIZATION_VERSION = "1.0"
 #     to UTC as given -- "parsed_aware".
 #   - A value with NO timezone information (a naive timestamp, or a
 #     bare date) is ASSUMED to already be UTC -- "assumed_utc". This
-#     mirrors the exact behavior Phase 1 shipped with; it is a
+# mirrors the exact behavior shipped with; it is a
 #     documented assumption, not a silent one, and the policy actually
 #     applied is recorded on the returned NormalizedTimestamp so it can
 #     be surfaced in provenance rather than lost.
@@ -78,7 +78,7 @@ def normalize_timestamp(value) -> NormalizedTimestamp:
 # ---------------------------------------------------------------------------
 #
 # Policy: a missing coordinate stays missing -- it is NEVER defaulted to
-# (0, 0) or any other placeholder (Section 7 of the Phase 1 spec,
+# (0, 0) or any other placeholder (Section 7 spec,
 # preserved unchanged here). An out-of-range pair is invalid and the
 # caller must reject/quarantine the record rather than clamp or guess.
 

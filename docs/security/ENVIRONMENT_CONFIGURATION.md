@@ -1,8 +1,8 @@
-# Environment Configuration (Phase 14)
+# Environment Configuration
 
 Settings live in `app/core/config.py` and are read from environment / `backend/.env`.
 
-## Phase 14 settings
+## Settings
 | Setting | Default | Meaning |
 |---|---|---|
 | `PASSWORD_MIN_LENGTH` | 10 | Password policy minimum |

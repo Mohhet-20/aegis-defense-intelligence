@@ -1,4 +1,4 @@
-# Temporal Exploration and Historical Playback (Phase 7)
+# Temporal Exploration and Historical Playback
 
 **Status: IMPLEMENTED.** `app/services/geo_timeline_service.py`,
 frontend `pages/geo/TimelineExplorerPage.tsx`.
@@ -65,11 +65,11 @@ as a silently-complete result (Section 15).
 full ORM row) for efficiency; SQLite hands these back as naive
 `datetime` objects even though the column is declared
 `DateTime(timezone=True)` -- the same bug class first fixed in
-Phase 1's `user_service.py` and re-fixed in three Phase 6 services.
+the `user_service.py` and re-fixed in three services.
 `geo_timeline_service.py`'s own `_as_aware_utc()` helper normalizes
 every value read this way before any arithmetic touches it.
 `app/geo/validation.py` later centralized an equivalent helper so
-every Phase 7 caller is protected automatically (see
+every caller is protected automatically (see
 `docs/data/LOCATION_PROVENANCE_AND_UNCERTAINTY.md`).
 
 ## 6. What this does NOT do

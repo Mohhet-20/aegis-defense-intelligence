@@ -32,7 +32,7 @@ class User(Base, UUIDPrimaryKeyMixin, TimestampMixin, OrgScopedMixin):
     locked_until: Mapped[Optional[datetime]] = mapped_column(UTCDateTime(), nullable=True)
     last_login_at: Mapped[Optional[datetime]] = mapped_column(UTCDateTime(), nullable=True)
 
-    # Phase 14: bumped on password change, role change, disablement and
+    # Bumped on password change, role change, disablement and
     # explicit "revoke sessions". Every issued token carries the value at
     # issue time (claim `tv`); a token whose `tv` != the stored value is
     # rejected, so ALL previously issued access AND refresh tokens die.

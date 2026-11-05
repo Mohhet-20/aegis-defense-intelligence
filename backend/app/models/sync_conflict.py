@@ -1,5 +1,5 @@
 """Sync-time conflict records. Deliberately a
-SEPARATE model from Phase 3's `Conflict`
+SEPARATE model from the `Conflict`
 (app/models/conflict.py)/`conflict_service.py` -- that model detects a
 contradiction between two already-correlated `Event` rows (an
 event-fusion concern). This model detects a contradiction between an

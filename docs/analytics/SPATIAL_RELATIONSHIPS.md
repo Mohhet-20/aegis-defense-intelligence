@@ -1,4 +1,4 @@
-# Spatial Relationships (Phase 7)
+# Spatial Relationships
 
 **Status: IMPLEMENTED.** `app/services/spatial_relationship_service.py`,
 frontend `pages/geo/SpatialRelationshipExplorerPage.tsx`.
@@ -6,9 +6,9 @@ frontend `pages/geo/SpatialRelationshipExplorerPage.tsx`.
 ## 1. What a spatial relationship is -- and is not
 
 `generate_candidates()` creates a `"spatially_associated"`
-`EvidenceRelationship` row (Phase 3's model; this value was reserved
-in `EvidenceRelationship.RELATIONSHIP_TYPES` since Phase 3 and left
-unused until this phase) between any `Event`/`Observation` pair that
+`EvidenceRelationship` row (the model; this value was reserved
+in `EvidenceRelationship.RELATIONSHIP_TYPES` and left
+unused until this layer) between any `Event`/`Observation` pair that
 is **both** within a configurable distance threshold **and** within a
 configurable time window of each other.
 
@@ -17,7 +17,7 @@ never a conflict finding. The relationship's own `explanation` text
 says so explicitly: "This is an explainable proximity association
 only -- it is NOT a determination that the two records describe the
 same real-world event." Determining whether two close records
-describe the *same* real-world thing remains Phase 3's
+describe the *same* real-world thing remains the
 `conflict_service.py`'s job exclusively; `spatial_relationship_service.py`
 never calls into it and never produces a `Conflict` row.
 
@@ -64,10 +64,10 @@ location can never produce a spatial-relationship candidate.
 candidate, `_as_relationship_ref()` wraps it as a `"sensor_observation"`
 `Evidence` row via `evidence_service.get_or_create_observation_evidence()`
 (idempotent -- reuses an already-wrapped `Evidence` row if one
-exists). This is the exact pattern Phase 6's
+exists). This is the exact pattern the
 `cross_source_comparison_service.py` established first; that
 function's private helper was promoted to a shared, public
-`evidence_service` function during this phase specifically so this
+`evidence_service` function specifically so this
 module could reuse it rather than duplicating the wrap-or-reuse logic
 a second time (see
 `docs/architecture/GEOSPATIAL_INTELLIGENCE_ARCHITECTURE.md` Section 2).
@@ -89,14 +89,13 @@ generated candidate is an **ordinary** `EvidenceRelationship` row with
 any other relationship. No new review endpoint or permission was
 added for this (confirmed by
 `tests/test_spatial_relationship_service.py::test_candidate_reviewable_via_review_relationship`
-and the live Playwright interaction test described in
-`docs/implementation/history/PHASE_7_FINAL_REPORT.md`).
+and a live Playwright interaction test).
 
 ## 6. Generation authorization
 
 `POST /geospatial/relationships/generate` requires
 `Permission.GEOSPATIAL_MANAGE` (Administrator, Analyst only --
-Investigator explicitly excluded, mirroring Phase 3's
+Investigator explicitly excluded, mirroring the
 `CORRELATION_MANAGE`). `GET /geospatial/relationships` (listing) only
 requires the broader `GEOSPATIAL_READ`.
 

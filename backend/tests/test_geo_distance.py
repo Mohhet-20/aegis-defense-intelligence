@@ -1,4 +1,4 @@
-"""Tests for app/geo/distance.py (Phase 7, Section 17 "Spatial queries")."""
+"""Tests for app/geo/distance.py (Section 17 "Spatial queries")."""
 from __future__ import annotations
 
 import math

@@ -42,7 +42,7 @@ def ingest_media(
 
     # Idempotent re-upload: the exact same bytes from the same org
     # return the existing row rather than being re-validated and
-    # re-stored -- same discipline as Phase 3's relationship_service
+    # re-stored -- same discipline as the relationship_service
     # (row, created) pattern, simplified here to "just return the row"
     # since a MediaAsset has no additional fields a second upload could
     # legitimately change.

@@ -1,12 +1,12 @@
-# Fleet Testing (Phase 9)
+# Fleet Testing
 
 **Status: IMPLEMENTED.** 66 new backend tests across 7 new files,
 actually re-run fresh in this completion pass (not assumed from an
 earlier run). Full backend suite: **784 passed**, 0 failed (718 carried
-forward from Phases 1-8 + 66 new this phase). **93% overall line
+forward + 66 new this layer). **93% overall line
 coverage maintained** (`python -m pytest tests/ -q --cov=app
 --cov-report=term-missing`, re-run in this session). This test suite,
-like Phase 8's, is **simulation-only** -- see Section 4.
+like the, is **simulation-only** -- see Section 4.
 
 ## 1. Backend test files, by what each covers
 
@@ -44,7 +44,7 @@ FastAPI `TestClient` -- never a mocked service layer.
   returning a real `409` on a revision conflict, baseline assignment
   and drift computation walked through the real API, and Viewer being
   forbidden from creating a baseline or updating a device's config.
-- **`tests/test_device_lifecycle_phase9.py` (8 tests)** -- `maintenance`
+- **`tests/test_device_lifecycle.py` (8 tests)** -- `maintenance`
   only being legal from `active`, decommissioning preserving historical
   sync/health rows while blocking reactivation, `maintenance` being
   genuinely distinct from `suspended` (both block auth, different
@@ -84,10 +84,10 @@ FastAPI `TestClient` -- never a mocked service layer.
   API, 404s on resolve/reopen of an unknown alert, and Viewer being
   forbidden from resolving or reopening an alert.
 
-**Total new tests this phase: 12 + 10 + 7 + 8 + 11 + 9 + 9 = 66.**
-718 (Phases 1-8) + 66 = **784**, matching the real `pytest` run below.
+**Total new tests this layer: 12 + 10 + 7 + 8 + 11 + 9 + 9 = 66.**
+718 + 66 = **784**, matching the real `pytest` run below.
 
-## 2. Coverage, by module (new Phase 9 code)
+## 2. Coverage, by module (new code)
 
 Re-measured in this session via `python -m pytest tests/ -q --cov=app
 --cov-report=term-missing`:
@@ -135,7 +135,7 @@ raised a `UNIQUE constraint failed` error on
 `uq_device_capabilities_device_key` the second time it was called for
 that key within the same request. Root cause: every DB session in this
 project is `autoflush=False` (`app/db/session.py`, unchanged since
-Phase 1), so the first call's `db.add(row)` was never visible to the
+The foundation), so the first call's `db.add(row)` was never visible to the
 second call's own `SELECT` lookup until an explicit flush or commit --
 the second call saw no existing row and tried to `INSERT` a second one.
 Fixed by calling `db.flush()` (not `db.commit()`) immediately after
@@ -151,32 +151,32 @@ driver paths, which made `(now - last_verified_at).total_seconds()`
 `fleet_presence_service.py` raise `TypeError: can't subtract
 offset-naive and offset-aware datetimes`. Fixed with the same
 `_aware()` normalization helper pattern `edge_sync_service.py` already
-established for this exact issue in Phase 8 -- reused verbatim, not
+established for this exact issue -- reused verbatim, not
 reinvented, in both new modules.
 
 ## 4. Simulation-only, and the frontend boundary -- stated explicitly
 
 **This entire backend test suite runs in simulation.** No physical
 edge hardware is available in this environment (unchanged from every
-statement Phase 8 made about this -- see
+statement made about this -- see
 `docs/architecture/EDGE_ARCHITECTURE.md` Section 18). Every
 device-authenticated call in these tests goes through a real FastAPI
 `TestClient` against a real (in-memory SQLite) database -- never a
 mocked service layer -- but there is no real device hardware, no real
 cellular/radio link, and no real intermittent-connectivity network
-path anywhere in this test suite, consistent with Phase 8's own
+path anywhere in this test suite, consistent with the own
 honesty statement.
 
-**The frontend was built this same phase.** `frontend/src/pages/fleet/`
+**The frontend was built this same work.** `frontend/src/pages/fleet/`
 exists and contains `FleetOverviewPage.tsx`, `FleetSitesPage.tsx`, and
 `FleetAlertCenterPage.tsx`, routed and added to navigation, plus
 extensions to `EdgeDeviceListPage.tsx`/`EdgeDeviceDetailPage.tsx`
 (capability/config/lifecycle/site-assignment views). **This frontend
-was independently verified this phase via a clean static pass**: run
+was independently verified this layer via a clean static pass**: run
 from `frontend/` itself, `npx tsc -b` (clean, no output), `npm run
 build` (built successfully, only Vite's pre-existing chunk-size
 informational note), and `npm run lint` (0 errors, 2 pre-existing
-warnings unrelated to this phase's work) all passed. **No live
+warnings unrelated to this work) all passed. **No live
 browser click-through or Playwright run was performed** -- that
 remains unverified by this effort. The 784-test/93%-coverage figures
 above are backend figures; the frontend's own `tsc`/`build`/`lint`
@@ -212,7 +212,7 @@ results are reported separately above, not folded into those numbers.
   entry and `docs/architecture/FLEET_MANAGEMENT.md` Section 7).
 - **Fleet-wide behavior at a large device count.** No test seeds a
   large number of devices and measures the fleet-overview/capability-
-  summary query cost at scale -- consistent with every prior phase's
+  summary query cost at scale -- consistent with each layer's
   own stated gap on retention/performance at scale (see
-  `docs/operations/LOCAL_STORAGE_AND_RETENTION.md` for the Phase 8
+  `docs/operations/LOCAL_STORAGE_AND_RETENTION.md`
   precedent of documenting this honestly rather than silently).

@@ -80,7 +80,7 @@ class Permission(str, enum.Enum):
     # Reading relationships/conflicts/the evidence graph vs. actually
     # creating a relationship, reviewing/reversing one, or resolving a
     # conflict -- "do something" always needs the *_MANAGE/_REVIEW
-    # variant, same split Phase 2 used for correlation.
+    # variant, same split used for correlation.
     RELATIONSHIP_READ = "relationship:read"
     RELATIONSHIP_MANAGE = "relationship:manage"
     CONFLICT_READ = "conflict:read"
@@ -147,7 +147,7 @@ class Permission(str, enum.Enum):
     # Bulk GeoJSON/CSV export of located records -- mirrors
     # DATA_EXPORT's Administrator+Analyst-only grant exactly (Section
     # 14: "not every role gets unrestricted bulk export," same as
-    # Phase 2 already decided for event export).
+    # Already decided for event export).
     GEOSPATIAL_EXPORT = "geospatial:export"
     # Triggering spatial-relationship candidate generation -- mirrors
     # CORRELATION_MANAGE's Analyst-only (not Investigator) grant:
@@ -226,12 +226,12 @@ class Permission(str, enum.Enum):
     # the read-only Viewer. Scores themselves never trigger actions.
     ASSESSMENT_REVIEW = "assessment:review"
 
-    # Phase 11: producing an investigation report/export bundle is its own
+    # Producing an investigation report/export bundle is its own
     # permission (it can copy media bytes out of the platform); viewers
     # can read investigations but cannot export them.
     INVESTIGATION_EXPORT = "investigation:export"
 
-    # Phase 12: retrieval + copilot. RETRIEVAL_READ lets a user search and
+    # Retrieval + copilot. RETRIEVAL_READ lets a user search and
     # ask questions, but results are STILL filtered by the per-record-type
     # read permission and live record access (it grants no new data).
     # RETRIEVAL_INDEX triggers/inspects indexing; RETRIEVAL_EVALUATE runs
@@ -240,7 +240,7 @@ class Permission(str, enum.Enum):
     RETRIEVAL_INDEX = "retrieval:index"
     RETRIEVAL_EVALUATE = "retrieval:evaluate"
 
-    # Phase 13: scenario simulation. READ covers viewing scenarios, runs,
+    # Scenario simulation. READ covers viewing scenarios, runs,
     # comparisons and exports; WRITE creates/edits/versions scenarios and
     # generates synthetic datasets; RUN executes simulations/sensitivity
     # sweeps (bounded CPU). Simulated output is never operational evidence.
@@ -248,7 +248,7 @@ class Permission(str, enum.Enum):
     SCENARIO_WRITE = "scenario:write"
     SCENARIO_RUN = "scenario:run"
 
-    # Phase 14: governance. SECURITY_READ shows the (secret-free)
+    # Governance. SECURITY_READ shows the (secret-free)
     # security-configuration report. LIFECYCLE_* split reading policies/
     # previews, REQUESTING an archive/delete, and APPROVING/EXECUTING it.
     # None of these are granted to non-administrators by default.
@@ -257,7 +257,7 @@ class Permission(str, enum.Enum):
     LIFECYCLE_REQUEST = "lifecycle:request"
     LIFECYCLE_APPROVE = "lifecycle:approve"
 
-    # Phase 15: MLOps. READ covers the registry, experiments (including their
+    # MLOps. READ covers the registry, experiments (including their
     # full configuration), comparisons, monitoring and review signals. REGISTER
     # adds a model version. RUN executes an evaluation experiment. REVIEW
     # requests a model review, selects a baseline, and acknowledges/resolves
@@ -273,7 +273,7 @@ class Permission(str, enum.Enum):
     MLOPS_APPROVE = "mlops:approve"
     OBSERVABILITY_READ = "observability:read"
 
-    # Phase 16 (analytics and reporting). REPORTING_READ opens the dashboards
+    # Analytics and reporting. REPORTING_READ opens the dashboards
     # and report history; each analytics SECTION additionally requires the read
     # permission of the data it aggregates (events, investigations, ...), so a
     # dashboard never reveals counts the caller could not list directly.
@@ -402,7 +402,7 @@ ROLE_PERMISSIONS: dict[Role, set[Permission]] = {
         # Investigator can review/resolve/author case-work, same as it
         # already can for investigations and risk assessments -- but
         # NOT run the fusion pipeline itself (FUSION_RUN), mirroring
-        # Phase 2's own choice to withhold CORRELATION_MANAGE from this
+        # the own choice to withhold CORRELATION_MANAGE from this
         # role: generating NEW candidates at scale stays analyst/admin.
         Permission.FUSION_READ,
         Permission.GRAPH_READ,
@@ -413,8 +413,8 @@ ROLE_PERMISSIONS: dict[Role, set[Permission]] = {
         Permission.EVALUATION_READ,
         # Investigator can review/annotate tracking results, same as it
         # can for detections, but NOT run new tracking jobs (TRACKING_RUN)
-        # or new tracking evaluations -- mirroring the exact split Phase
-        # 4 already drew for INFERENCE_RUN/EVALUATION_RUN.
+        # or new tracking evaluations -- mirroring the exact split
+        # the computer-vision layer already drew for INFERENCE_RUN/EVALUATION_RUN.
         Permission.TRACKING_READ,
         Permission.TRACK_ANNOTATE,
         Permission.TRACKING_EVALUATION_READ,
@@ -537,7 +537,7 @@ def create_refresh_token(user_id: str, role: str, token_version: int = 0) -> str
 
 def token_matches_user(payload: dict[str, Any], user: Any) -> bool:
     """True only if the token was issued at the user's CURRENT token
-    version. Tokens minted before Phase 14 carry no `tv` claim and are
+    version. Tokens minted carry no `tv` claim and are
     treated as version 0, so they keep working until the first
     revocation event for that user bumps the version."""
     return int(payload.get("tv", 0)) == int(getattr(user, "token_version", 0) or 0)
@@ -584,7 +584,7 @@ def get_current_user(token: str = Depends(_oauth2_scheme), db: Session = Depends
 
 
 def _audit_denied(db: Session, request: Request, current_user: "AuthenticatedUser", permission: Permission) -> None:
-    """Best-effort audit of a denied operation (Phase 14, Phase B.8).
+    """Best-effort audit of a denied operation (.8).
     Records WHO, which permission, and the method + route template -- never
     the request body, query string values, or headers. A failure to write
     this row must never turn a 403 into a 500, so it is swallowed (and
@@ -658,7 +658,7 @@ def require_device_auth(
     silently grant unrestricted access")."""
     from app.services import device_service  # local import avoids a circular import at module load time
 
-    # Phase 17: missing credentials are an authentication failure (401), not a request-validation failure (422),
+    # Missing credentials are an authentication failure (401), not a request-validation failure (422),
     # so unauthenticated callers get the same answer on every protected route.
     device = device_service.authenticate_device(db, x_device_id, x_device_api_key) if x_device_id and x_device_api_key else None
     if device is None:

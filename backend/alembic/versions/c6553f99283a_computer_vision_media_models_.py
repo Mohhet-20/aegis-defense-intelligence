@@ -160,8 +160,8 @@ def upgrade() -> None:
     op.add_column('model_records', sa.Column('adapter_key', sa.String(length=100), nullable=True))
     # server_default='[]' is required here, not optional: the existing
     # seeded 'demo-risk-scorer' ModelRecord row (and any other
-    # pre-Phase-4 row) must backfill to a valid empty JSON list for
-    # this new NOT NULL column, exactly the same reasoning Phase 3's
+    # pre-original row) must backfill to a valid empty JSON list for
+    # this new NOT NULL column, exactly the same reasoning the
     # investigations.collaborator_user_ids migration already documented.
     op.add_column('model_records', sa.Column('supported_media_types', sa.JSON(), nullable=False, server_default='[]'))
     if op.get_bind().dialect.name != 'sqlite':

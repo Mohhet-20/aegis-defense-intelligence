@@ -1,6 +1,6 @@
-"""Reusable tenant-isolation helpers (Phase 14, Phase B/C).
+"""Reusable tenant-isolation helpers (/C).
 
-Convention (unchanged from earlier phases): a record that belongs to another
+Convention (unchanged from earlier work): a record that belongs to another
 organization is indistinguishable from one that does not exist -- both give
 the same 404. These helpers apply that convention to *referenced* records
 (ids supplied in a request body), which per-resource GET routes alone do not

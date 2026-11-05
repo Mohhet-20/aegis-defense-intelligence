@@ -1,9 +1,9 @@
-# Tracking Test Strategy (Phase 5, Section 16/17)
+# Tracking Test Strategy (Section 16/17)
 
 ## Why a dedicated fixture, not the mock CV adapter pipeline
 
-Phase 4's `MockDetectionAdapter` derives each detection's box position/size/confidence from a
-`sha256` hash of the **entire frame's pixel bytes** -- fine for exercising Phase 4's own
+the `MockDetectionAdapter` derives each detection's box position/size/confidence from a
+`sha256` hash of the **entire frame's pixel bytes** -- fine for exercising the own
 pipeline, but it means box positions jump unpredictably frame-to-frame when fed the existing
 `mp4_bytes` conftest fixture's uniform-color synthetic frames. That is useless for testing
 tracking logic, which needs smoothly-moving, predictable boxes to produce a meaningful,
@@ -37,7 +37,7 @@ briefly overlap at a known frame, for identity-switch-adjacent scenarios).
 
 ## What is deliberately not separately tested
 
-- **Predicted-vs-observed motion.** No Kalman/motion-prediction filter exists in this phase
+- **Predicted-vs-observed motion.** No Kalman/motion-prediction filter exists
   (Section 8 was deliberately deferred), so there is nothing to compare a prediction against.
   `test_no_speed_or_predicted_position_field_exists_on_motion_step` instead confirms this gap
   is real and not an oversight.
@@ -49,19 +49,18 @@ briefly overlap at a known frame, for identity-switch-adjacent scenarios).
 
 ## Results, as actually run (not claimed without evidence)
 
-Full backend suite (`pytest -q --cov=app`), including every Phase 1-4 test alongside the new
-Phase 5 tests above: **368 passed**, **92% statement coverage**. Every new tracking module
+Full backend suite (`pytest -q --cov=app`), including every test alongside the new
+Tests above: **368 passed**, **92% statement coverage**. Every new tracking module
 (`app/tracking/motion.py`, `app/tracking/trackers/base.py`, `app/tracking/synthetic_fixture.py`)
 reaches 100% coverage; `app/tracking/association.py` and `app/tracking/trackers/iou_tracker.py`
 reach 99%; the service layer (`tracking_service.py`, `track_annotation_service.py`,
-`tracking_evaluation_service.py`) reaches 89-94%. See
-`docs/implementation/history/PHASE_5_FINAL_REPORT.md` for the exact command and full output.
+`tracking_evaluation_service.py`) reaches 89-94%.
 
 ## Frontend
 
 `tsc -b --force`, `eslint .`, and `npm run build` were all run clean against the new
 `pages/tracking/*`, `components/cv/TrackOverlay.tsx`, and the `types/api.ts`/`api/client.ts`
-additions -- see `docs/implementation/history/PHASE_5_FINAL_REPORT.md` for the exact output. There is
-no frontend unit-test harness in this codebase (consistent with every prior phase); frontend
+additions. There is
+no frontend unit-test harness in this codebase (consistent with every earlier work); frontend
 correctness here rests on type-checking, linting, and a clean production build against the
 real backend API shapes.

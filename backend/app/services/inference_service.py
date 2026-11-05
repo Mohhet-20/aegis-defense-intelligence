@@ -4,8 +4,8 @@ video frame analysis (a sampled sequence of frames) -- against one
 registered `ModelRecord`/adapter, persisting validated, postprocessed
 `DetectionResult` rows.
 
-Execution model, stated plainly: exactly like Phase 2's
-`ingestion_service.run_ingestion()` and Phase 3's
+Execution model, stated plainly: exactly like the
+`ingestion_service.run_ingestion()` and the
 `fusion_service.run_fusion_job()`, this function runs SYNCHRONOUSLY
 inside the API request that calls it. There is still no background
 worker/queue anywhere in this codebase. "Bounded concurrency" (Section
@@ -131,7 +131,7 @@ def submit_inference_job(
 
 
 def _record_job_metrics(job: InferenceJob, outcome: str) -> None:
-    """Phase 15: bounded-label job metrics (outcome and job_type only)."""
+    """Bounded-label job metrics (outcome and job_type only)."""
     from app.core.obs_metrics import registry
 
     registry.inc("inference_jobs_total", {"outcome": outcome})

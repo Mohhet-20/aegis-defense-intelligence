@@ -1,7 +1,6 @@
-# AEGIS API Reference -- Phase 1
-
+# AEGIS API Reference --
 Documents only the routes that actually exist in `backend/app/api/routes/*.py` as of
-Phase 1. Every example below is a real request/response shape produced by the
+Every example below is a real request/response shape produced by the
 Pydantic schemas in `backend/app/schemas/*.py` -- nothing here is aspirational.
 
 Interactive OpenAPI docs are also served live by the running backend at
@@ -145,7 +144,7 @@ it has actually reported in. Valid statuses: `active`, `inactive`, `fault`,
 |---|---|---|
 | GET | `/observations?sensor_id=<optional>` | `observation:read` |
 
-Read-only in Phase 1 -- observations are written by Phase 6/future sensor
+Read-only -- observations are written/future sensor
 integrations, not through a public create endpoint yet.
 
 ## Events
@@ -234,7 +233,7 @@ New investigations start `"status": "open"` and `"review_status": "not_reviewed"
 | GET | `/risk-assessments/{id}` | `risk:read` |
 | POST | `/risk-assessments/{id}/review` | `risk:review` |
 
-Read-only creation in Phase 1 (seeded examples only; there is no real scoring
+Read-only creation (seeded examples only; there is no real scoring
 model yet -- see `docs/architecture/AI_ANALYTICS_CONTRACTS.md`). Every row carries
 `method` (attribution -- never a bare score), `score_scale` (always
 `"0-100 (uncalibrated; see docs/architecture/AI_ANALYTICS_CONTRACTS.md)"`), and
@@ -288,14 +287,14 @@ cached or hardcoded figure.
 real `SELECT 1` against the database fails.
 
 
-## Phase 10 additions
+## Additions
 
 Model outputs, explanations, model evaluations, assessment scoring and review routes are documented in
 [`ANALYTICS_API.md`](ANALYTICS_API.md). New permissions: `analytics:read`, `analytics:evaluate`,
 `assessment:review`.
 
 
-## Phase 11 additions
+## Additions
 
 Investigation lifecycle, members, links, evidence registration/integrity/provenance, timeline, notes, search,
 relationships, export and dashboard routes are documented in

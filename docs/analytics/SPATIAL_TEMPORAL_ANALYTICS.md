@@ -1,4 +1,4 @@
-# Spatial/Temporal Analytics (Phase 7)
+# Spatial/Temporal Analytics
 
 **Status: IMPLEMENTED.** `geo_query_service.spatial_grid_counts()`,
 `geo_timeline_service.time_bucket_counts()`/`temporal_gaps()`, surfaced
@@ -8,7 +8,7 @@ together as the Geographic Analytics Dashboard
 ## 1. Binding principle: counts, never conclusions
 
 This document exists specifically to hold the specification's
-prohibited-scope rule in one place for every analytic this phase
+prohibited-scope rule in one place for every analytic this layer
 computes: **every number here is a count of records in this
 project's own data.** None of it is, or is ever combined into, a
 threat score, a hostile-intent inference, a priority ranking, or any
@@ -16,7 +16,7 @@ other judgment about the real world. A grid cell with a high count
 means "this project has many located records whose coordinates fall
 in this cell" -- nothing more. A temporal gap means "this project
 has no records for this record type in this interval" -- not "nothing
-happened." No function in this phase takes a density or co-occurrence
+happened." No function takes a density or co-occurrence
 figure as input and produces a causal or evaluative output; this is
 enforced by code review of every function's return type (always a
 count, a list of counts, or a distance/time figure) and is repeated
@@ -27,7 +27,7 @@ as a binding comment at the top of `spatial_grid_counts()` and in
 
 `spatial_grid_counts()` buckets every located record (reusing
 `app/geo/validation.classify_validation_status()` to exclude invalid
-locations, same as every other query in this phase) into fixed-size
+locations, same as every other query) into fixed-size
 lat/lon cells (`grid_resolution_degrees`, default
 `settings.GEOSPATIAL_DEFAULT_GRID_RESOLUTION_DEGREES = 0.5`), using
 `floor(lat/resolution)`/`floor(lon/resolution)` as the cell key. Each
@@ -71,7 +71,7 @@ record to exactly one display category, in this priority order
 4. **`derived`** / **`estimated_inferred`** -- reserved categories
    mapped from `location_origin`, included for taxonomic completeness
    per Section 7's required marker categories, but unreachable with
-   today's real data since no service in this phase ever writes
+   today's real data since no service ever writes
    `location_origin="derived"` or `"estimated"`/`"inferred"` (see
    `docs/data/LOCATION_SCHEMA_AND_COORDINATE_SYSTEMS.md` Section 3).
 5. **`unvalidated`** -- fallback for anything not matching the above.

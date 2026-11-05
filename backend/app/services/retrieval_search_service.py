@@ -1,4 +1,4 @@
-"""Phase 12: authorized keyword (BM25) retrieval over the derived index.
+"""Authorized keyword (BM25) retrieval over the derived index.
 
 Pipeline: validate -> SQL prefilter (org, active docs, record types the role
 may read, filters, term LIKE) -> BM25 in Python -> LIVE per-record

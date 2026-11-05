@@ -63,7 +63,7 @@ def upgrade() -> None:
 
     # --- observations: canonical schema extensions (Section 4) -------
     # NOT NULL columns get an explicit server_default so the existing
-    # Phase-1 seed rows backfill cleanly rather than failing the ALTER.
+    # original seed rows backfill cleanly rather than failing the ALTER.
     op.add_column('observations', sa.Column('ingested_at', sa.DateTime(timezone=True), nullable=True))
     op.add_column('observations', sa.Column('measurement_value', sa.Float(), nullable=True))
     op.add_column('observations', sa.Column('unit', sa.String(length=50), nullable=True))
@@ -107,7 +107,7 @@ def upgrade() -> None:
         batch_op.create_foreign_key('fk_sensors_retired_by_user_id', 'users', ['retired_by_user_id'], ['id'], ondelete='SET NULL')
         batch_op.create_foreign_key('fk_sensors_asset_id', 'assets', ['asset_id'], ['id'], ondelete='SET NULL')
 
-    # Existing Phase-1 seed rows (and any sensor created before this
+    # Existing original seed rows (and any sensor created before this
     # migration) have no lifecycle_status set by application code yet
     # -- the server_default above already backfills 'registered' for
     # every pre-existing row, consistent with "a sensor's lifecycle

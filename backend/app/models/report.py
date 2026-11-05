@@ -1,4 +1,4 @@
-"""Phase 16: report runs.
+"""Report runs.
 
 One table. A ReportRun is the durable record of one generated report: who asked,
 for what window/filters/sections, what it contained (sample summary, caveats live

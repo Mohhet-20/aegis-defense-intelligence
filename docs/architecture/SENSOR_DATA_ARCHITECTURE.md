@@ -1,34 +1,34 @@
-# Sensor Data Architecture (Phase 6)
+# Sensor Data Architecture
 
 **Status: REAL.** This supersedes `docs/architecture/MULTISENSOR_CONTRACTS.md`'s
-"planned" section for Phase 6 -- sensor health, observation-quality scoring,
+"planned" section -- sensor health, observation-quality scoring,
 timestamp normalization, and anomaly detection are all implemented, migrated
 (`e416c9a24fa4`), and covered by the backend test suite (507 passed, 92%
 overall coverage; `app/sensors/quality.py` 98%, `app/sensors/units.py` 100%,
 `app/sensors/statistics.py` 99%, `app/services/sensor_ingestion_service.py`
 89%, `app/services/sensor_service.py` 92%). `MULTISENSOR_CONTRACTS.md` is left
-in place as the historical planning record, not deleted -- its Phase 3
-(fusion/correlation) section is still planned and unaffected by this phase.
+in place as the historical planning record, not deleted -- its
+(fusion/correlation) section is still planned and unaffected.
 
-## What's reused from Phase 1, unchanged in meaning
+## What's reused, unchanged in meaning
 
 - `Sensor` (`app/models/sensor.py`) and `Observation` (`app/models/observation.py`)
-  -- both tables already existed. Phase 6 extends them with new nullable (or
-  server-defaulted) columns rather than replacing them; no Phase 1 column is
+  -- both tables already existed. The multi-sensor layer extends them with new nullable (or
+  server-defaulted) columns rather than replacing them; no column is
   repurposed or dropped. `Sensor.status` (`active`/`inactive`/`fault`/`unknown`)
-  keeps its exact Phase 1 meaning -- it is a separate field from the new
+  keeps its exact meaning -- it is a separate field from the new
   `lifecycle_status` below, not superseded by it.
 - `IngestionJob` and `RawRecord` (`app/models/ingestion_job.py`,
-  `app/models/raw_record.py`), both introduced in Phase 2 for Event ingestion.
+  `app/models/raw_record.py`), both introduced for Event ingestion.
   Sensor batches reuse these same tables rather than a competing
   `SensorIngestionJob`/`SensorRawRecord` pair -- `IngestionJob.job_type` simply
   gets three new values (`sensor_json_batch`, `sensor_csv_batch`,
   `sensor_synthetic`), and `RawRecord.event_id` just stays `NULL` for every row
   a sensor batch produces. See `docs/data/CANONICAL_SENSOR_OBSERVATION.md` for
   how a `RawRecord` relates to the `Observation` it may produce.
-- The registry CRUD + audit-trail pattern Phase 1/Phase 3 already
+- The registry CRUD + audit-trail pattern earlier work already
   established: `GET/POST /sensors`, `GET/PATCH /sensors/{id}` were real before
-  this phase; Phase 6 adds the lifecycle and status-history routes on top
+  this layer; the multi-sensor layer adds the lifecycle and status-history routes on top
   (see `docs/data/SENSOR_REGISTRY.md`).
 
 ## What's new
@@ -45,7 +45,7 @@ in place as the historical planning record, not deleted -- its Phase 3
   allow-list registry (`app/sensors/adapters/registry.py`). See "Adapter
   registry pattern" below.
 - **`observation_anomalies` table** (`app/models/observation_anomaly.py`) --
-  the one genuinely new table this phase adds. Everything else is a column
+  the one genuinely new table this layer adds. Everything else is a column
   addition to an existing table. See `docs/data/CANONICAL_SENSOR_OBSERVATION.md`.
 - **Services**: `app/services/sensor_ingestion_service.py` (batch ingestion
   orchestration), `app/services/sensor_health_service.py` (on-demand health
@@ -115,7 +115,7 @@ Every `Observation` an ingestion batch creates carries `source_record_id`
 (the `RawRecord` it was normalized from) and `ingestion_job_id` -- an analyst
 can always trace one canonical observation back to the exact raw payload and
 batch that produced it, the same lineage discipline `TrackObservation` /
-`DetectionResult` established in Phase 4/5.
+`DetectionResult` established.
 
 ## Health is never cached
 
@@ -131,13 +131,13 @@ explicit call: either an analyst's own lifecycle transition
 never silently on every read. See `docs/data/SENSOR_REGISTRY.md` for the
 exact transition rules.
 
-## What Phase 6 deliberately does NOT build
+## What deliberately does NOT build
 
 - A background worker or job queue of any kind (see "Execution model" above).
 - An HTTP/network sensor connector (deferred, see "Adapter registry pattern").
 - Cross-sensor correlation/fusion -- an anomaly candidate is scoped to exactly
   one sensor + measurement type; recognizing that two different sensors'
-  observations describe the same real-world event is still Phase 3
+  observations describe the same real-world event is still
   (`MULTISENSOR_CONTRACTS.md`'s "Cross-source association"), unimplemented.
 - Any machine-learning anomaly model -- `app/sensors/anomaly.py` is entirely
   documented statistical heuristics (range/z-score/MAD/rate-of-change/

@@ -1,14 +1,14 @@
-# Computer Vision Contracts — Planned (Phase 4–5)
+# Computer Vision Contracts — Planned
 
-> **Superseded for everything Phase 4 actually built.** As of Phase 4,
+> **Superseded for everything actually built.** As,
 > image/video ingestion, the model registry, inference pipelines, and
 > the analyst review workspace are REAL, implemented, and tested — see
 > `docs/architecture/COMPUTER_VISION_ARCHITECTURE.md` for the as-built
 > architecture. This file's historical content below is kept
 > **unmodified** (per this project's "document what changed, don't
 > quietly drop it" rule) because it still correctly describes what
-> remains PLANNED: `TrackIdentifier`/`TrackObservation` (Phase 5
-> tracking/re-identification — deliberately NOT built in Phase 4; see
+> remains PLANNED: `TrackIdentifier`/`TrackObservation` (the tracking layer
+> tracking/re-identification — deliberately NOT built; see
 > `docs/ml/VIDEO_FRAME_ANALYSIS.md`'s "What this does NOT do"). Two
 > entities named below were resolved differently than originally
 > sketched: `MediaProcessingJob` became the real `InferenceJob`
@@ -21,20 +21,20 @@
 > exists ... unused by any real inference yet"); see
 > `docs/ml/MODEL_REGISTRY.md`.
 
-**Original status note (historical, Phase 1): No image/video
+**Original status note (historical): No image/video
 processing, inference, tracking, or re-identification code exists in
 this repository yet.** This document defines the shapes and principles
-Phase 4 (Computer Vision Infrastructure) and Phase 5 (Tracking and
-Re-Identification) will implement against, so Phase 1's database
+Computer Vision Infrastructure and (Tracking and
+Re-Identification) will implement against, so the database
 schema and API versioning don't have to be redesigned when that work
 starts.
 
 ## Why this exists now
 
 Section 12 asks for documented contracts, not a working pipeline, in
-this phase — "do not implement an entire unverified tracking pipeline
-in this foundation phase." Writing the shape down now means the `Event`/
-`Asset`/`Sensor` models Phase 1 already ships can be referenced by a
+this layer — "do not implement an entire unverified tracking pipeline
+in this foundation work." Writing the shape down now means the `Event`/
+`Asset`/`Sensor` models already ships can be referenced by a
 future `DetectionRecord`/`Track` model without a breaking schema change.
 
 ## Planned entities
@@ -43,7 +43,7 @@ future `DetectionRecord`/`Track` model without a breaking schema change.
   stream segment: `id`, `source_media_ref`, `model_record_id`, `status`
   (`queued`/`running`/`succeeded`/`failed`), `started_at`,
   `completed_at`, `error_summary`.
-- **ModelRecord** (already exists as a Phase 1 model/table, unused by
+- **ModelRecord** (already exists as a model/table, unused by
   any real inference yet) — `name`, `version`, `model_type`,
   `artifact_reference`, `evaluation_metadata`, `status`.
 - **DetectionRecord** — one detected object instance: `job_id`,
@@ -77,11 +77,11 @@ future `DetectionRecord`/`Track` model without a breaking schema change.
 - No covert identification or automated harmful decision workflow may
   be built on top of this contract, per Rule 10.
 
-## What Phase 1 does NOT do
+## What does NOT do
 
 No media is uploaded, decoded, or processed. No inference runs. No
 `DetectionRecord`/`TrackIdentifier`/`TrackObservation`/
-`MediaProcessingJob` tables exist in the Phase 1 migration. `ModelRecord`
+`MediaProcessingJob` tables exist migration. `ModelRecord`
 exists as a table (seed data creates one placeholder row) but nothing
 references it from real inference output, because there is no real
 inference yet.

@@ -1,4 +1,4 @@
-"""Phase 12: per-record-type text adapters, live-record loading and the
+"""Per-record-type text adapters, live-record loading and the
 record-level access decision used by BOTH indexing and search.
 
 The index is derived data. `can_view` is evaluated against the LIVE record at

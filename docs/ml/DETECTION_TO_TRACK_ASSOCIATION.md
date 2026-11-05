@@ -1,4 +1,4 @@
-# Detection-to-Track Association (Phase 5, Section 5)
+# Detection-to-Track Association (Section 5)
 
 `app/tracking/association.py` is a pure, DB-free module: given the last known box of every
 active track and the boxes of every detection in the current frame, it decides which pairs

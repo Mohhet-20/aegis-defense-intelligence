@@ -1,4 +1,4 @@
-"""Phase 17: static contract check between the frontend and the real OpenAPI schema.
+"""Static contract check between the frontend and the real OpenAPI schema.
 
 Every API path literal in the frontend (src/api/*.ts and pages/components that call request()/fetch())
 must match an operation in the backend, and every in-app link/navigation target must match a <Route>.

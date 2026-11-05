@@ -100,7 +100,7 @@ def test_updated_record_with_same_external_id_never_silently_overwrites(client, 
     (a corrected/updated report) is still flagged a duplicate, not
     silently merged into the existing event -- Section 11: 'never
     silently replace existing evidence.' Updating existing evidence is
-    a deliberate, separate operation this phase does not implement;
+    a deliberate, separate operation this layer does not implement;
     the safe default is to preserve the original and flag the
     resend for analyst attention."""
     original = b'[{"event_type": "x", "title": "Original Report", "observed_at": "2026-01-01T00:00:00Z", "external_id": "upd-1", "severity": "low"}]'

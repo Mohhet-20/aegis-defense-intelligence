@@ -1,4 +1,4 @@
-"""Phase 11 investigation workspace routes: members, lifecycle, record
+"""Investigation workspace routes: members, lifecycle, record
 links, evidence registry, integrity, timeline, notes, search, export.
 
 Authorization: route-level permission (RBAC) + service-level access check

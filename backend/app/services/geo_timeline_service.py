@@ -1,5 +1,4 @@
-"""Temporal exploration over location-bearing records (Phase 7,
-Section 5C/8/9). Shares app/services/geo_query_service.py's per-type
+"""Temporal exploration over location-bearing records (Section 5C/8/9). Shares app/services/geo_query_service.py's per-type
 fetch/validation machinery -- a timeline query is a geospatial query
 with no bounding box, not a parallel implementation.
 

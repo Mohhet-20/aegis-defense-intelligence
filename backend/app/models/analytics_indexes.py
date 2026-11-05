@@ -1,8 +1,8 @@
-"""Phase 16: composite indexes that serve windowed analytics queries.
+"""Composite indexes that serve windowed analytics queries.
 
 Every analytics query filters by organization and a time window; single-column
 indexes on organization_id and the time column cannot serve both. Declared here
-(rather than editing each model) so the Phase 16 migration and the ORM stay in
+(rather than editing each model) so the migration and the ORM stay in
 step; creating them is non-destructive.
 """
 from __future__ import annotations

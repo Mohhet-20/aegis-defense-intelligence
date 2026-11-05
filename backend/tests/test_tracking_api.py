@@ -1,4 +1,4 @@
-"""Phase 5, Section 10/16: the tracking API surface -- submission,
+"""/16: the tracking API surface -- submission,
 status, track history, frame-range queries, the annotation workflow,
 and retry behavior. Exercised through the real HTTP client, never by
 calling service functions directly (that is test_tracking_persistence.py's

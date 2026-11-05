@@ -1,4 +1,4 @@
-"""Normalization + validation engine tests (Phase 2, Sections 5 & 9).
+"""Normalization + validation engine tests (Sections 5 & 9).
 Exercises the pure functions directly -- no database, no HTTP.
 """
 from __future__ import annotations

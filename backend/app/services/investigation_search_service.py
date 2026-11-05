@@ -1,4 +1,4 @@
-"""Investigation-scoped search and relationship view (Phase 11, Phase G).
+"""Investigation-scoped search and relationship view.
 
 Only records tied to the investigation are searched, and each is resolved
 with an organization filter. Relationships reuse EvidenceRelationship; the

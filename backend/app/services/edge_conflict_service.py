@@ -1,5 +1,5 @@
 """Conflict review queue. List/inspect/resolve
-for `SyncConflict` rows -- deliberately separate from Phase 3's
+for `SyncConflict` rows -- deliberately separate from the
 `conflict_service.py` (see app/models/sync_conflict.py's module
 docstring). Every resolution here is an explicit, audited human
 decision; nothing here is ever resolved merely because a record arrived

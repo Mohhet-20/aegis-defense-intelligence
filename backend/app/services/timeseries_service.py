@@ -1,5 +1,4 @@
-"""Bounded time-series queries and descriptive statistics (Phase 6,
-Sections 7-8). Every query here is explicitly bounded -- a caller
+"""Bounded time-series queries and descriptive statistics (Sections 7-8). Every query here is explicitly bounded -- a caller
 cannot request an unbounded history; `app/core/config.py`'s
 SENSOR_MAX_QUERY_RANGE_DAYS/SENSOR_MAX_RAW_SAMPLES are the hard ceilings
 enforced here, never left to the caller's judgment alone."""

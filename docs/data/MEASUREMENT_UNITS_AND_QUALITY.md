@@ -1,4 +1,4 @@
-# Measurement Units and Quality (Phase 6, Sections 6 and 12)
+# Measurement Units and Quality (Sections 6 and 12)
 
 ## Status
 

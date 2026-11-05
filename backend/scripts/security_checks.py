@@ -1,4 +1,4 @@
-"""Operational security checks (Phase 14, Phase K).
+"""Operational security checks.
 
 Runs whichever scanners are installed and reports -- honestly -- which were
 unavailable. A clean result is NOT proof of security: these tools find known

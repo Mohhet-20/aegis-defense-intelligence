@@ -1,6 +1,6 @@
 """Cross-source observation comparison. Read-only
 comparison is a pure function over two already-fetched Observation
-rows; persisting a reviewable LINK between them reuses Phase 3's
+rows; persisting a reviewable LINK between them reuses the
 Evidence + EvidenceRelationship models exactly as Section 11 asks
 ("link related observations using existing evidence-relationship
 models") -- there is no new comparison table.

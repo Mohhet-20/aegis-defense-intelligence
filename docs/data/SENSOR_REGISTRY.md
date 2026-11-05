@@ -1,6 +1,6 @@
-# Sensor Registry (Phase 6)
+# Sensor Registry
 
-**Status: REAL.** Phase 1's `Sensor` table plus the Phase 6 (Section 3)
+**Status: REAL.** the `Sensor` table plus the (Section 3)
 registry metadata and lifecycle state machine migrated in `e416c9a24fa4`.
 This supersedes `docs/architecture/MULTISENSOR_CONTRACTS.md`'s description of
 `Sensor` as identity/type/status/`last_seen_at` only -- the richer
@@ -15,28 +15,28 @@ now real columns with real routes exercising them.
 | `organization_id` | string | required, FK |
 | `source_id` | string, nullable | FK `data_sources.id`, `ON DELETE SET NULL` |
 | `name` | string | required |
-| `sensor_type` | string | free-text subtype (e.g. `"camera"`, `"gps"`, `"environmental"`) -- Phase 1 field, unchanged meaning |
-| `status` | string | Phase 1's simple connectivity flag: `active`/`inactive`/`fault`/`unknown` (`SENSOR_STATUSES`). Kept exactly as-is -- a separate field from `lifecycle_status`, never collapsed into it. |
-| `last_seen_at` | datetime, nullable | Phase 1 field |
-| `config_version` | string, nullable | Phase 1 field |
-| `capability_metadata` | JSON dict | Phase 1 field |
-| `category` | string, nullable | **Phase 6.** Broad grouping distinct from `sensor_type`; `NULL` until an analyst sets one, never backfilled with a guess |
-| `description` | string, nullable | **Phase 6.** |
-| `manufacturer` | string, nullable | **Phase 6.** |
-| `model_name` | string, nullable | **Phase 6.** |
-| `asset_id` | string, nullable | **Phase 6.** FK `assets.id`, `ON DELETE SET NULL` |
-| `measurement_types` | JSON list | **Phase 6.** Measurement types this sensor is authorized/expected to report, e.g. `["temperature_c", "battery_voltage"]`. Empty means "not yet configured" -- quality/analytics treat an unconfigured type as "no validation rule exists," never an automatic rejection. |
-| `measurement_units` | JSON dict | **Phase 6.** `measurement_type -> unit string`, e.g. `{"temperature_c": "celsius"}` |
-| `operating_range` | JSON dict | **Phase 6.** `measurement_type -> {"min": float, "max": float}`; only checked when both bounds are present |
-| `nominal_sampling_interval_seconds` | float, nullable | **Phase 6.** Drives heartbeat/sampling-gap checks |
-| `expected_data_format` | string, nullable | **Phase 6.** |
-| `sensor_timezone` | string | **Phase 6.** Default `"UTC"` |
-| `lifecycle_status` | string | **Phase 6.** One of `SENSOR_LIFECYCLE_STATUSES`, default `"registered"` -- see "Lifecycle state machine" below |
-| `last_ingestion_success_at` | datetime, nullable | **Phase 6.** |
-| `device_reported_status` | string, nullable | **Phase 6.** Populated ONLY when an ingested record's payload explicitly carries a `device_status` field -- never inferred from connectivity or quality |
-| `device_reported_status_at` | datetime, nullable | **Phase 6.** |
-| `retired_at` | datetime, nullable | **Phase 6.** |
-| `retired_by_user_id` | string, nullable | **Phase 6.** FK `users.id`, `ON DELETE SET NULL` |
+| `sensor_type` | string | free-text subtype (e.g. `"camera"`, `"gps"`, `"environmental"`) -- field, unchanged meaning |
+| `status` | string | the simple connectivity flag: `active`/`inactive`/`fault`/`unknown` (`SENSOR_STATUSES`). Kept exactly as-is -- a separate field from `lifecycle_status`, never collapsed into it. |
+| `last_seen_at` | datetime, nullable | Field |
+| `config_version` | string, nullable | Field |
+| `capability_metadata` | JSON dict | Field |
+| `category` | string, nullable | Broad grouping distinct from `sensor_type`; `NULL` until an analyst sets one, never backfilled with a guess |
+| `description` | string, nullable | |
+| `manufacturer` | string, nullable | |
+| `model_name` | string, nullable | |
+| `asset_id` | string, nullable | FK `assets.id`, `ON DELETE SET NULL` |
+| `measurement_types` | JSON list | Measurement types this sensor is authorized/expected to report, e.g. `["temperature_c", "battery_voltage"]`. Empty means "not yet configured" -- quality/analytics treat an unconfigured type as "no validation rule exists," never an automatic rejection. |
+| `measurement_units` | JSON dict | `measurement_type -> unit string`, e.g. `{"temperature_c": "celsius"}` |
+| `operating_range` | JSON dict | `measurement_type -> {"min": float, "max": float}`; only checked when both bounds are present |
+| `nominal_sampling_interval_seconds` | float, nullable | Drives heartbeat/sampling-gap checks |
+| `expected_data_format` | string, nullable | |
+| `sensor_timezone` | string | Default `"UTC"` |
+| `lifecycle_status` | string | One of `SENSOR_LIFECYCLE_STATUSES`, default `"registered"` -- see "Lifecycle state machine" below |
+| `last_ingestion_success_at` | datetime, nullable | |
+| `device_reported_status` | string, nullable | Populated ONLY when an ingested record's payload explicitly carries a `device_status` field -- never inferred from connectivity or quality |
+| `device_reported_status_at` | datetime, nullable | |
+| `retired_at` | datetime, nullable | |
+| `retired_by_user_id` | string, nullable | FK `users.id`, `ON DELETE SET NULL` |
 
 The model itself still stores identity/configuration, not computed health --
 health is always derived on demand from the sensor's own `Observation`/
@@ -131,7 +131,7 @@ enum/role-table definitions), disclosed here rather than hidden.
 There is no separate per-sensor history table. `GET /sensors/{id}/status-history`
 and `sensor_service.get_status_history()` both reuse the append-only
 `AuditRecord` trail (`audit_service.list_for_target(target_type="sensor",
-target_id=sensor_id)`) -- the same choice Phase 3 already made for
+target_id=sensor_id)`) -- the same choice already made for
 relationship/conflict/assessment review history. Three actions are recorded
 against a sensor: `sensor.create`, `sensor.update` (from the registry
 routes), `sensor.lifecycle_transition` (an analyst's explicit transition,

@@ -40,7 +40,7 @@ review a real object detector, build investigations from evidence, and report on
 
 **Simulated by design:** sensors and edge/fleet devices, what-if scenarios (labelled SIMULATED), and a
 deterministic mock detector kept for pipeline tests. **Not built:** background job queue, MFA/SSO, GPU
-inference, high availability ([roadmap](docs/implementation/MASTER_ROADMAP.md)).
+inference, high availability.
 
 | Model evaluation on real photos | Interactive map | Investigation workspace |
 |---|---|---|
@@ -175,7 +175,7 @@ audits, secret scan) and reports PASS / FAIL / NOT RUN per check. Individually: 
 
 | | |
 |---|---|
-| Status and verification | [Project status](docs/implementation/PROJECT_STATUS.md) · [Release verification](docs/operations/RELEASE_VERIFICATION.md) · [Changelog](CHANGELOG.md) |
+| Status and verification | [Release verification](docs/operations/RELEASE_VERIFICATION.md) · [Changelog](CHANGELOG.md) |
 | Running it | [Public demo](docs/operations/PUBLIC_DEMO.md) · [Deployment](docs/operations/DEPLOYMENT_GUIDE.md) · [Configuration reference](docs/operations/CONFIGURATION_REFERENCE.md) · [Backup & restore](docs/operations/BACKUP_AND_RESTORE.md) · [Runbooks](docs/operations/RUNBOOKS.md) |
 | Design | [Architecture decisions](docs/architecture/ARCHITECTURE_DECISIONS.md) · [Module catalog](docs/architecture/MODULE_CATALOG.md) · [API](docs/api/) |
 | ML | [Model adapters](docs/ml/MODEL_ADAPTERS.md) · [Model evaluation](docs/ml/MODEL_EVALUATION.md) |
@@ -187,10 +187,10 @@ Docker images are authored but have not yet run on GitHub.
 
 ## License
 
-[MIT](LICENSE) © 2026 balak. Third-party parts keep their own licences: detector weights Apache-2.0
+[MIT](LICENSE) © 2026 Mohhet. Third-party parts keep their own licences: detector weights Apache-2.0
 (TensorFlow model zoo); COCO annotations CC BY 4.0 and each photo its own Creative Commons or
 public-domain licence, recorded per image (the demo image bundles the 200-photo sample with that
 manifest); Leaflet BSD-2-Clause; map tiles © OpenStreetMap contributors; `psycopg2-binary` LGPL (used
-unmodified). Details: [`docs/operations/LICENSE_DECISION.md`](docs/operations/LICENSE_DECISION.md).
+unmodified).
 
 Contributions welcome -- see [`CONTRIBUTING.md`](CONTRIBUTING.md).

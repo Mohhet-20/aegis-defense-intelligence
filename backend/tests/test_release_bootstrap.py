@@ -1,4 +1,4 @@
-"""Phase 18: first-administrator bootstrap for production deployments."""
+"""First-administrator bootstrap for production deployments."""
 from __future__ import annotations
 
 import pytest

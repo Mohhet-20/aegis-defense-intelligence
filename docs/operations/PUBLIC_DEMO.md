@@ -28,8 +28,7 @@ Never set `DEMO_MODE=true` on a deployment with real data: it lets anyone open a
 Free CPU Space (2 vCPU, 16 GB RAM), HTTPS, no credit card. It sleeps after 48 hours without visitors
 and wakes on the next visit.
 
-1. Push the repository to GitHub first ([`GITHUB_PUBLICATION.md`](GITHUB_PUBLICATION.md)), so the Space
-   can link to the code.
+1. Push the repository to GitHub first, so the Space can link to the code.
 2. On <https://huggingface.co/new-space>: choose a name (e.g. `aegis`), **SDK: Docker → Blank**,
    hardware **CPU basic (free)**, visibility **Public**. Create it.
 3. On your machine, from the repository root:

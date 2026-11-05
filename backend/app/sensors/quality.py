@@ -1,4 +1,4 @@
-"""Measurement validation and quality classification (Phase 6, Section
+"""Measurement validation and quality classification (Section
 6). Pure functions -- no database access. The caller
 (app/services/sensor_ingestion_service.py) supplies whatever historical
 context a check needs (e.g. the sensor's recent observations for a

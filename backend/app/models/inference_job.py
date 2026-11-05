@@ -1,7 +1,7 @@
 """InferenceJob. One explicit, authorized run of
 one registered model (`ModelRecord`) over one `MediaAsset` -- an image
 (single-frame) or a bounded sample of video frames. Same discipline as
-Phase 2's `IngestionJob` and Phase 3's `FusionJob`: a real, inspectable
+the `IngestionJob` and the `FusionJob`: a real, inspectable
 record of what a run actually did, status transitions that are never
 faked, and failure that is captured rather than swallowed.
 
@@ -12,7 +12,7 @@ still no background worker process anywhere in this codebase. "Bounded
 concurrency" here means a bounded amount of WORK per job (frame sampling
 caps, detection-per-frame caps), not a worker pool; see
 docs/ml/INFERENCE_PIPELINE.md's "What this does NOT do" section for the
-explicit, undiscarded gap this leaves for a future phase.
+explicit, undiscarded gap this leaves for later work.
 """
 from __future__ import annotations
 

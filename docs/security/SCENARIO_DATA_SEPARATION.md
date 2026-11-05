@@ -1,4 +1,4 @@
-# Simulated vs. Operational Data: Controls (Phase 13)
+# Simulated vs. Operational Data: Controls
 
 | Concern | Control | Verified by |
 |---|---|---|

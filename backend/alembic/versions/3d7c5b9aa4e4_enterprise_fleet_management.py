@@ -4,13 +4,13 @@ Revision ID: 3d7c5b9aa4e4
 Revises: f7c55967f675
 Create Date: 2026-10-15 07:58:59.238019
 
-Adds the Phase 9 enterprise fleet management subsystem: 4 new tables
+Adds the enterprise fleet management subsystem: 4 new tables
 (fleet_sites, device_config_baselines, device_capabilities,
 infrastructure_alerts) and 5 new columns on the existing `devices`
 table (site_id, config_revision, config_baseline_id, current_config,
 last_resource_metrics).
 
-Hand-fixed after autogeneration (same discipline as Phases 6 and 8's
+Hand-fixed after autogeneration (same discipline as and 8's
 migrations): autogenerate produced two NOT NULL `ADD COLUMN`s
 (`config_revision`, `current_config`) with no server-side default,
 which fails against any existing non-empty `devices` table -- safe
@@ -134,7 +134,7 @@ def upgrade() -> None:
     op.create_index(op.f('ix_devices_site_id'), 'devices', ['site_id'], unique=False)
     # SQLite cannot ALTER a table to add a foreign-key constraint
     # directly -- batch mode (copy-and-move) is required, same approach
-    # Phase 8's migration already used for `registered_by_user_id`.
+    # the migration already used for `registered_by_user_id`.
     with op.batch_alter_table('devices') as batch_op:
         batch_op.create_foreign_key('fk_devices_config_baseline_id_device_config_baselines', 'device_config_baselines', ['config_baseline_id'], ['id'], ondelete='SET NULL')
         batch_op.create_foreign_key('fk_devices_site_id_fleet_sites', 'fleet_sites', ['site_id'], ['id'], ondelete='SET NULL')

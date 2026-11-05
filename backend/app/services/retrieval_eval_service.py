@@ -1,4 +1,4 @@
-"""Phase 12: reproducible retrieval evaluation on SYNTHETIC fixtures.
+"""Reproducible retrieval evaluation on SYNTHETIC fixtures.
 
 This exercises the real chunker and BM25 scorer against a small in-memory
 corpus whose relevance labels were written by hand for this test. It does NOT

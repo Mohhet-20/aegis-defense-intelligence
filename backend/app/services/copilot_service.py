@@ -1,4 +1,4 @@
-"""Phase 12: evidence-grounded copilot.
+"""Evidence-grounded copilot.
 
 Retrieval always happens BEFORE any generation. Without a configured model the
 copilot is still fully functional but strictly extractive/deterministic:

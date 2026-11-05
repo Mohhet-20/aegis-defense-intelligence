@@ -1,4 +1,4 @@
-"""Phase 17 Phase 7: job status is truthful and retry/cancel are only offered
+"""Job status is truthful and retry/cancel are only offered
 where they are real. All AEGIS jobs run synchronously inside the request
 that creates them (documented limitation: there is no worker queue), so a
 job is never reported as 'running' after its request returned, and a finished

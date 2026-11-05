@@ -1,4 +1,4 @@
-"""Phase 4, Section 9/11/17: cross-cutting CV API integration --
+"""/11/17: cross-cutting CV API integration --
 pagination, media content download, job retry after a failure, and
 readiness reporting the new per-dependency checks.
 """

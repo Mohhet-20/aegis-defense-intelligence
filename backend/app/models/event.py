@@ -69,7 +69,7 @@ class Event(Base, UUIDPrimaryKeyMixin, TimestampMixin, OrgScopedMixin, GeoLocati
     # Rule 9 enforcement point: every event states where it actually
     # came from. "synthetic_demo" for seed data, "user_upload" for a
     # real JSON/CSV import through the ingestion pipeline. Nothing else
-    # is a valid value until a real connector (Phase 2+) exists.
+    # is a valid value until a real connector exists.
     data_origin: Mapped[str] = mapped_column(String(30), nullable=False, index=True)
 
     ingestion_job_id: Mapped[Optional[str]] = mapped_column(String(36), ForeignKey("ingestion_jobs.id", ondelete="SET NULL"), nullable=True)

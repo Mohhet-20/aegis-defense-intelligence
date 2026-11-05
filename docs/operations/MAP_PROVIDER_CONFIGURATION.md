@@ -1,4 +1,4 @@
-# Map Provider Configuration (Phase 7)
+# Map Provider Configuration
 
 **Status: IMPLEMENTED.** No map tile provider or API key is hardcoded,
 bundled, or defaulted anywhere in this codebase -- this document exists
@@ -63,7 +63,7 @@ never present in this repository.
 
 ## 5. Sandbox verification note
 
-During this phase's own live Playwright verification (run inside this
+During its own live Playwright verification (run inside this
 project's cloud development sandbox), the Map Explorer was configured
 with the OpenStreetMap development URL above and correctly rendered
 markers, clustering, the legend, and the record-count summary; the
@@ -73,9 +73,7 @@ direct network-log inspection, to be the sandbox's own network egress
 proxy not allowlisting `tile.openstreetmap.org` -- not a defect in the
 application's tile-loading code. A real deployment outside this
 sandbox, with normal outbound HTTPS access, is expected to load tiles
-normally once `VITE_MAP_TILE_URL` is set. See
-`docs/implementation/history/PHASE_7_FINAL_REPORT.md` for the full
-verification record.
+normally once `VITE_MAP_TILE_URL` is set.
 
 ## 6. What this does NOT do
 

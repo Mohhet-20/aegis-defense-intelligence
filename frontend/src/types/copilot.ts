@@ -1,4 +1,4 @@
-// Phase 12 types. They mirror the backend schemas in app/schemas/copilot.py.
+// Types. They mirror the backend schemas in app/schemas/copilot.py.
 
 export type RecordType =
   | 'investigation' | 'investigation_note' | 'event' | 'observation' | 'assessment'

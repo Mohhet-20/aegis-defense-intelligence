@@ -1,4 +1,4 @@
-# Retrieval and Copilot API (Phase 12)
+# Retrieval and Copilot API
 
 Base path `/api/v1`. All endpoints require authentication, enforce organization isolation, validate input with Pydantic
 (unknown body fields are rejected), and return the platform error shape `{detail, request_id}`. Unauthorized, other-organization and

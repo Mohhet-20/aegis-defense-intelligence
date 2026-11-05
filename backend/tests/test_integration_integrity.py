@@ -1,4 +1,4 @@
-"""Phase 17 Phase 4: cross-module data integrity.
+"""Cross-module data integrity.
 
 Populates several modules through the real API, then checks the stored
 rows generically against the schema metadata, so a new table with a

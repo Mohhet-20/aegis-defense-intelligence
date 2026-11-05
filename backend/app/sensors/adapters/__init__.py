@@ -1,6 +1,6 @@
 """Sensor observation adapters. Each adapter
-implements the SAME app.connectors.base.BaseConnector interface Phase
-2's Event connectors already use, and produces the same
+implements the SAME app.connectors.base.BaseConnector interface
+the data platform's Event connectors already use, and produces the same
 app.connectors.types.RawRecord/ConnectorResult dataclasses -- this is
 exactly the "future sensor/CV/edge adapter plugs in later without
 rewriting the ingestion engine" extension point that interface's own

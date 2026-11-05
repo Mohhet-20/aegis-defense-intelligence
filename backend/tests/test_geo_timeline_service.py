@@ -1,4 +1,4 @@
-"""Tests for app/services/geo_timeline_service.py (Phase 7, Section 17
+"""Tests for app/services/geo_timeline_service.py (Section 17
 "Temporal queries")."""
 from __future__ import annotations
 

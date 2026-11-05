@@ -1,9 +1,9 @@
-# Local Storage and Retention (Phase 8)
+# Local Storage and Retention
 
 **Status: IMPLEMENTED, with an honestly-documented retention gap.** This
 document covers the edge-side local outbox schema/lifecycle and the
 central tables' retention behavior. **No automatic retention or purge job
-exists anywhere in this phase** -- every table described below keeps rows
+exists anywhere** -- every table described below keeps rows
 indefinitely until an explicit cancel or (not-yet-built) purge action.
 This is stated as a known gap, not papered over with an invented policy
 that isn't actually coded.
@@ -49,7 +49,7 @@ that isn't actually enforced.
 ## 2. Central tables: `SyncRecord`, `SyncConflict`, `DeviceHealthReport`
 
 All three are plain, append-oriented SQLAlchemy models with **no retention
-or purge job** anywhere in this phase:
+or purge job** anywhere:
 
 - **`SyncRecord`** (`sync_records`) -- one row per logical sync attempt,
   ever. Rows reaching a terminal state (`synced`, `permanent_failure`,
@@ -74,25 +74,22 @@ Retention for all three tables is **indefinite, with no purge job
 implemented** -- the same honest gap as the local outbox above, not an
 invented retention policy. A real production deployment running this
 system for an extended period, with many devices syncing frequently, would
-need a retention/archival policy added (likely as part of Phase 14's
+need a retention/archival policy added (likely as part of the
 "retention policies" scope, or an earlier operational necessity) before
-these tables grow unboundedly. Nothing in this phase estimates row-growth
+these tables grow unboundedly. Nothing estimates row-growth
 rate or proposes a specific retention window, because no such policy has
 been designed or coded yet -- stating a number here would be inventing a
 policy that doesn't exist.
 
 ## 3. Why this is the honest answer, not an oversight
 
-Every other durability claim in this phase is backed by an actual test
+Every other durability claim is backed by an actual test
 (local-store close/reopen durability, idempotency-key uniqueness,
 transition-table enforcement). Retention/purge has no corresponding test
 because no corresponding code exists -- adding a specific number here
 (e.g. "retained for 90 days") without the enforcement to back it would
-violate this project's standing "don't claim what wasn't built" discipline
-(see `docs/implementation/PROJECT_STATUS.md`'s own framing). This gap is
-listed explicitly in `docs/architecture/EDGE_ARCHITECTURE.md` Section 16
-and `docs/implementation/history/PHASE_8_FINAL_REPORT.md` as well, so it is
-visible from every entry point into this phase's documentation.
+violate this project's standing "don't claim what wasn't built" discipline. This gap is
+listed explicitly in `docs/architecture/EDGE_ARCHITECTURE.md` Section 16 as well.
 
 ## 4. What a future retention implementation would need to decide
 

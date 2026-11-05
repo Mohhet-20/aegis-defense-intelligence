@@ -1,4 +1,4 @@
-"""Phase 4, Section 6/17: detection postprocessing/validation --
+"""/17: detection postprocessing/validation --
 finite-number checks, bbox/confidence bounds, class_label allow-list,
 and real NMS via cv2.dnn.NMSBoxes (never hand-rolled IoU math).
 """

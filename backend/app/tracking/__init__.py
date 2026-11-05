@@ -1,4 +1,4 @@
-"""Object tracking. Associates already-persisted Phase 4
+"""Object tracking. Associates already-persisted
 `DetectionResult` rows across the frames of one video into
 sequence-scoped tracks. See docs/architecture/OBJECT_TRACKING_ARCHITECTURE.md.
 

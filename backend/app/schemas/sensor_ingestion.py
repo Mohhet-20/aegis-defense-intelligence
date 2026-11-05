@@ -10,7 +10,7 @@ class SensorBatchSubmitRequest(BaseModel):
     source_id: str
     format: str = Field(pattern="^(json|csv)$")
     # Base64 is NOT used here -- the HTTP route accepts a multipart file
-    # upload, same convention as Phase 1's /ingestion/upload. This
+    # upload, same convention as the /ingestion/upload. This
     # schema documents the non-file fields only; see
     # app/api/routes/sensor_ingestion.py.
 

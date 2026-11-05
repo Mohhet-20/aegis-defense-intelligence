@@ -1,7 +1,7 @@
-"""Analyst track annotations (Phase 5, Section 3E/12F). Never edits a
+"""Analyst track annotations (Section 3E/12F). Never edits a
 `Track` or `TrackObservation` row -- an annotation is purely additive,
 and "correcting" an earlier one creates a new row pointing back at the
-one it supersedes, exactly like Phase 3's review-history discipline.
+one it supersedes, exactly like the review-history discipline.
 """
 from __future__ import annotations
 

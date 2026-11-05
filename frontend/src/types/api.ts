@@ -254,7 +254,7 @@ export interface Observation {
   uncertainty_metadata: Record<string, unknown> | null
 }
 
-// --- Phase 6: multi-sensor data platform, analytics, anomalies ------
+// --- Multi-sensor data platform, analytics, anomalies ------
 
 export interface SensorRawRecord {
   id: string
@@ -509,7 +509,7 @@ export interface ReadinessResponse {
   checks: { database: 'ok' | 'error'; media_storage?: 'ok' | 'error'; model_runtime?: 'ok' | 'error' }
 }
 
-// --- Phase 3: fusion, evidence, relationships, conflicts, assessments ----
+// --- Fusion, evidence, relationships, conflicts, assessments ----
 
 export interface Evidence {
   id: string
@@ -672,7 +672,7 @@ export interface GraphResponse {
   max_nodes: number
 }
 
-// --- Phase 4: computer vision infrastructure ------------------------
+// --- Computer vision infrastructure ------------------------
 
 export interface MediaAsset {
   id: string
@@ -772,7 +772,7 @@ export interface ModelEvaluationRun {
   evaluated_at: string
 }
 
-// --- Phase 5: object tracking, lifecycle, motion analytics, evaluation ----
+// --- Object tracking, lifecycle, motion analytics, evaluation ----
 
 // Sequence-scoped only -- see app/models/track.py. A track_id/state here
 // is never evidence of a real-world identity, and never implies a
@@ -935,7 +935,7 @@ export interface TrackingEvaluationRun {
   evaluated_at: string
 }
 
-// --- Phase 7: geospatial intelligence --------------------------------
+// --- Geospatial intelligence --------------------------------
 // Mirrors backend/app/schemas/geospatial.py exactly.
 
 export type GeoRecordType = 'event' | 'sensor' | 'observation' | 'asset'
@@ -1109,7 +1109,7 @@ export interface GeospatialOverview {
 // return a Blob + the server-suggested filename, there is no
 // GeospatialExportResult response type to model here.
 
-// --- Phase 8: edge AI / offline-first operation ---------------------
+// --- Edge AI offline-first operation ---------------------
 
 export type DeviceAdministrativeStatus = 'pending' | 'active' | 'suspended' | 'revoked' | 'maintenance' | 'decommissioned'
 export type DeviceConnectivityState = 'online' | 'offline' | 'unknown'
@@ -1252,7 +1252,7 @@ export interface SyncConflict {
   created_at: string
 }
 
-// --- Phase 9: enterprise edge fleet management -----------------------
+// --- Enterprise edge fleet management -----------------------
 // Mirrors backend/app/schemas/fleet.py exactly.
 
 export interface FleetSite {
@@ -1365,7 +1365,7 @@ export interface LifecyclePreview {
 }
 
 // ---------------------------------------------------------------------
-// Phase 10: explainable AI, model evaluation, assessment scoring/review
+// Explainable AI, model evaluation, assessment scoring/review
 // ---------------------------------------------------------------------
 export interface MetricValue {
   value: number | null

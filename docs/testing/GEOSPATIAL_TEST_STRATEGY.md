@@ -1,10 +1,10 @@
-# Geospatial Test Strategy (Phase 7)
+# Geospatial Test Strategy
 
 **Status: IMPLEMENTED.** 113 new backend tests across 9 files, plus a
 live Playwright browser-verification pass against the real running
 backend/frontend with real seeded data. Full backend suite: **620
 passed, 0 failed**, 93% line coverage across `app/` (re-run fresh
-during this phase's completion pass, not assumed from an earlier
+during this layer's completion pass, not assumed from an earlier
 run).
 
 ## 1. Backend test files, by layer
@@ -96,7 +96,7 @@ route files in one pass.
 Pure `app/geo/` functions are tested with zero database fixture
 overhead (fast, exhaustive boundary-condition coverage); every
 service-layer test uses the project's existing SQLite
-Session-per-test fixture (same pattern as every prior phase's test
+Session-per-test fixture (same pattern as each layer's test
 suite); route tests verify permission-gating and response shape, not
 business logic already covered at the service layer -- no test
 duplicates assertions across layers unnecessarily.
@@ -106,11 +106,11 @@ duplicates assertions across layers unnecessarily.
 `npx tsc -b --force` -- clean, no errors. `npx eslint .` -- 0 errors,
 2 warnings (1 pre-existing in `AuthContext.tsx`, 1 pre-existing
 intentional `react-hooks/exhaustive-deps` in `SensorDetailPage.tsx`;
-neither is new this phase). `npm run build` -- succeeds, `dist/`
+neither is new this layer). `npm run build` -- succeeds, `dist/`
 628.47 kB JS (174.54 kB gzip) / 33.02 kB CSS, only the standard
 Vite large-chunk informational warning.
 
-**Live browser verification** (this phase's own addition, beyond the
+**Live browser verification** (its own addition, beyond the
 `tsc`/`eslint`/`build` bar): a Playwright script, run against the real
 backend (`uvicorn`) and frontend (`vite`) dev servers with the real
 seeded database, logged in as the seeded `analyst` account and visited

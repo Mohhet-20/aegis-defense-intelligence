@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 from app.models.sensor import Sensor
 
 
-def test_create_sensor_with_phase6_metadata(client, tokens, auth_header, source):
+def test_create_sensor_with_registry_metadata(client, tokens, auth_header, source):
     response = client.post(
         "/api/v1/sensors",
         json={
@@ -23,7 +23,7 @@ def test_create_sensor_with_phase6_metadata(client, tokens, auth_header, source)
     body = response.json()
     assert body["lifecycle_status"] == "registered"
     assert body["measurement_types"] == ["temperature_c"]
-    assert body["status"] == "unknown"  # legacy field untouched by Phase 6 defaults
+    assert body["status"] == "unknown"  # legacy field untouched defaults
 
 
 def test_create_sensor_requires_sensor_manage_viewer_forbidden(client, tokens, auth_header):
@@ -55,7 +55,7 @@ def test_list_sensors_filters_by_measurement_type(client, tokens, auth_header, d
     assert items[0]["name"] == "Temp Sensor"
 
 
-def test_update_sensor_patches_phase6_fields(client, tokens, auth_header, db, org, source):
+def test_update_sensor_patches_registry_fields(client, tokens, auth_header, db, org, source):
     sensor = Sensor(organization_id=org.id, source_id=source.id, name="To Update", sensor_type="camera", status="unknown")
     db.add(sensor)
     db.commit()

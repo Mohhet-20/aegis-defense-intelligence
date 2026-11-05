@@ -1,5 +1,5 @@
 """API tests for /geospatial, /geospatial/timeline, /geospatial/analytics,
-/geospatial/export (Phase 7, Section 13/16: auth, RBAC, tenant
+/geospatial/export (Section 13/16: auth, RBAC, tenant
 isolation, and bounded results at the route layer)."""
 from __future__ import annotations
 

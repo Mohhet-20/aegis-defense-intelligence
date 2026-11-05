@@ -1,4 +1,4 @@
-"""Phase 11: investigation lifecycle, links, evidence registry, integrity,
+"""Investigation lifecycle, links, evidence registry, integrity,
 provenance, timeline, notes, search, export, isolation, audit, rollback."""
 from __future__ import annotations
 

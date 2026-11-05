@@ -1,4 +1,4 @@
-# Location Quality (Phase 7)
+# Location Quality
 
 **Status: IMPLEMENTED.** `app/services/location_quality_service.py`,
 frontend `pages/geo/LocationQualityCenterPage.tsx`.
@@ -9,7 +9,7 @@ Nothing in this service mutates a record or "fixes" a bad coordinate.
 It exists to **explain** what `app/geo/validation.py` finds for each
 row and let an authorized analyst decide what to do -- edit the source
 record through its own existing update path (unchanged, outside this
-phase's scope), or, if a conflicting second source exists for the same
+layer's scope), or, if a conflicting second source exists for the same
 real-world thing, let `spatial_relationship_service.py` surface it as
 a reviewable candidate (see `docs/analytics/SPATIAL_RELATIONSHIPS.md`).
 There is no "repair" or "auto-correct" endpoint anywhere in this

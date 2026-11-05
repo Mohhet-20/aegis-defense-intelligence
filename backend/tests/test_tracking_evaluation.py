@@ -1,4 +1,4 @@
-"""Phase 5, Section 13/16: tracking evaluation against the
+"""/16: tracking evaluation against the
 deterministic synthetic fixture. HOTA/IDF1/MOTA are deliberately never
 computed here -- only this module's own custom, documented metrics
 (app/tracking/evaluation.py).
@@ -12,7 +12,7 @@ from app.tracking.trackers.registry import UnsupportedTrackerError
 
 def test_synthetic_evaluation_produces_the_expected_deterministic_metrics(db, org, seeded_users):
     """These exact numbers were confirmed by hand during development
-    (see docs/implementation/history/PHASE_5_FINAL_REPORT.md) against the
+    against the
     default-configured baseline tracker: the "parallel" sequence is
     tracked perfectly (0 identity switches), and the "crossing"
     sequence legitimately produces exactly 2 identity switches -- the

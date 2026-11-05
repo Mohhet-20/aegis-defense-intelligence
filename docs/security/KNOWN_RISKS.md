@@ -17,16 +17,16 @@ Ordered by suggested priority.
 13. **Locked accounts reveal the lock before the password check** (existing test requires it).
 14. Lifecycle covers a limited set of resource types; no automated retention runs; backups not addressed.
 
-## Phase 15 additions (MLOps / observability)
-15. **Platform-level model rows are shared and not immutable.** Model rows created before Phase 15 (owner NULL) are visible to every organization and are not protected by the immutability guard; any holder of the relevant legacy permission path could still affect behaviour that reads them.
+## Additions (MLOps observability)
+15. **Platform-level model rows are shared and not immutable.** Model rows created (owner NULL) are visible to every organization and are not protected by the immutability guard; any holder of the relevant legacy permission path could still affect behaviour that reads them.
 16. **Signal deduplication is service-level.** Two truly concurrent writers could create two open rows for one dedup key (no DB unique constraint, to allow recurrence episodes).
 17. **Metrics are process-local** (reset on restart, not aggregated across workers) and the JSON/Prometheus endpoints are only as private as `observability:read`.
 18. **Artifact verification is hash/stat only.** AEGIS never loads or executes uploaded model files; trust in a file's origin is out of scope.
 19. **Approval is not deployment gating.** There is no serving environment, so "approved" does not control what runs in production.
 20. **Redaction is pattern-based**; novel secret formats in free-text log messages may not be matched.
-21. Postgres execution of the Phase 15 migration was not tested (SQLite only).
+21. Postgres execution migration was not tested (SQLite only).
 
-## Phase 16 additions (analytics / reporting)
+## Additions (analytics reporting)
 22. **No PDF export and no AI-written summaries.** Only JSON, CSV and HTML; `ai_generated_text` is always null.
 23. **Generation is synchronous.** Large windows are bounded (window, rows, artifact size) but there is no queue; a very slow query blocks a worker for its duration. 6 concurrent generations completed on SQLite in testing; heavier load is untested.
 24. **Percentile and geo fetches are capped** at `ANALYTICS_MAX_ROWS` (most recent first); results are flagged partial when truncated, but are not exact beyond the cap.
@@ -34,11 +34,11 @@ Ordered by suggested priority.
 26. **Visibility is creator/administrator or organization.** There is no per-user sharing list; an organization report requires readers to hold the permissions it needed, but its contents were visible to the author at generation time.
 27. **Geo suppression is simple k-suppression** (k=3) at fixed 0.1 degree cells; differencing across overlapping windows/filters could still reveal small counts. No differential privacy.
 28. **Process-local request metrics** appear in the system section (per worker, reset on restart).
-29. **Index effect not benchmarked before/after**: composite indexes are in place and migrate cleanly. Phase 17 measured absolute timings (`scripts/benchmark_queries.py`) but has no pre-index baseline, so no improvement is claimed; Postgres execution of migration `c16r3p0rt01` is untested.
-30. ~~The generic 422 handler echoes the rejected input value.~~ **Fixed in Phase 17**: validation errors now return only `type`, `loc`, `msg` and `request_id`; regression tests in `test_integration_errors.py`.
-31. ~~One transient `503` from `/health/ready`, cause not identified.~~ **Root cause found and fixed in Phase 18**: the storage readiness probe used one fixed file name, so concurrent probes raced (reproduced: 28 of 300 concurrent calls returned 503). Each probe now uses a unique name; regression test `tests/test_release_health.py` fails on the old code.
+29. **Index effect not benchmarked before/after**: composite indexes are in place and migrate cleanly. The integration-hardening work measured absolute timings (`scripts/benchmark_queries.py`) but has no pre-index baseline, so no improvement is claimed; Postgres execution of migration `c16r3p0rt01` is untested.
+30. ~~The generic 422 handler echoes the rejected input value.~~ **Fixed**: validation errors now return only `type`, `loc`, `msg` and `request_id`; regression tests in `test_integration_errors.py`.
+31. ~~One transient `503` from `/health/ready`, cause not identified.~~ **Root cause found and fixed**: the storage readiness probe used one fixed file name, so concurrent probes raced (reproduced: 28 of 300 concurrent calls returned 503). Each probe now uses a unique name; regression test `tests/test_release_health.py` fails on the old code.
 
-## Phase 17 additions (integration / reliability)
+## Additions (integration reliability)
 32. **Device routes returned 422 instead of 401 for missing credentials** — fixed (`require_device_auth`); regression test in `test_integration_sweeps.py`.
 33. ~~(open, low) A stored out-of-range coordinate made `GET /events` return 500.~~ **Fixed (1.0.0-rc.2):** response schemas (`GeoLocationResponseFields`) return stored values as they are; requests are still range-validated. Regression test in `test_events.py`.
 34. ~~(open, moderate) `react-router` 6.x advisories.~~ **Fixed in the final stabilization pass**: upgraded to `react-router-dom` 7.18.4; `npm audit --omit=dev` reports 0 vulnerabilities; type-check, build and every browser walk pass. (Original: `npm audit --omit=dev`: `react-router`/`react-router-dom` 6.x (open redirect via backslash in `<Link>`/`useNavigate`, SSR-hydration issue). The fix is a major upgrade to 7.x. The app never navigates to a user-supplied URL (grep-verified) and does not use SSR, so exposure is low; upgrade deferred as an unrelated refactor.)
@@ -47,7 +47,7 @@ Ordered by suggested priority.
 37. **All jobs are synchronous** (ingestion, inference, tracking, reports, sync): no queue, no worker, no cancellation of running work. Status values are truthful (terminal when the request returns) and finished jobs cannot be retried or cancelled.
 38. **Coverage is line coverage only** and says nothing about assertion quality; no frontend unit/component tests exist.
 
-## Phase 18 additions (release / deployment)
+## Additions (release deployment)
 39. ~~(accepted, low) ORM vs. migration differences on `model_records`.~~ **Resolved in the final stabilization pass**: the ORM now declares the unique `(name, version)` index and nullable `framework_metadata`; `alembic check` reports no differences and `scripts/check_schema_drift.py` has no allow-list. The cross-organization (name, version) uniqueness note still applies: registering a pair another organization used returns 409 (names only, no content).
 40. **(fixed)** `GET /sensors?measurement_type=` returned HTTP 500 on PostgreSQL (`json LIKE` is not an operator there). Fixed with a cast; regression test compiles the query for the PostgreSQL dialect. Found only because the suite was run against a real PostgreSQL 16.
 41. **(fixed)** No way to create the first administrator in production (`seed.py` refuses there). Added `scripts/bootstrap_admin.py` (password from env/prompt only, refuses a second admin per organization, audited).

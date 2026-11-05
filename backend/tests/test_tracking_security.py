@@ -1,4 +1,4 @@
-"""Phase 5, Section 9/15/16: tracking authorization and input
+"""/15/16: tracking authorization and input
 validation. Every tracking/annotation/evaluation route decides
 authorization server-side via require_permission (Section 9's split:
 Analyst can run+read+annotate; Investigator can read+annotate but not

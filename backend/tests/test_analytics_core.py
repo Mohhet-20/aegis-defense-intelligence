@@ -1,4 +1,4 @@
-"""Phase 16: analytics correctness against hand-derived fixtures."""
+"""Analytics correctness against hand-derived fixtures."""
 from __future__ import annotations
 
 import pytest

@@ -1,4 +1,4 @@
-"""Phase 4, Section 4/5/17: end-to-end image object detection --
+"""/5/17: end-to-end image object detection --
 upload -> model selection -> inference -> validated/normalized/persisted
 results, exercised through the REAL FastAPI app, not by calling internal
 functions directly, so this also proves the schemas/routes/permissions

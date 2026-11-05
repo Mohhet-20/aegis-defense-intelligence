@@ -1,4 +1,4 @@
-"""Integration tests for app/edge/simulator.py (Phase 8, Section
+"""Integration tests for app/edge/simulator.py (Section
 4/13/18) -- a SimulatedEdgeNode driven against the REAL FastAPI `client`
 test fixture (never a direct service-function call), proving the
 capture -> local durable queue -> real HTTP sync -> ack -> local state

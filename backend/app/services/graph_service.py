@@ -7,8 +7,8 @@ slice.
 
 Node types: `event` (a canonical Event/"observation"), `evidence` (an
 Evidence item), `assessment` (an Assessment). Edge types: `correlation`
-(Phase 2's EventCorrelation, event<->event only), `relationship`
-(this phase's EvidenceRelationship, event/evidence <-> event/
+(the EventCorrelation, event<->event only), `relationship`
+(this layer's EvidenceRelationship, event/evidence <-> event/
 evidence), `conflict` (a detected Conflict, event<->event),
 `assessment_link` (an AssessmentEvidenceLink, assessment<->event/
 evidence).

@@ -1,4 +1,4 @@
-"""Phase 5, Section 13/16: the synthetic multi-object fixture itself.
+"""/16: the synthetic multi-object fixture itself.
 Confirms it is genuinely deterministic (pure arithmetic, no `random`,
 no wall-clock) and that its "crossing" sequence really does cross where
 its own docstring claims.

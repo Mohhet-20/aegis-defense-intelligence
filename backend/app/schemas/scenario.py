@@ -1,4 +1,4 @@
-"""Phase 13 schemas. Unknown fields are rejected; sizes are bounded."""
+"""Schemas. Unknown fields are rejected; sizes are bounded."""
 from __future__ import annotations
 
 from datetime import datetime

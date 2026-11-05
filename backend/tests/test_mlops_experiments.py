@@ -1,4 +1,4 @@
-"""Phase 15 -- experiment tracking: fingerprints, idempotency, limits, failure
+"""Experiment tracking: fingerprints, idempotency, limits, failure
 handling, honest metrics, baseline comparison compatibility."""
 from __future__ import annotations
 

@@ -1,8 +1,8 @@
-# Edge Inference (Phase 8)
+# Edge Inference
 
 **Status: IMPLEMENTED, tested, SIMULATED ONLY.** `app/edge/inference/registry.py`
 is the closed adapter registry for local (on-device) inference, modeled
-after the same pattern this project already uses twice: Phase 4's
+after the same pattern this project already uses twice: the
 `app/cv/adapters/mock_adapter.py`/CV adapter registry, and
 `app/sensors/adapters/registry.py`/`app/connectors/registry.py`. Nothing
 here claims real, trained-model detection capability.
@@ -26,7 +26,7 @@ deployment, the device) to run code it didn't ship with.
 `{"brightness": <float>}`, it deterministically classifies `"bright"` vs
 `"dim"` against a fixed threshold (`BRIGHTNESS_THRESHOLD = 0.5`) and
 returns a confidence derived from distance to that threshold. It is
-**explicitly not a trained model** -- the same honest precedent Phase 4's
+**explicitly not a trained model** -- the same honest precedent the
 `mock_adapter.py` set for computer vision. It exists purely to exercise the
 plumbing (the registry contract, availability states, provenance linkage)
 honestly, without claiming any real detection capability the project
@@ -86,7 +86,7 @@ Extending the registry, never dynamic code loading:
    purely additive to the registry, same as adding a new CV/sensor
    adapter in the existing registries.
 
-What this phase deliberately does **not** provide: any mechanism for a
+What this layer deliberately does **not** provide: any mechanism for a
 device to upload or register a new model/adapter dynamically, any
 model-weight file handling, and any capability for `inference_backends`/
 `model_manifest` (a device's self-reported capability metadata) to cause a
@@ -96,10 +96,10 @@ different adapter to actually run -- those fields are advisory/display-only
 ## 7. Known gaps
 
 - Exactly one adapter is registered; no second, trained adapter exists in
-  this codebase (consistent with Phase 4's own single-real-adapter
+  this codebase (consistent with the own single-real-adapter
   state for computer vision).
 - No model-file or weight-management story exists for a future real
-  adapter -- this phase doesn't need one, since its one adapter has no
+  adapter -- this layer doesn't need one, since its one adapter has no
   file to manage.
 - `availability()` is static (`"available"` always) for the only
   registered adapter -- a real adapter's `availability()` reporting

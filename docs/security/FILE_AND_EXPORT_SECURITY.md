@@ -1,6 +1,6 @@
-# File, Upload and Export Security (Phase 14)
+# File, Upload and Export Security
 
-Complements MEDIA_UPLOAD_SECURITY.md (earlier phases).
+Complements MEDIA_UPLOAD_SECURITY.md (earlier work).
 
 ## Request size limits
 `SizeLimitMiddleware` (pure ASGI) rejects with 413 using Content-Length and also counts streamed bytes:
@@ -11,7 +11,7 @@ Complements MEDIA_UPLOAD_SECURITY.md (earlier phases).
 ## Uploads
 - `read_bounded` (`app/core/uploads.py`) reads uploads in chunks and stops at the bound instead of loading unbounded bodies.
 - Ingestion uploads are bounded at `MAX_REQUEST_BODY_BYTES`; an over-`MAX_UPLOAD_BYTES` file within that bound still produces a *failed job* (existing behaviour, preserved).
-- Media type/content checks, safe filename handling and controlled storage ids come from the earlier media phase.
+- Media type/content checks, safe filename handling and controlled storage ids come from the media module.
 
 ## Download
 - Authorization by permission and organization (cross-org = 404).
@@ -19,7 +19,7 @@ Complements MEDIA_UPLOAD_SECURITY.md (earlier phases).
 - `media.content_access` audited (toggle `AUDIT_MEDIA_ACCESS`); `Cache-Control: no-store`.
 
 ## Exports
-Export endpoints need dedicated export permissions (tested). Export row/size limits are those of the existing export features; no new global export size cap was added in Phase 14.
+Export endpoints need dedicated export permissions (tested). Export row/size limits are those of the existing export features; no new global export size cap was added.
 
 ## Response headers
 `SecurityHeadersMiddleware` (toggle `SECURITY_HEADERS_ENABLED`) sets nosniff, X-Frame-Options DENY, no-referrer, a restrictive Permissions-Policy, same-origin CORP and `Cache-Control: no-store` (unless a route sets its own). No CSP is set, and the SPA host is responsible for its own headers.

@@ -1,4 +1,4 @@
-# Integration, reliability and CI (Phase 17)
+# Integration, reliability and CI
 
 ## Commands (run from `backend/` unless noted)
 ```
@@ -14,7 +14,7 @@ cd ../frontend && npm ci && npm run lint && npm run build     # tsc -b + vite bu
 
 ## What the workflows prove (`test_integration_workflows.py`)
 A auth/permissions; B ingestion provenance/duplicates/malformed input; C evidence and relationship review (uncertain ≠ contradicts, audited); D media → mock inference → human review → promotion, tenant-private media; E investigation notes (optimistic concurrency), transition validation, export, foreign-org denial; F MLOps run (idempotent replay) → analytics → report equal; G report lifecycle, authorization, tamper detection; H edge sync idempotency, stale-write conflict, resolution, credential rotation.
-They use the real HTTP stack, in-memory SQLite, mock adapters and synthetic data. They do **not** cover PostgreSQL, a real browser (see `backend/scripts/e2e_reporting_browser.py` for the Phase 16 pages), real model weights or real devices.
+They use the real HTTP stack, in-memory SQLite, mock adapters and synthetic data. They do **not** cover PostgreSQL, a real browser (see `backend/scripts/e2e_reporting_browser.py` pages), real model weights or real devices.
 
 ## Running the suite against PostgreSQL
 ```
@@ -31,7 +31,7 @@ real analytics defect (`to_char()` bucket labels follow the session zone) until 
 server configured as `Asia/Calcutta`. `python scripts/check_schema_drift.py` compares a migrated
 database with the ORM (0 differences expected).
 
-## Release tooling (Phase 18)
+## Release tooling
 `scripts/bootstrap_admin.py`, `scripts/backup_restore.py`, `scripts/smoke_test.py`, `scripts/check_schema_drift.py`, `scripts/gen_config_reference.py`, `scripts/e2e_release_browser.py` (see `docs/operations/`).
 
 ## Troubleshooting

@@ -1,4 +1,4 @@
-# Sensor Ingestion Operations (Phase 6)
+# Sensor Ingestion Operations
 
 Status: implemented, live-verified, `app/services/sensor_ingestion_service.py` at 89% test
 coverage in the 507-test backend suite (92% overall).
@@ -10,11 +10,11 @@ A sensor batch (`submit_file_batch()` / `submit_synthetic_batch()` in
 the same execution model `IngestionJob`/`FusionJob`/`InferenceJob`/`TrackingJob` already use.
 There is still no background worker or message queue anywhere in this codebase; a 2000-record
 batch (`settings.SENSOR_MAX_OBSERVATIONS_PER_BATCH`) holds the HTTP connection open for the
-whole run. This is an accepted limitation carried forward unchanged, not something this phase
+whole run. This is an accepted limitation carried forward unchanged, not something this layer
 introduces or needs to solve on its own -- see `docs/operations/TRACKING_OPERATIONS.md`'s own
-section for the Phase 5 version of the same gap.
+section version of the same gap.
 
-Sensor batches deliberately reuse the **same** `IngestionJob`/`RawRecord` tables Phase 2's
+Sensor batches deliberately reuse the **same** `IngestionJob`/`RawRecord` tables the
 Event pipeline uses -- `RawRecord.event_id` simply stays `NULL` for every row this module
 creates, and `IngestionJob.job_type` gets three new values: `sensor_json_batch`,
 `sensor_csv_batch`, `sensor_synthetic`. This is "extend existing models rather than creating
@@ -24,8 +24,8 @@ competing duplicates," not an oversight -- there is no separate `SensorIngestion
 
 `app/sensors/adapters/registry.py` is a **separate** closed allow-list from
 `app.connectors.registry` (the Event-ingestion one) and from the CV adapter/tracker registries
-before it -- never a dynamic import of a client-supplied string, the same discipline every prior
-phase established.
+before it -- never a dynamic import of a client-supplied string, the same discipline used
+throughout the codebase.
 
 | Adapter | `connector_type` | Reached via | Notes |
 |---|---|---|---|
@@ -34,7 +34,7 @@ phase established.
 | `SensorJsonBatchConnector` | `sensor_json_batch` | `get_file_adapter_class("json")`, `POST /sensor-ingestion/batches` with `format=json` | Accepts a bare object, `{"observations": [...]}`, or a list of objects. |
 
 No HTTP sensor connector is registered -- unrestricted network egress was deliberately not
-added this phase. A future HTTP source can reuse
+added this layer. A future HTTP source can reuse
 `app.connectors.http_connector.HttpApiConnector`'s existing SSRF-hardened fetch path; wiring one
 up is deferred, see `docs/architecture/SENSOR_DATA_ARCHITECTURE.md`.
 
@@ -92,7 +92,7 @@ received, `validation_status` (`valid`/`invalid`), `validation_errors`/`validati
 and duplicate flags -- optionally filtered by `validation_status`. This is the only way to see
 *why* a specific record was rejected; a rejected record's payload is never silently discarded.
 
-## The seed script's Phase 6 behavior
+## The seed script's behavior
 
 `scripts/seed.py` runs one deterministic synthetic batch through the real
 `sensor_ingestion_service.submit_synthetic_batch()` -- not hand-inserted rows -- so the seeded
@@ -118,7 +118,7 @@ existing history, and is covered by a dedicated regression test in `tests/test_s
 ## Known operational gaps (stated honestly, not hidden)
 
 - No background worker: a very large batch means a correspondingly long synchronous request,
-  same gap as every prior phase's job tables.
+  same gap as each layer's job tables.
 - No job-level idempotency key for file batches -- only the record-level `external_id` dedup
   above. A client wanting at-most-once job *submission* semantics must de-duplicate on its own
   side before calling `POST /sensor-ingestion/batches`.

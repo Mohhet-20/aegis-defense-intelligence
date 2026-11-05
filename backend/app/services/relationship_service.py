@@ -1,6 +1,6 @@
-"""EvidenceRelationship CRUD + review workflow (Phase 3, Sections 3D
+"""EvidenceRelationship CRUD + review workflow (Sections 3D
 and 11). See app/models/evidence_relationship.py's module docstring for
-exactly how this differs from Phase 2's `EventCorrelation` (which is
+exactly how this differs from the `EventCorrelation` (which is
 untouched by this module and keeps working exactly as it did).
 
 Every relationship here is DIRECTIONAL (source -> target) -- unlike

@@ -1,4 +1,4 @@
-"""Track (Phase 5, Section 3B/6). A temporary, sequence-scoped
+"""Track (Section 3B/6). A temporary, sequence-scoped
 association of detections produced by exactly one TrackingJob run.
 
 "Sequence-scoped" is the operative word, enforced here, not just in
@@ -16,7 +16,7 @@ from_state, to_state, reason} entries recording every state transition
 this track went through during its run (Section 3D's "track segment and
 gap" requirement) -- kept as a JSON column on this row rather than a
 6th table, the same "don't over-normalize a first vertical slice"
-judgment Phase 4 made for DetectionResult.raw_model_output. Every gap
+judgment made for DetectionResult.raw_model_output. Every gap
 (a run of missed frames between two confirmed observations) and every
 reacquisition is reconstructable from this list plus the track's own
 TrackObservation rows -- nothing about a gap is silently discarded.

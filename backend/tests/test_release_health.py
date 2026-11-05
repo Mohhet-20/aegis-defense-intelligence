@@ -1,4 +1,4 @@
-"""Phase 18: health endpoints under concurrency and without leaking internals."""
+"""Health endpoints under concurrency and without leaking internals."""
 from __future__ import annotations
 
 from concurrent.futures import ThreadPoolExecutor

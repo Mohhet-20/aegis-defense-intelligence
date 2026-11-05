@@ -1,4 +1,4 @@
-"""Investigation lifecycle + access (Phase 3 CRUD, extended in Phase 11).
+"""Investigation lifecycle + access (the fusion layer CRUD, extended).
 
 Authorization lives here, at the data-access boundary: every lookup is
 org-scoped (cross-org -> not found) and a `is_restricted` investigation is

@@ -1,4 +1,4 @@
-"""Phase 13: scenario API -- creation/validation, versioning, runs,
+"""Scenario API -- creation/validation, versioning, runs,
 idempotency/retry/failure, comparison, sensitivity, synthetic datasets,
 separation from operational data, authorization, organization isolation,
 exports, audit, and the retrieval/copilot integration."""

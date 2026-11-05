@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { DetectionResult } from '../../types/api'
 
-// Phase 4, Section 14: bounding boxes are stored (and received from
+// Bounding boxes are stored (and received from
 // the API) as 0..1 fractions of the image's width/height -- NEVER
 // pixel coordinates -- specifically so this component can draw a
 // correct overlay at whatever size the browser is actually rendering

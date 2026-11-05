@@ -1,4 +1,4 @@
-"""Tests for app/geo/validation.py (Phase 7, Section 17 "Coordinate
+"""Tests for app/geo/validation.py (Section 17 "Coordinate
 validation" and Section 10 "Location quality and uncertainty")."""
 from __future__ import annotations
 

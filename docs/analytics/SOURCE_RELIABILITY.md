@@ -1,6 +1,6 @@
 # Source Reliability, Evidence Quality, and Confidence
 
-Phase 2, Section 16. These are deliberately kept as SIX separate
+These are deliberately kept as SIX separate
 concepts in this codebase. Collapsing any two of them into one number is
 exactly the mistake this document exists to prevent.
 
@@ -51,10 +51,10 @@ summaries (`quality_service.py`) are visible to every authenticated role
 (`DATA_QUALITY_READ`) -- they describe pipeline health, not evidentiary
 weight, so there's no reason to restrict them further.
 
-## What this phase does NOT build
+## What this layer does NOT build
 
 An automated source-scoring model that adjusts reliability from outcome
-history is explicitly a later-phase feature (the kind of thing Phase 3's
-multisource fusion or a later AI-analytics phase would own) -- nothing
+history is explicitly a later feature (the kind of thing the
+multisource fusion or a later AI-analytics work would own) -- nothing
 here pretends one exists. `reliability_weight` today is exactly what it
 says: a number a human configured, with a reason on file for why.

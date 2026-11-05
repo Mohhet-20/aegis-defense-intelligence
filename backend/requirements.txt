@@ -19,7 +19,7 @@ pytest==9.1.1
 pytest-cov==7.1.0
 httpx==0.28.1
 
-# --- Phase 4 (computer vision infrastructure) ---------------------
+# --- Computer vision infrastructure ---------------------
 # opencv-python-headless (not the GUI `opencv-python` package -- this
 # server has no display) backs both the real OpenCVHOGPersonAdapter
 # (app/cv/adapters/opencv_hog_adapter.py) and the tested NMS/video-
@@ -32,10 +32,10 @@ numpy==2.5.4
 # REMOVED the classical cv2.HOGDescriptor/CascadeClassifier objdetect
 # bindings from its Python API entirely (confirmed in this session --
 # `cv2.HOGDescriptor` raises AttributeError under 5.0.0.93). 4.14.0
-# still ships them and is otherwise current as of this phase.
+# still ships them and is otherwise current currently.
 opencv-python-headless==4.14.0.94
 
-# --- Phase 5 (object tracking) -------------------------------------
+# --- Object tracking -------------------------------------
 # scipy.optimize.linear_sum_assignment (the Hungarian algorithm) backs
 # the real detection-to-track association in app/tracking/association.py
 # -- a tested library implementation, not hand-rolled greedy matching.

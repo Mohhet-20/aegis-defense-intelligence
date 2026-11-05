@@ -1,4 +1,4 @@
-# Track Lifecycle (Phase 5, Section 6)
+# Track Lifecycle (Section 6)
 
 ## States
 

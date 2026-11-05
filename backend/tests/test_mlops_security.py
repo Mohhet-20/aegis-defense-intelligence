@@ -1,4 +1,4 @@
-"""Phase 15 -- authentication, RBAC matrix, input hardening and migration."""
+"""Authentication, RBAC matrix, input hardening and migration."""
 from __future__ import annotations
 
 import os
@@ -122,7 +122,7 @@ def test_migration_matches_orm_and_round_trips_with_legacy_data(tmp_path):
 
     cfg = _alembic(tmp_path)
     heads = ScriptDirectory.from_config(cfg).get_heads()
-    assert heads == ["c16r3p0rt01"], heads  # Phase 16 is the head; Phase 15's revision must remain its ancestor
+    assert heads == ["c16r3p0rt01"], heads  # the reporting migration is the head; the revision must remain its ancestor
     assert ScriptDirectory.from_config(cfg).get_revision("c16r3p0rt01").down_revision == "b15e0ps0001"
     settings = get_settings()
     old = settings.DATABASE_URL

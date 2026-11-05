@@ -1,4 +1,4 @@
-"""Phase 15 -- monitoring snapshots, drift vs prediction drift vs performance vs
+"""Monitoring snapshots, drift vs prediction drift vs performance vs
 operational, honest 'not assessable', bounded storage, job-failure signals."""
 from __future__ import annotations
 

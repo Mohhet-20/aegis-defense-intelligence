@@ -1,4 +1,4 @@
-"""Data retention and lifecycle (Phase 14, Phase G).
+"""Data retention and lifecycle.
 
 Design rules (documented in docs/security/DATA_LIFECYCLE.md):
 

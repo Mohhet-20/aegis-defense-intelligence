@@ -1,4 +1,4 @@
-# Spatial Query Design (Phase 7)
+# Spatial Query Design
 
 **Status: IMPLEMENTED.** `app/services/geo_query_service.py`.
 
@@ -38,8 +38,8 @@ correctly rather than guessing. Verified by
 Every query function takes `organization_id` as a required, non-optional
 parameter and every underlying SQL statement filters on it explicitly
 (`model.organization_id == organization_id`) -- the same per-call
-discipline every prior phase's service functions use (Phase 1's
-documented, not-yet-framework-enforced tenant model, Phase 14's job).
+discipline each layer's service functions use (the
+documented, not-yet-framework-enforced tenant model, the job).
 The route layer additionally requires `Permission.GEOSPATIAL_READ` on
 every read endpoint (see `docs/security/GEOGRAPHIC_DATA_GOVERNANCE.md`).
 A cross-tenant query returns an empty/zero-match result, never another

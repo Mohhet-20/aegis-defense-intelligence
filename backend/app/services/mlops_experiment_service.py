@@ -1,15 +1,15 @@
 """Experiment tracking, baselines and comparison.
 
 Execution model (stated honestly): evaluations run SYNCHRONOUSLY inside the API
-process, exactly like the existing Phase 4/10 evaluations they reuse. Therefore
+process, exactly like the existing evaluations they reuse. Therefore
 only three run states exist -- running, succeeded, failed. There is no queue, so
 no "queued"; a synchronous call cannot be pre-empted, so no "cancelled" or
 "timed_out". Cost is bounded instead by hard caps on sample counts. A run left
 in "running" because the process died is marked failed ("interrupted") by
 ``reap_stale_runs``.
 
-Reuse, not duplication: detection runs call the Phase 4 evaluation service and
-classification runs call the Phase 10 evaluation service, so those tables and
+Reuse, not duplication: detection runs call the evaluation service and
+classification runs call the evaluation service, so those tables and
 views stay populated. The ExperimentRun is the unified ledger that adds
 fingerprints, reproducibility metadata, idempotency, status and comparison.
 """

@@ -1,7 +1,7 @@
-# Sensor Analytics Test Strategy (Phase 6)
+# Sensor Analytics Test Strategy
 
 Status: implemented, live-verified. Full backend suite (`pytest -q --cov=app
---cov-report=term-missing`), including every Phase 1-5 test alongside the new Phase 6 tests
+--cov-report=term-missing`), including every test alongside the new tests
 below: **507 passed**, **0 failed**, **92% overall statement coverage**.
 
 ## Why pure, DB-free modules first
@@ -9,7 +9,7 @@ below: **507 passed**, **0 failed**, **92% overall statement coverage**.
 `app/sensors/units.py`, `app/sensors/quality.py`, `app/sensors/statistics.py`, and
 `app/sensors/anomaly.py` import no SQLAlchemy and take whatever history/context a check needs
 as plain arguments -- the same "pure function, caller supplies the context" discipline
-`app/tracking/motion.py` and `app/tracking/association.py` already proved out in Phase 5. This
+`app/tracking/motion.py` and `app/tracking/association.py` already proved out. This
 lets the heaviest-logic modules be exhaustively unit-tested without a database fixture at all,
 which is why they reach the highest coverage numbers in the table below.
 
@@ -41,7 +41,7 @@ which is why they reach the highest coverage numbers in the table below.
   test for queueing, retry backoff, or cancellation beyond the synchronous request path already
   covered.
 - **An HTTP/network sensor connector.** None is registered (`app/sensors/adapters/registry.py`
-  has no network-fetching entry), so there is no SSRF/network-hardening surface in this phase to
+  has no network-fetching entry), so there is no SSRF/network-hardening surface to
   test -- that work is deferred along with the connector itself.
 
 ## What we learned (test-authoring mistakes, corrected -- not production bugs)
@@ -96,16 +96,16 @@ table.
 intentional `react-hooks/exhaustive-deps` warning in the new `SensorDetailPage.tsx`), and
 `npm run build` (succeeded, `dist/assets/index-*.js` 439.20 kB / gzip 120.17 kB) were all run
 clean against the new sensor pages and API-client additions. There is no frontend unit-test
-harness in this codebase (consistent with every prior phase); frontend correctness otherwise
+harness in this codebase (consistent with every earlier work); frontend correctness otherwise
 rests on type-checking, linting, and a clean production build against the real backend API
 shapes.
 
-This phase additionally ran a **live, Playwright-driven browser verification pass** -- logged in
+This layer additionally ran a **live, Playwright-driven browser verification pass** -- logged in
 as the real seeded `admin`/`DevPassword123!` account against the real running dev stack --
 confirming all 5 new frontend pages (Sensor Registry, Sensor Detail including the SVG
 time-series chart, the four-signal health card, lifecycle actions, and the recompute/
 run-anomaly-checks buttons; Sensor Ingestion Monitor; Anomaly Review Center; Cross-Source
 Comparison) render correctly against real seeded data with zero browser console errors. This is
-strictly more verification than Phase 5 had, which relied only on `tsc`/`eslint`/`build` with
-no live browser pass -- a strengthened discipline worth carrying forward into future phases,
+strictly more verification than had, which relied only on `tsc`/`eslint`/`build` with
+no live browser pass -- a strengthened discipline worth carrying forward into later work,
 not a one-off.

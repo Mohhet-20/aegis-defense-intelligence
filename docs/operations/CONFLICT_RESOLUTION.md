@@ -1,9 +1,9 @@
-# Conflict Resolution (Phase 8)
+# Conflict Resolution
 
 **Status: IMPLEMENTED, tested.** This document covers the full two-tier
 sync-conflict policy, the three resolution strategies and their exact
 effects, and the Section 8.4 review API. It is **deliberately separate**
-from Phase 3's `Conflict`/`conflict_service.py`: that model detects an
+from the `Conflict`/`conflict_service.py`: that model detects an
 event-correlation contradiction between two already-correlated `Event`
 rows (an event-fusion concern); `SyncConflict` here detects a sync-time
 revision mismatch between an edge device's submitted payload and the
@@ -100,13 +100,13 @@ Investigator is granted `DEVICE_READ` + `EDGE_SYNC_READ` +
 submission is case-work: an Investigator deciding whether a device's
 updated annotation or the central system's existing one should stand is the
 same category of judgment call as reviewing evidence (`EVIDENCE_MANAGE`,
-which Investigator also has from Phase 3). It is **not** fleet
+which Investigator also has). It is **not** fleet
 administration: Investigator cannot register, activate, suspend, or revoke
 a device (`DEVICE_MANAGE`), and cannot force-retry or cancel a sync record
 (`EDGE_SYNC_MANAGE`) -- those are operational decisions about the fleet
 itself, not about the content of a specific conflicting record. This
 mirrors the "can review/resolve case-work, cannot administer the
-infrastructure producing it" boundary Phase 4-7 already drew for
+infrastructure producing it" boundary already drew for
 Investigator across inference jobs, tracking jobs, and sensor ingestion.
 
 Full role matrix:
@@ -124,7 +124,7 @@ Full role matrix:
 
 - No generic merge UI exists for the `merged` strategy -- by design, not
   oversight (Section 3).
-- Only one mutable record type (`annotation`) is defined in this phase; a
+- Only one mutable record type (`annotation`) is defined; a
   future record type that needs revisioned conflict handling would extend
   `MUTABLE_SYNC_RECORD_TYPES`, not duplicate this logic.
 - Conflict detection is scoped to one organization's own

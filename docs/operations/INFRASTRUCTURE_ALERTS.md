@@ -1,4 +1,4 @@
-# Infrastructure Alerts (Phase 9, Section 9)
+# Infrastructure Alerts (Section 9)
 
 **Status: IMPLEMENTED, tested.** See `app/models/infrastructure_alert.py`
 and `app/services/fleet_alert_service.py`.
@@ -8,8 +8,8 @@ and `app/services/fleet_alert_service.py`.
 `InfrastructureAlert` is a dedicated model/queue, deliberately
 **separate** from intelligence `Event`s, `ObservationAnomaly` candidates,
 and `RiskAssessment`/threat records -- the same deliberate separation
-Phase 8 drew between `SyncConflict` (a sync-protocol concern) and
-Phase 3's `Conflict` (an event-fusion concern). Every alert this queue
+Drew between `SyncConflict` (a sync-protocol concern) and
+the `Conflict` (an event-fusion concern). Every alert this queue
 can ever hold is about **the health of the fleet itself** -- a device
 went offline or stale, a resource metric crossed a threshold, a
 device's configuration drifted from its assigned baseline -- **never**
@@ -22,7 +22,7 @@ SMS, or any other outbound channel is wired up anywhere in this
 project -- alerts surface only through the API/UI (the Fleet
 Operations Center's Alert Center) and the audit trail. This is
 deliberate, not an oversight: nothing in this project has a configured
-notification provider, and the phase's own instruction is that no
+notification provider, and by design no
 real external notification should exist unless one is already properly
 configured (none is).
 
@@ -40,8 +40,8 @@ configured (none is).
 | `capability_unhealthy` | reserved in `INFRA_ALERT_TYPES` | -- | -- |
 
 **Honest note on `capability_unhealthy`:** this value is defined in
-`INFRA_ALERT_TYPES` (reserving the vocabulary, the same pattern Phase
-3 used for `RELATIONSHIP_ORIGINS`'s unused `model_assisted` value) but
+`INFRA_ALERT_TYPES` (reserving the vocabulary, the same pattern
+the fusion layer used for `RELATIONSHIP_ORIGINS`'s unused `model_assisted` value) but
 `fleet_alert_service.evaluate_alerts_for_device()` does not currently
 raise it -- capability health is surfaced today only through the
 per-device/fleet-wide capability views (Section 4 of
@@ -151,7 +151,7 @@ allowed, surfaced over the API as `400 Bad Request`.
 | `INFRA_ALERT_MANAGE` | Administrator, Analyst **only** | `POST /fleet/alerts/{id}/acknowledge`, `/resolve`, `/reopen` |
 
 Deliberately **not** extended to Investigator -- unlike
-`EDGE_CONFLICT_MANAGE` (Phase 8), which Investigator *does* hold
+`EDGE_CONFLICT_MANAGE`, which Investigator *does* hold
 because resolving a sync conflict is case-work over intelligence data,
 acknowledging/resolving a fleet-health alert is **fleet operations**,
 kept analyst/admin-only the same way `DEVICE_MANAGE`/`FLEET_SITE_MANAGE`

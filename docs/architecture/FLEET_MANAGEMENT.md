@@ -1,21 +1,18 @@
-# Enterprise Fleet Management Architecture (Phase 9)
+# Enterprise Fleet Management Architecture
 
 **Status: IMPLEMENTED, tested, in SIMULATION ONLY.** No physical edge
 hardware is available in this environment -- see
-`docs/architecture/EDGE_ARCHITECTURE.md` Section 18 and
-`docs/implementation/history/PHASE_9_FINAL_REPORT.md`'s own honesty statement.
+`docs/architecture/EDGE_ARCHITECTURE.md` Section 18.
 This document extends, and does not replace,
-`docs/architecture/EDGE_ARCHITECTURE.md` (Phase 8) -- device identity,
+`docs/architecture/EDGE_ARCHITECTURE.md` -- device identity,
 credentials, the sync protocol, and the two-tier conflict policy stay
-exactly where Phase 8 left them. Everything below is new fleet-level
-observability and administration built *on top of* that foundation, per
-`docs/implementation/MASTER_ROADMAP.md`'s Phase 9 row and its own
-"Phase 9 preview" section.
+exactly where left them. Everything below is new fleet-level
+observability and administration built *on top of* that foundation, .
 
 ## 1. Scope and non-scope, stated first
 
-Phase 9 delivers: server-computed presence derivation reusing Phase
-8's `Device.last_seen_at`; a standardized health-finding rule engine
+Delivers: server-computed presence derivation reusing
+the edge-sync layer's `Device.last_seen_at`; a standardized health-finding rule engine
 with explicit measurement-quality discipline; per-device capability
 discovery across five independent states; fleet sites/deployment
 groups; configuration baselines with optimistic-concurrency updates and
@@ -24,18 +21,18 @@ system with service-layer deduplication; an extended administrative
 lifecycle (`maintenance`/`decommissioned`) with confirmation-preview
 support; and a live, point-in-time fleet analytics snapshot. It does
 **not** deliver: automatic promotion of a `SyncRecord` into a canonical
-domain row (still Phase 8's stated deferral, unchanged by this
-phase), any background scheduler (nothing here runs on a timer --
+domain row (still the stated deferral, unchanged by this
+layer), any background scheduler (nothing here runs on a timer --
 alerts are (re-)evaluated synchronously on every health-report
-submission, exactly as every prior phase's job-execution model has
+submission, exactly as each layer's job-execution model has
 been request/response only), a distributed/multi-process-safe rate
 limiter (Section 9 below), or stored historical trend series anywhere
 (`fleet_analytics_service.py`'s own module docstring is explicit about
-this). Strictly defensive scope, confirmed clean for this phase: no
+this). Strictly defensive scope, confirmed clean: no
 autonomous targeting, weapon control, engagement logic, or remote
 weapon interface exists anywhere in the new models, services, or
 routes -- this is pure fleet observability/administration tooling, the
-same honest statement every prior phase has made about its own scope.
+same honest statement every earlier work has made about its own scope.
 
 ## 2. Components and how they fit together
 
@@ -46,23 +43,23 @@ same honest statement every prior phase has made about its own scope.
 | Capability discovery | `app/models/device_capability.py`, `app/services/fleet_capability_service.py`, `app/api/routes/fleet_capabilities.py` | Five independent per-(device, capability) states, fleet-wide rollup. |
 | Configuration baselines + drift | `app/models/device_config_baseline.py`, `app/services/fleet_config_service.py`, `app/api/routes/fleet_config.py` | Authorized configuration intent, optimistic-concurrency updates, key-by-key drift comparison. |
 | Infrastructure alerting | `app/models/infrastructure_alert.py`, `app/services/fleet_alert_service.py`, `app/api/routes/infra_alerts.py` | Deduplicated, auditable fleet-health alert queue, deliberately separate from intelligence alerting. |
-| Fleet sites/groups | `app/models/fleet_site.py`, `app/services/fleet_site_service.py`, `app/api/routes/fleet_sites.py` | Deployment-location grouping, reusing Phase 7's `GeoLocationMixin`. |
-| Extended administrative lifecycle | `app/services/device_service.py` (`enter_maintenance`, `decommission_device`, `preview_lifecycle_transition`), `app/api/routes/edge_devices.py` | Adds `maintenance`/`decommissioned` states and a read-only confirmation preview to Phase 8's lifecycle. |
+| Fleet sites/groups | `app/models/fleet_site.py`, `app/services/fleet_site_service.py`, `app/api/routes/fleet_sites.py` | Deployment-location grouping, reusing the `GeoLocationMixin`. |
+| Extended administrative lifecycle | `app/services/device_service.py` (`enter_maintenance`, `decommission_device`, `preview_lifecycle_transition`), `app/api/routes/edge_devices.py` | Adds `maintenance`/`decommissioned` states and a read-only confirmation preview to the lifecycle. |
 | Fleet analytics | `app/services/fleet_analytics_service.py`, `app/api/routes/fleet_analytics.py` | A single live snapshot endpoint over devices/alerts/sync-conflicts. |
 | Security/config | `app/core/security.py` (5 new `Permission`s), `app/core/config.py` (`FLEET_*` settings) | RBAC and configurable thresholds for everything above. |
-| Frontend (Fleet Operations Center) | `frontend/src/pages/fleet/*`, plus `EdgeDeviceListPage.tsx`/`EdgeDeviceDetailPage.tsx` extensions -- built this phase and independently verified via a clean `tsc`/`build`/`lint` pass (see `docs/testing/FLEET_TESTING.md` Section 4) | Overview/Sites/Alerts pages and (per the device detail page) capability/config/lifecycle tabs. |
+| Frontend (Fleet Operations Center) | `frontend/src/pages/fleet/*`, plus `EdgeDeviceListPage.tsx`/`EdgeDeviceDetailPage.tsx` extensions -- built this layer and independently verified via a clean `tsc`/`build`/`lint` pass (see `docs/testing/FLEET_TESTING.md` Section 4) | Overview/Sites/Alerts pages and (per the device detail page) capability/config/lifecycle tabs. |
 
-Reused, not duplicated: `Device.last_seen_at` (Phase 8, updated by
+Reused, not duplicated: `Device.last_seen_at` (updated by
 every device-authenticated request) is the *only* liveness signal
 presence derivation reads -- no second heartbeat-tracking table exists.
-`Device.capabilities`/`inference_backends` (Phase 8, self-reported at
+`Device.capabilities`/`inference_backends` (self-reported at
 registration) and the existing `HealthReportRequest.runtime_capabilities`/
-`model_status` fields (Phase 8's health-report schema, unchanged) are
+`model_status` fields (the health-report schema, unchanged) are
 the only inputs to capability discovery -- no new device-reporting
-channel was added. `GeoLocationMixin` (Phase 7) is reused verbatim for
+channel was added. `GeoLocationMixin` is reused verbatim for
 `FleetSite` coordinates. `audit_service.record()` is called from every
 new state-changing function in every new service module, the same
-discipline every prior phase has followed. Newly introduced: four
+discipline every earlier work has followed. Newly introduced: four
 primary-entity tables (`FleetSite`, `DeviceCapability`,
 `DeviceConfigBaseline`, `InfrastructureAlert`); five new columns on the
 existing `devices` table (`site_id`, `config_revision`,
@@ -75,10 +72,10 @@ five mounted under `/fleet/*`).
 ## 3. The six genuinely separate concepts, and why they are never collapsed
 
 A `Device` row's overall state is the union of six concerns that this
-phase (and Phase 8 before it) deliberately keeps as six distinct
+layer (and before it) deliberately keeps as six distinct
 fields/subsystems, never folded into one status string:
 
-1. **Connectivity** (`Device.connectivity_state`) -- Phase 8's
+1. **Connectivity** (`Device.connectivity_state`) -- the
    device-*self-reported* claim about its own network state, taken at
    face value and never verified server-side.
 2. **Presence** (`fleet_presence_service.derive_presence_state()`,
@@ -91,7 +88,7 @@ fields/subsystems, never folded into one status string:
    `"offline"` -- the two are never substituted for one another (Part
    3, binding).
 3. **Synchronization** (`Device.sync_status`, `SyncRecord` --
-   Phase 8, unchanged) -- whether the device's submitted records have
+   the edge-sync layer, unchanged) -- whether the device's submitted records have
    actually landed centrally; entirely independent of whether the
    device is currently reachable.
 4. **Administrative lifecycle** (`Device.administrative_status`) --
@@ -133,7 +130,7 @@ rationale, summarized here:
 registration (and whenever a device's declared capability list
 changes) and marks every key `supported=True`.
 `sync_from_health_report()` runs on every accepted health report (from
-`edge_sync_service.process_health_report()`, Phase 8's existing
+`edge_sync_service.process_health_report()`, the existing
 ingestion path) and updates `installed`/`available_and_ready` from
 `runtime_capabilities`, and `healthy`/`last_verified_at` from
 `model_status`. A capability_key mentioned in an older report but
@@ -150,11 +147,11 @@ table on every call -- never cached or pre-aggregated.
 
 1. A device makes any device-authenticated request (a sync batch, a
    health report, or a bare heartbeat via `POST /edge/presence/heartbeat`).
-   `device_service.authenticate_device()` (Phase 8, unchanged) updates
+   `device_service.authenticate_device()` (unchanged) updates
    `Device.last_seen_at` with the **server's** receipt time, never the
    device's own claimed timestamp.
 2. If the request was a health report, `edge_sync_service.process_health_report()`
-   (Phase 8's route, Phase 9 additions inline) persists the
+   (the route, additions inline) persists the
    `DeviceHealthReport` row, mirrors its `resource_metrics` onto
    `Device.last_resource_metrics` (a convenience cache, never
    authoritative -- the report history remains the real record), then
@@ -187,19 +184,19 @@ table on every call -- never cached or pre-aggregated.
    neither extrapolates a trend from a single snapshot.
 
 No step in this pipeline writes to a second, parallel tracking table --
-every stage reads from, and writes back onto, Phase 8's own `Device`/
-`DeviceHealthReport` rows or this phase's four new tables, each scoped
+every stage reads from, and writes back onto, the own `Device`/
+`DeviceHealthReport` rows or this layer's four new tables, each scoped
 to exactly one of the six concerns in Section 3.
 
 ## 6. Fleet sites/groups
 
 `FleetSite` (Section 6 of the prompt) is an organizational grouping --
 "the warehouse sensor cluster," "forward base alpha" -- deliberately
-distinct from `Device.deployment_label` (Phase 8's free-text
-self-description) the same way Phase 6 kept `Sensor.lifecycle_status`
+distinct from `Device.deployment_label` (the free-text
+self-description) the same way kept `Sensor.lifecycle_status`
 distinct from `Sensor.status`. `FleetSite` reuses `GeoLocationMixin`
-(Phase 7) verbatim for optional coordinates rather than inventing a
-second latitude/longitude pair -- Phase 9 Part 6 explicitly requires
+ verbatim for optional coordinates rather than inventing a
+second latitude/longitude pair -- explicitly requires
 reusing the existing geospatial module. A site with no coordinates is
 simply a logical grouping with no map position, never defaulted to
 `(0, 0)`. `Device.site_id` is nullable and `ON DELETE SET NULL` -- a
@@ -218,7 +215,7 @@ status, plus its open-alert count.
   `evaluate_alerts_for_all_devices()` (`app/services/fleet_alert_service.py`),
   an explicit operator/scheduler-triggered sweep exposed as
   `POST /fleet/alerts/evaluate-sweep` (`INFRA_ALERT_MANAGE`), mirroring
-  Phase 8's own `POST /edge/sync/recover-stale` pattern -- see
+  the own `POST /edge/sync/recover-stale` pattern -- see
   `test_sweep_raises_offline_alert_for_a_device_that_never_reported`,
   `test_sweep_is_org_scoped`, and `test_viewer_cannot_trigger_sweep` in
   `backend/tests/test_fleet_alerts.py`. A real deployment would point
@@ -230,7 +227,7 @@ status, plus its open-alert count.
   `docs/security/DEVICE_LIFECYCLE_SECURITY.md`'s "known limitations."
 - Fleet analytics is a point-in-time snapshot only; there is no stored
   trend series anywhere, by design (Section 1 above).
-- The frontend's Fleet Operations Center was built this phase and
+- The frontend's Fleet Operations Center was built this layer and
   independently verified via a clean `tsc`/`build`/`lint` pass, not a
   live browser click-through -- see `docs/testing/FLEET_TESTING.md`
   Section 4 for exactly what was and was not exercised.

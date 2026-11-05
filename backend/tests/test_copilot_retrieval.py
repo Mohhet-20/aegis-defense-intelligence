@@ -1,4 +1,4 @@
-"""Phase 12: retrieval index, authorized search, evidence-grounded copilot,
+"""Retrieval index, authorized search, evidence-grounded copilot,
 citations, conversations, provider adapters, evaluation, security/privacy.
 
 No real language model or embedding service is used anywhere in this file:

@@ -1,4 +1,4 @@
-"""Phase 4, Section 9/14: analyst review of a detection, and the ONLY
+"""/14: analyst review of a detection, and the ONLY
 path into the Evidence layer -- promoting a CONFIRMED detection. The
 single most important test here proves a detection can never be
 auto-promoted: promotion must fail for 'unreviewed' and for 'rejected'.

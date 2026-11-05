@@ -27,7 +27,7 @@ class ErrorResponse(BaseModel):
 class GeoLocationFields(BaseModel):
     """Mixin for request/response schemas carrying optional coordinates.
     Section 7: validate range when present; never invent a
-    value when absent. Extended in Phase 7 (Phase 7, Section 3) with
+    value when absent. Extended (Section 3) with
     the provenance/uncertainty fields app/models/mixins.py's
     GeoLocationMixin now carries -- every table that already composed
     this schema mixin (Event/Asset/Sensor/Observation) picks these up

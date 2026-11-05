@@ -1,5 +1,4 @@
-"""Unit tests for app/services/edge_conflict_service.py (Phase 8,
-Section 8.4): each resolution strategy's effect on the conflicting
+"""Unit tests for app/services/edge_conflict_service.py (Section 8.4): each resolution strategy's effect on the conflicting
 SyncRecord, the already-resolved guard, and the invalid-strategy
 guard. Never resolved merely because a record arrived later -- every
 test here resolves through an explicit, audited call."""

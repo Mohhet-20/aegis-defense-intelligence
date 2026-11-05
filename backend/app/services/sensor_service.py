@@ -45,7 +45,7 @@ def list_sensors_query(
         # quote/bracket characters), so this is safe here and avoids a
         # dialect-specific JSON operator. The CAST is required on PostgreSQL:
         # `json LIKE text` is not an operator there (it raised
-        # UndefinedFunction -> HTTP 500 before Phase 18).
+        # UndefinedFunction -> HTTP 500).
         stmt = stmt.where(cast(Sensor.measurement_types, String).like(f'%"{measurement_type}"%'))
     if search:
         pattern = f"%{search}%"
@@ -108,7 +108,7 @@ def retire_sensor(db: Session, sensor: Sensor, *, actor_user_id: str, note: Opti
 
 def get_status_history(db: Session, organization_id: str, sensor_id: str) -> list:
     """Reuses the append-only AuditRecord trail rather than a parallel
-    per-sensor history table -- same choice Phase 3's
+    per-sensor history table -- same choice the
     audit_service.list_for_target() already made for relationship/
     conflict/assessment review history."""
     return audit_service.list_for_target(db, organization_id, target_type="sensor", target_id=sensor_id)

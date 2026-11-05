@@ -1,4 +1,4 @@
-# Analytics, dashboards and reporting architecture (Phase 16)
+# Analytics, dashboards and reporting architecture
 
 ## Layers
 1. **Metric catalog** (`app/reporting/definitions.py`): 93 metric ids, each with label, definition, unit, kind (fact / derived / assessment / configured) and time basis. Published at `GET /reporting/metrics`; rendered as tooltips in the UI and embedded in every report. Full table: `METRIC_DEFINITIONS.md`.

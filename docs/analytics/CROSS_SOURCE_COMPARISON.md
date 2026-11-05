@@ -1,4 +1,4 @@
-# Cross-Source Comparison (Phase 6, Section 11)
+# Cross-Source Comparison (Section 11)
 
 Status: implemented, live-verified, `app/services/cross_source_comparison_service.py` at 93%
 test coverage in the 507-test backend suite (92% overall).
@@ -51,13 +51,13 @@ real-world event.
 
 Both routes resolve observations through the same `_resolve_observation()` helper in
 `app/api/routes/cross_source_comparison.py`, so a cross-tenant request behaves identically on
-either route: `404`, not `403`, matching the tenant-isolation discipline every prior phase's
+either route: `404`, not `403`, matching the tenant-isolation discipline each layer's
 routes already follow.
 
-## Persisting a link: reusing the Phase 3 evidence model
+## Persisting a link: reusing the evidence model
 
 Section 11 asks to "link related observations using existing evidence-relationship models,"
-and that is exactly what happens -- there is no new comparison table in this phase.
+and that is exactly what happens -- there is no new comparison table.
 
 `create_comparison_link()` first wraps each `Observation` as an `Evidence` row via
 `_get_or_create_observation_evidence()` (`evidence_type="sensor_observation"`,
@@ -66,7 +66,7 @@ and reuses the existing `Evidence` row rather than creating a duplicate. It then
 `relationship_service.create_relationship()` with `source_ref_type="evidence"` /
 `target_ref_type="evidence"` on both sides, `relationship_type="cross_source_comparison"`
 (added to `RELATIONSHIP_TYPES` in `app/models/evidence_relationship.py` specifically for this
-phase), `origin="analyst_created"` (the route always passes this; only an API-submitted link
+layer), `origin="analyst_created"` (the route always passes this; only an API-submitted link
 is created this way, never a background job), `explanation=comparison["explanation"]`, and
 `supporting_metadata=comparison` -- the full comparison dict, including the ISO-formatted
 timestamps, is stored verbatim on the resulting row's `supporting_metadata` JSON column.
@@ -83,7 +83,7 @@ through the `Evidence` wrapper, meaning a `cross_source_comparison` relationship
 `evidence<->evidence` in storage, never `event<->event`, keeping it fully inside
 `EvidenceRelationship`'s existing shape rather than requiring `Event`-side plumbing. This is
 the same model documented in full in `docs/data/EVIDENCE_RELATIONSHIP_MODEL.md` and
-`docs/analytics/EVIDENCE_GRAPH.md`; this phase adds one new `relationship_type` value to it and
+`docs/analytics/EVIDENCE_GRAPH.md`; this layer adds one new `relationship_type` value to it and
 nothing else.
 
 Creating a link is never proof the two observations describe the same real-world event --
@@ -94,5 +94,5 @@ the existing relationship review workflow (confirm/reject/uncertain), not resolv
 automatically by this service.
 
 See also `docs/api/SENSOR_API.md` for the full route table and `docs/analytics/SENSOR_HEALTH.md`
-for the parallel "never collapse signals into a judgment" discipline this phase applies to
+for the parallel "never collapse signals into a judgment" discipline this layer applies to
 sensor operational health.

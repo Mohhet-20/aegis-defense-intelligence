@@ -1,5 +1,4 @@
-"""Labelled-dataset evaluation of a registered model (Phase 10,
-Section 3). Wraps the pure functions in app/analytics/metrics.py with
+"""Labelled-dataset evaluation of a registered model (Section 3). Wraps the pure functions in app/analytics/metrics.py with
 persistence, version checks, and failure handling.
 
 Failure semantics: bad input (MetricInputError / version mismatch) is a

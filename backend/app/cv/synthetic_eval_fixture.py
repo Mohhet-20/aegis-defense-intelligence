@@ -1,5 +1,4 @@
-"""A small, clearly-labelled SYNTHETIC evaluation fixture (Phase 4,
-Section 10). No real labelled operational dataset exists in this
+"""A small, clearly-labelled SYNTHETIC evaluation fixture (Section 10). No real labelled operational dataset exists in this
 repository yet, so this module generates one deterministically at
 evaluation time -- never from a downloaded or externally-fetched
 dataset ("no unrestricted remote media fetching" applies

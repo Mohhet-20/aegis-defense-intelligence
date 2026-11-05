@@ -1,4 +1,4 @@
-# Scenario Simulation API (Phase 13)
+# Scenario Simulation API
 
 Base path `/api/v1`. All endpoints require authentication, enforce organization isolation, validate input with Pydantic
 (unknown body fields are rejected with 422) and return the platform error shape `{detail, request_id}`.

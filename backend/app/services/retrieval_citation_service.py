@@ -1,4 +1,4 @@
-"""Phase 12: structured citations that are built from, and re-verified
+"""Structured citations that are built from, and re-verified
 against, persisted records and the requesting user's CURRENT permissions.
 
 Statuses

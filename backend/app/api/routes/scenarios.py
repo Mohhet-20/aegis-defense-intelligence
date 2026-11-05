@@ -1,4 +1,4 @@
-"""Phase 13 routes: scenarios, simulation runs, comparison, sensitivity,
+"""Routes: scenarios, simulation runs, comparison, sensitivity,
 synthetic datasets and exports. Everything returned is SIMULATED.
 
 RBAC at the route; organization isolation + investigation access in the

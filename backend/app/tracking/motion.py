@@ -7,7 +7,7 @@ computing those things in the first place, not by a flag that could be
 turned off).
 
 Pixel figures use the source video's own stored `width_px`/`height_px`
-(Phase 4's MediaAsset -- a real, measured property of the file, not a
+(the MediaAsset -- a real, measured property of the file, not a
 guess) to convert the fractional (0..1) bbox coordinates this platform
 already stores everywhere else into real pixel units ON THE STORED
 FRAME RESOLUTION. This is still an image-space measurement, not a

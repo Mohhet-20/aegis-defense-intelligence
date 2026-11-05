@@ -1,4 +1,4 @@
-"""Anomaly detection orchestration + review workflow (Phase 6, Section
+"""Anomaly detection orchestration + review workflow (Section
 9). Fetches a sensor+measurement_type's recent history, runs every
 applicable heuristic from app/sensors/anomaly.py, and persists any
 resulting candidate as an ObservationAnomaly -- never more than once

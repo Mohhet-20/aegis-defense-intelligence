@@ -1,8 +1,8 @@
-# Object Tracking Architecture (Phase 5)
+# Object Tracking Architecture
 
 ## What this is, and what it is not
 
-Phase 5 adds **temporary, sequence-scoped** multi-object tracking on top of Phase 4's
+Adds **temporary, sequence-scoped** multi-object tracking on top of the
 already-persisted `DetectionResult` rows. A `Track` associates detections across the frames
 of exactly one `video_frame_analysis` `InferenceJob` run. It is evidence that a tracking
 algorithm linked some detections together within one run -- **never** evidence of a
@@ -17,7 +17,7 @@ Explicitly out of scope, by design, with no code path that could produce them:
 - Automatic hostile-intent classification.
 - A track lifecycle label implying a real-world outcome ("destroyed", "captured", "hostile").
 
-## Where this sits relative to Phase 4
+## Where this sits relative to
 
 ```
 MediaAsset (video) --> InferenceJob (video_frame_analysis, completed)
@@ -51,7 +51,7 @@ not an oversight.
 No new "tracker registry" table was built, deliberately mirroring the decision not to
 duplicate `ModelRecord` for CV adapters: a tracker is code behind a closed allow-list
 (`app/tracking/trackers/registry.py`), never a client-supplied dynamic import. See
-`docs/architecture/COMPUTER_VISION_CONTRACTS.md` for the equivalent Phase 4 decision this
+`docs/architecture/COMPUTER_VISION_CONTRACTS.md` for the equivalent decision this
 one directly mirrors.
 
 ## Execution model (stated honestly, not left implicit)
@@ -87,14 +87,14 @@ Each has its own doc: `docs/ml/DETECTION_TO_TRACK_ASSOCIATION.md`, `docs/ml/TRAC
 
 ## Authorization
 
-Five new permissions, mirroring Phase 4's `INFERENCE_RUN`/`DETECTION_REVIEW` split exactly:
+Five new permissions, mirroring the `INFERENCE_RUN`/`DETECTION_REVIEW` split exactly:
 `TRACKING_RUN`, `TRACKING_READ`, `TRACK_ANNOTATE`, `TRACKING_EVALUATION_RUN`,
 `TRACKING_EVALUATION_READ`. Analyst holds all five; Investigator holds read + annotate + 
 evaluation-read (can review, cannot run); Viewer holds read + evaluation-read only. Every
 route decides this server-side via `require_permission` -- never a frontend-only check. See
 `docs/security/TRACKING_DATA_GOVERNANCE.md`.
 
-## What Phase 5 deliberately does NOT build
+## What deliberately does NOT build
 
 - A Kalman filter or any motion-prediction model (Section 8 explicitly permits deferring this
   "if a filter is unnecessary for the baseline tracker ... rather than adding complexity

@@ -1,6 +1,6 @@
 """The connector lifecycle contract. Every connector --
 file-based today, HTTP/synthetic also today, sensor/CV/edge adapters
-in later phases -- implements this same small interface. The
+in later work -- implements this same small interface. The
 ingestion engine (app/services/ingestion_service.py) only ever talks
 to a connector through these methods."""
 from __future__ import annotations

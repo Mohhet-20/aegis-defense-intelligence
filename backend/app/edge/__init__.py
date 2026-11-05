@@ -11,7 +11,7 @@ over real HTTP (via `httpx`), exactly as a physical device would,
 rather than calling service functions directly.
 
 Honestly stated (see docs/architecture/EDGE_ARCHITECTURE.md Section 18
-and the Phase 8 final report): this edge runtime has been exercised in
+and the final report): this edge runtime has been exercised in
 SIMULATION ONLY. No physical edge hardware is available in this
 environment, so nothing here has been run on real device hardware.
 """

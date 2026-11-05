@@ -1,4 +1,4 @@
-"""TrackObservation (Phase 5, Section 3C). Links one `DetectionResult`
+"""TrackObservation (Section 3C). Links one `DetectionResult`
 to one `Track` at a specific frame -- the association a tracking run
 produced, never a rewrite of the detection it points at.
 
@@ -7,7 +7,7 @@ confidence) is a READ-ONLY mirror of the referenced DetectionResult at
 the moment this observation was created, kept here purely so a track's
 history can be queried and rendered without a join back to
 `detection_results` on every request -- the exact same denormalize-for-
-read-convenience judgment Phase 4 made putting `media_asset_id` and
+read-convenience judgment made putting `media_asset_id` and
 `model_record_id` directly on `DetectionResult`. The original
 `DetectionResult` row is the single source of truth; nothing in this
 platform ever edits these mirrored columns after creation (Section 3C:
@@ -15,7 +15,7 @@ platform ever edits these mirrored columns after creation (Section 3C:
 rewrite or fabricate the original detector output.").
 
 There is deliberately no "interpolated" observation_state in this
-phase -- Section 7 explicitly forbids silently interpolating a missing
+layer -- Section 7 explicitly forbids silently interpolating a missing
 position into authoritative evidence, so a frame with no matched
 detection for a track simply has no TrackObservation row for that
 track/frame at all. The one value `observation_state` can hold today is

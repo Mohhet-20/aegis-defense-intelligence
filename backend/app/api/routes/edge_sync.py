@@ -1,4 +1,4 @@
-"""Device-authenticated synchronization endpoints (Phase 8, Sections
+"""Device-authenticated synchronization endpoints (Sections
 5-9/12). Every route here depends on `require_device_auth`, NEVER on a
 JWT/`require_permission` -- a device has no Role/Permission. See
 app/api/routes/edge_devices.py for the JWT-authenticated admin side and

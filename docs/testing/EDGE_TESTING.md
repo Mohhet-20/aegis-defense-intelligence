@@ -1,8 +1,8 @@
-# Edge Testing (Phase 8)
+# Edge Testing
 
 **Status: IMPLEMENTED.** 98 new backend tests across 9 new files. Full
-backend suite: **718 passed** (620 carried forward from Phases 1-7 +
-98 new this phase), 0 failed, **93% overall line coverage maintained**.
+backend suite: **718 passed** (620 carried forward +
+98 new this layer), 0 failed, **93% overall line coverage maintained**.
 Plus a separate, manually-run live end-to-end verification pass against
 real servers -- distinguished explicitly from the automated suite below.
 
@@ -90,7 +90,7 @@ real servers -- distinguished explicitly from the automated suite below.
   traffic, a genuine network failure being classified and backed off, and
   the local store surviving a simulated process restart mid-backlog.
 
-## 2. Coverage, by module (new Phase 8 code)
+## 2. Coverage, by module (new code)
 
 | Module | Line coverage |
 |---|---|
@@ -103,7 +103,7 @@ real servers -- distinguished explicitly from the automated suite below.
 | New route files (`edge_devices.py`, `edge_sync.py`, `edge_sync_admin.py`, `edge_conflicts.py`) | 83-100% |
 
 **Overall project coverage stayed at 93%** across the full suite --
-adding this phase's roughly 3,100 lines of new backend code did not
+adding this layer's roughly 3,100 lines of new backend code did not
 regress the project's existing coverage bar. `simulator.py`'s lower
 figure (79%) is mostly its constructor branch for an injected vs.
 self-owned `httpx.Client` and a couple of less-common HTTP-status
@@ -148,9 +148,9 @@ These two verification passes are **not interchangeable**: the automated
 suite proves the logic is correct under controlled, repeatable
 conditions; the live pass proves the same logic actually works when
 driven through a real HTTP stack, a real browser, and real user
-interaction, which is the bar this project has held since Phase 6/7.
+interaction, which is the bar this project has held.
 
-## 4. Known gaps in this phase's testing
+## 4. Known gaps's testing
 
 - No load/concurrency test exercises many devices syncing simultaneously
   against a shared SQLite file -- the fault-injection test for

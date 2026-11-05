@@ -61,7 +61,7 @@ export function CVOverviewPage() {
         <h2 className="mb-2 text-sm font-semibold text-slate-200">What this covers</h2>
         <p className="text-sm text-slate-400">
           Secure image/video upload (real file-signature validation, never a trusted filename), a model registry extending
-          the Phase 1 <code className="text-slate-300">ModelRecord</code> table, a deterministic mock detector plus a real
+          the core <code className="text-slate-300">ModelRecord</code> table, a deterministic mock detector plus a real
           OpenCV HOG+SVM person detector, bounded video frame sampling, detection postprocessing with real NMS, analyst
           review, and promotion of a <em>confirmed</em> detection into the Evidence layer. See{' '}
           <Link to="/cv/models" className="text-accent-400 hover:underline">

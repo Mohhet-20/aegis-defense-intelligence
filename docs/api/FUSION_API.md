@@ -1,9 +1,9 @@
 # Intelligence Fusion API
 
-Phase 3's expanded `/api/v1` surface: evidence, evidence relationships,
+the expanded `/api/v1` surface: evidence, evidence relationships,
 conflicts, assessments, and fusion-job orchestration (including the
 bounded evidence graph). All routes below sit under `/api/v1` and
-require a valid bearer token, same as every prior phase's routes.
+require a valid bearer token, same as each layer's routes.
 Every route appears in the live OpenAPI docs at `/api/docs` -- nothing
 here is hand-maintained separately from the actual route code.
 
@@ -53,7 +53,7 @@ here is hand-maintained separately from the actual route code.
 
 | Method & path | Permission | What it does |
 |---|---|---|
-| `POST /fusion/run` | `FUSION_RUN` (administrator/analyst only -- NOT investigator, mirroring Phase 2's own choice to withhold bulk correlation-generation from that role) | The one explicit entry point that composes `correlation_service.recompute()` + `conflict_service.detect_conflicts()` into one `FusionJob`. Optional `time_window_seconds`/`spatial_threshold_meters`/`spatial_conflict_threshold_meters` override the configured defaults for this run only. On an internal exception, the job is marked `failed` with `error_message` set -- the failure itself is still recorded and returned, never swallowed |
+| `POST /fusion/run` | `FUSION_RUN` (administrator/analyst only -- NOT investigator, mirroring the own choice to withhold bulk correlation-generation from that role) | The one explicit entry point that composes `correlation_service.recompute()` + `conflict_service.detect_conflicts()` into one `FusionJob`. Optional `time_window_seconds`/`spatial_threshold_meters`/`spatial_conflict_threshold_meters` override the configured defaults for this run only. On an internal exception, the job is marked `failed` with `error_message` set -- the failure itself is still recorded and returned, never swallowed |
 | `GET /fusion/jobs` | `FUSION_READ` (every authenticated role) | Paginated job history |
 | `GET /fusion/jobs/{id}` | `FUSION_READ` | Detail -- status, parameters, counts, timing, error message if failed |
 | `GET /fusion/graph` | `GRAPH_READ` (every authenticated role) | The bounded evidence graph -- see `docs/analytics/EVIDENCE_GRAPH.md` for the full parameter/filter/cap documentation. `seed_type`+`seed_id` required; `max_depth`/`max_nodes` are accepted but ALWAYS clamped server-side to the configured caps, never a raw pass-through; `relationship_type` (repeatable), `review_status`, `source_id`, `since`, `until` all filter which edges/nodes are included. 404 for a nonexistent seed |
@@ -61,8 +61,8 @@ here is hand-maintained separately from the actual route code.
 ## Cross-cutting concerns
 
 - **Pagination**: every list endpoint uses the same `Page[...]`/
-  `PageParams` pattern as every prior phase.
-- **Organization scoping**: every query in every Phase 3 service
+  `PageParams` pattern as every earlier work.
+- **Organization scoping**: every query in every service
   function filters by `organization_id` from the authenticated token --
   no endpoint above can read or act across organizations.
 - **Audit logging**: every mutating endpoint
@@ -76,11 +76,11 @@ here is hand-maintained separately from the actual route code.
 - **OpenAPI docs**: `GET /docs`/`GET /openapi.json` reflect every route
   and schema above automatically.
 
-## What this phase does NOT add
+## What this layer does NOT add
 
 No endpoint to delete an Evidence item, EvidenceRelationship, Conflict,
 Assessment, or FusionJob -- same retention/deletion-out-of-scope stance
-as Phase 2. No bulk/batch submission endpoint for relationships or
+as the data platform. No bulk/batch submission endpoint for relationships or
 evidence links -- one call creates one row (idempotently). No
 `POST /assessments/{id}/supersede` route -- the underlying
 `assessment_service.supersede_assessment()` function exists and is

@@ -1,4 +1,4 @@
-"""Phase 18: statements that SQLite accepts but PostgreSQL rejects.
+"""Statements that SQLite accepts but PostgreSQL rejects.
 
 The unit suite runs on SQLite, which is lenient (LIKE on a JSON column, no
 foreign-key enforcement). These tests compile the production queries against

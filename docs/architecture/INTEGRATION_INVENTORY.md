@@ -1,4 +1,4 @@
-# AEGIS integration inventory (Phase 17)
+# AEGIS integration inventory
 
 Status vocabulary: **verified** = exercised end to end by an executed test in this repository (see "Evidence"); **partially verified** = covered by module tests and the cross-cutting sweeps but not by a cross-module workflow; **unverified**; **blocked**; **not implemented**. A module is never "verified" because its files exist. "Verified" here means on SQLite, with synthetic fixtures and mock adapters; PostgreSQL, real model weights and real devices are not covered anywhere.
 
@@ -17,17 +17,17 @@ Cross-cutting evidence that applies to every module (all in `backend/tests/`):
 | Evidence, relationships | `/evidence`, `/relationships` | C | verified | Uncertain vs contradicting stay distinct; review audited. |
 | Fusion, correlation, conflicts, graph | `/fusion`, `/correlation`, `/conflicts` | C (fusion run only) | partially verified | `correlation/recompute` and `conflicts/detect` are covered by module tests, not by a cross-module workflow. |
 | Media, CV inference, detections | `/media`, `/inference`, `/detections`, `/cv-models` | D | verified (mock adapter) | Real detector weights are not part of the repo; HOG adapter has module tests only. |
-| Tracking | `/tracking`, `/track-annotations` | sweeps only | partially verified | Module tests (tracking security/evaluation) pass; no Phase 17 workflow. |
+| Tracking | `/tracking`, `/track-annotations` | sweeps only | partially verified | Module tests (tracking security/evaluation) pass; no workflow. |
 | Investigations, workspace, export | `/investigations` | E | verified | |
 | MLOps registry, experiments, monitoring | `/mlops` | F | verified (synthetic data) | Approval is not deployment gating (KNOWN_RISKS 19). |
-| Analytics, dashboards, reports | `/reporting` | F, G | verified | Report numbers equal the analytics section for the same window; tamper → 409 + audit. Browser run from Phase 16 was re-checked (see final report). |
+| Analytics, dashboards, reports | `/reporting` | F, G | verified | Report numbers equal the analytics section for the same window; tamper → 409 + audit. Browser run was re-checked (see final report). |
 | Edge devices, sync, presence, conflicts | `/devices`, `/edge/*` | H | verified (simulated device) | No real hardware. |
 | Fleet, sites, sensors, sensor ingestion, sensor/geo analytics | `/fleet*`, `/sensors*`, `/geo*` | sweeps only | partially verified | Module tests only. |
 | Scenarios, evaluation, model outputs | `/scenarios`, `/evaluation` | sweeps only | partially verified | Scenario data separation has dedicated tests. |
 | Copilot | `/copilot` | sweeps only | partially verified | Uses a deterministic offline retrieval path; no external LLM. |
 | Assessments / risk | `/assessments`, `/risk-assessments` | sweeps only | partially verified | |
 | Lifecycle / retention, security admin, observability, audit | `/lifecycle`, `/security`, `/observability`, `/audit` | A (audit read) + sweeps | partially verified | Audit is append-only by convention, **not tamper-proof**. |
-| Frontend | `frontend/src` | contract test; `tsc -b`, `eslint`, `vite build` | partially verified | No frontend unit/component test runner exists (not implemented). Browser E2E exists only for the Phase 16 pages. |
+| Frontend | `frontend/src` | contract test; `tsc -b`, `eslint`, `vite build` | partially verified | No frontend unit/component test runner exists (not implemented). Browser E2E exists only pages. |
 | CI | `.github/workflows/ci.yml` | static validation only | unverified on GitHub | Never executed on GitHub Actions; each command was run locally. |
 
 ## Conventions confirmed by the sweeps

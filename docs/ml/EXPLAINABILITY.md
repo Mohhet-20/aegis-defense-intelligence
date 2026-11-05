@@ -1,4 +1,4 @@
-# Explainability (Phase 10)
+# Explainability
 
 `app/analytics/explainers.py` defines an `Explainer` protocol and a closed
 registry. Each explainer declares which outputs it supports (`check`) and either

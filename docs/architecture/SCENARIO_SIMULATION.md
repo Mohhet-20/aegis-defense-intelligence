@@ -1,4 +1,4 @@
-# Scenario Simulation, What-If Analysis and Synthetic Data (Phase 13)
+# Scenario Simulation, What-If Analysis and Synthetic Data
 
 This document describes what is actually implemented. **Everything produced by this feature is SIMULATED.** It comes from a
 seeded model running on synthetic data under stated assumptions. It is not an observation of the real world, it is not evidence,

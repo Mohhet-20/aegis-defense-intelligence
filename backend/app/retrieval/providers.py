@@ -1,4 +1,4 @@
-"""Phase 12: modular generation / embedding provider interfaces.
+"""Modular generation embedding provider interfaces.
 
 * The default is NO provider: generation and embeddings report unavailable and
   the copilot stays on its extractive, source-grounded path.

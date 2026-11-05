@@ -16,7 +16,7 @@ DATA_SOURCE_STATUSES = ("active", "inactive", "error")
 # can be "run" to fetch a fresh batch (http_api, synthetic_demo);
 # "push" is reserved for a future inbound-webhook adapter; "internal"
 # is another part of this same application. Documentation only --
-# not DB-enforced, so existing Phase 1 sources never need a backfill.
+# not DB-enforced, so existing sources never need a backfill.
 DATA_SOURCE_CONNECTION_MODES = ("file_upload", "polling", "push", "internal")
 
 
@@ -34,7 +34,7 @@ class DataSource(Base, UUIDPrimaryKeyMixin, TimestampMixin, OrgScopedMixin):
     description: Mapped[Optional[str]] = mapped_column(String(2000), nullable=True)
     status: Mapped[str] = mapped_column(String(20), nullable=False, default="active", index=True)
 
-    # Phase 3 (fusion) will compute/consume this; Phase 1 only stores a
+    # Fusion will compute/consume this; the foundation only stores a
     # configured starting weight -- see docs/architecture/MULTISENSOR_CONTRACTS.md.
     reliability_weight: Mapped[float] = mapped_column(Float, nullable=False, default=1.0)
 

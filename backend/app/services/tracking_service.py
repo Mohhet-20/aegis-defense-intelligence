@@ -1,6 +1,6 @@
 """Tracking job orchestration. Submits and runs
 one `TrackingJob` -- associating the already-persisted `DetectionResult`
-rows of one completed Phase 4 `video_frame_analysis` InferenceJob into
+rows of one completed `video_frame_analysis` InferenceJob into
 sequence-scoped `Track`/`TrackObservation` rows via one tracker
 (app/tracking/).
 
@@ -14,7 +14,7 @@ of already-small DetectionResult rows for one job), and the tracker
 itself only ever holds state for currently-active tracks, not the whole
 video's history, per Section 11's "avoid holding every decoded video
 frame in memory" (this service never touches video frames at all --
-only the already-extracted, already-persisted detection rows Phase 4
+only the already-extracted, already-persisted detection rows
 produced).
 """
 from __future__ import annotations

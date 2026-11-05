@@ -1,4 +1,4 @@
-"""Phase 14 -- tenant isolation: audit scoping, referenced-record
+"""Tenant isolation: audit scoping, referenced-record
 association checks, direct media access, user administration across orgs.
 Each test names the defect it pins."""
 from __future__ import annotations
@@ -140,7 +140,7 @@ def test_investigation_rejects_foreign_linked_event_but_tolerates_legacy_danglin
     assert client.post(f"{API}/investigations", headers=b_headers, json={"title": "t", "linked_event_ids": [ev.id]}).status_code == 404
     iid = client.post(f"{API}/investigations", headers=b_headers, json={"title": "t"}).json()["id"]
     assert client.patch(f"{API}/investigations/{iid}", headers=b_headers, json={"linked_event_ids": [ev.id]}).status_code == 404
-    # a dangling (nonexistent-anywhere) id is legacy-tolerated, as before Phase 14
+    # a dangling (nonexistent-anywhere) id is legacy-tolerated, as
     assert client.post(f"{API}/investigations", headers=auth_header(tokens, "admin"), json={"title": "t", "linked_event_ids": ["missing-id"]}).status_code == 201
 
 

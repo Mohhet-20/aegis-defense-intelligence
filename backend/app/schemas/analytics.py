@@ -1,4 +1,4 @@
-"""Request/response schemas for Phase 10 analytics routes."""
+"""Request/response schemas analytics routes."""
 from __future__ import annotations
 
 import math

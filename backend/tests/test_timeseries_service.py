@@ -1,5 +1,5 @@
-"""Service-level tests for app/services/timeseries_service.py (Phase
-6, Section 7) -- bounded time-series queries, deterministic stride
+"""Service-level tests for app/services/timeseries_service.py (
+the multi-sensor layer, Section 7) -- bounded time-series queries, deterministic stride
 downsampling, and statistics over a real ingested series."""
 from __future__ import annotations
 

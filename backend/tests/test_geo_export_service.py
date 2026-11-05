@@ -1,4 +1,4 @@
-"""Tests for app/services/geo_export_service.py (Phase 7, Section 12
+"""Tests for app/services/geo_export_service.py (Section 12
 "GeoJSON/CSV export")."""
 from __future__ import annotations
 

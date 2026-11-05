@@ -1,4 +1,4 @@
-# Tracking API (Phase 5, Section 10)
+# Tracking API (Section 10)
 
 All routes are under `/api/v1`, and every one requires a bearer token and a specific
 `Permission` checked server-side via `require_permission` -- see
@@ -57,8 +57,7 @@ POST /api/v1/tracking/jobs
 
 Every numeric override is clamped server-side only at its sanity floor (`ge=0`/`ge=1`) --
 there is deliberately no upper bound on `max_missed_frames`/`min_hits_to_confirm` (the same
-"clamp, never reject" lesson Phase 3/4 already learned, documented in
-`docs/implementation/PROJECT_STATUS.md`), since these are per-job configuration choices, not a
+"clamp, never reject" lesson already learned), since these are per-job configuration choices, not a
 resource bound that needs a server-enforced ceiling.
 
 ## Response shape, job
@@ -73,8 +72,8 @@ There is no cancel endpoint, and none is planned for this execution model: a `Tr
 runs synchronously inside the HTTP request that submits it, so there is no separate
 in-flight, cancellable state for a cancel call to act on -- the request either has already
 returned (nothing left to cancel) or is still executing on the same thread that would have to
-receive the cancel call. This is identical to Phase 4's `InferenceJob` and is documented
-there, not a Phase 5 regression. Retrying a genuinely `failed` job is the supported recovery
+receive the cancel call. This is identical to the `InferenceJob` and is documented
+there, not a regression. Retrying a genuinely `failed` job is the supported recovery
 path, bounded at 3 attempts.
 
 ## Pagination

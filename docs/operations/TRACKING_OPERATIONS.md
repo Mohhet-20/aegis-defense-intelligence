@@ -1,4 +1,4 @@
-# Tracking Operations (Phase 5, Section 11/14)
+# Tracking Operations (Section 11/14)
 
 ## Execution model, stated plainly
 
@@ -8,12 +8,12 @@ here means a bounded amount of *work* per job (the per-job `max_active_tracks` c
 already-bounded number of sampled frames inherited from the source `InferenceJob`), not a
 worker pool. This is identical to `IngestionJob`/`FusionJob`/`InferenceJob` before it and is
 not a regression -- see `docs/ml/INFERENCE_PIPELINE.md`'s own "What this does NOT do" section
-for the Phase 4 version of this same honest gap.
+for the version of this same honest gap.
 
 A practical consequence: submitting a tracking job over a long video with many sampled frames
 holds the HTTP connection open for the whole run. This is an accepted limitation of the
 current architecture, carried forward unchanged from every prior job table, not something
-Phase 5 introduces or needs to solve on its own.
+Introduces or needs to solve on its own.
 
 ## Readiness
 
@@ -70,9 +70,9 @@ second time -- the same pattern `InferenceJob` already established.
 ## Known operational gaps (stated honestly, not hidden)
 
 - No background worker: a very long video (many sampled frames) means a correspondingly long
-  synchronous request. Deferred to a future phase, same as Phase 4's own gap.
+  synchronous request. Deferred to later work, same as the own gap.
 - No horizontal scaling consideration beyond what the underlying FastAPI/SQLite(or configured
-  RDBMS) deployment already provides -- this phase adds no new infrastructure.
+  RDBMS) deployment already provides -- this layer adds no new infrastructure.
 - No metrics/tracing integration (e.g. OpenTelemetry) -- the audit log and job-row counters
-  are the only observability surface today, consistent with every prior phase in this
+  are the only observability surface today, consistent with every earlier work in this
   codebase.

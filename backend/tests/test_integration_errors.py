@@ -1,4 +1,4 @@
-"""Phase 17 Phase 6: error responses are consistent and sanitized."""
+"""Error responses are consistent and sanitized."""
 from __future__ import annotations
 
 import json

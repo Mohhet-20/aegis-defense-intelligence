@@ -1,8 +1,8 @@
 """ClassificationEvaluationRun. One recorded
 evaluation of one registered model version against one NAMED, VERSIONED,
 caller-supplied labelled dataset, for classification and/or probability
-estimates. Complements -- does not replace -- Phase 4's detection
-`ModelEvaluationRun` and Phase 5's `TrackingEvaluationRun`.
+estimates. Complements -- does not replace -- the detection
+`ModelEvaluationRun` and the `TrackingEvaluationRun`.
 
 Honesty rules baked into the shape:
  * `is_synthetic` is a REQUIRED declaration by the submitter; the API

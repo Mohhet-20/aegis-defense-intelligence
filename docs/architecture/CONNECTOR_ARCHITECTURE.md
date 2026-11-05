@@ -1,13 +1,13 @@
 # Connector Architecture
 
-Phase 2, Section 4. How a source actually gets records into the ingestion
+How a source actually gets records into the ingestion
 pipeline, and how a future sensor/CV/edge adapter plugs in without rewriting
 the ingestion engine.
 
 ## The contract (`app/connectors/`)
 
 Every connector -- file-based today, HTTP/synthetic also today, a real
-sensor/CV/edge adapter in a later phase -- implements the same small
+sensor/CV/edge adapter in later work -- implements the same small
 interface, `app.connectors.base.BaseConnector`:
 
 ```python

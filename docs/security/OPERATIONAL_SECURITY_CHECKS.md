@@ -1,4 +1,4 @@
-# Operational Security Checks (Phase 14)
+# Operational Security Checks
 
 Run `python backend/scripts/security_checks.py` (reports skipped scanners rather than hiding them).
 

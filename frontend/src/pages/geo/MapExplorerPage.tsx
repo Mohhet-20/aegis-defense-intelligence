@@ -15,7 +15,7 @@ const DEFAULT_ZOOM = 13
 
 // A category is derived from a record's OWN reported fields -- never
 // an inferred threat level. "unvalidated" covers a record with no
-// location_origin recorded at all (every pre-Phase-7 write path);
+// location_origin recorded at all (every pre-original write path);
 // "uncertain" covers one with an informational quality finding
 // (uncertainty unknown or stale) even though its coordinates are
 // usable. Section 7: markers visually distinguish these, never hide

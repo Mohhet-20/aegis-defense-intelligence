@@ -1,7 +1,7 @@
-"""EvidenceRelationship (Phase 3, Section 3D). A generic, explainable
+"""EvidenceRelationship (Section 3D). A generic, explainable
 link between two referenceable records -- an Event (observation) or an
 Evidence item -- on EITHER side. This is deliberately a different,
-broader concept from Phase 2's `EventCorrelation`:
+broader concept from the `EventCorrelation`:
 
   * `EventCorrelation` (unchanged, still the system of record for it)
     is ONLY ever event<->event, ONLY ever rule-based
@@ -41,7 +41,7 @@ RELATIONSHIP_TYPES = (
     "spatially_associated",
     "shares_source_identifier",
     "analyst_linked",
-    # Phase 6, Section 11: a bounded-time-window comparison between two
+    # A bounded-time-window comparison between two
     # sensor observations (wrapped as "sensor_observation" Evidence --
     # never a direct event<->event link). Never implies the two
     # observations describe the same real-world event; see
@@ -51,7 +51,7 @@ RELATIONSHIP_TYPES = (
 
 # "rule_based": produced by fusion_service's candidate generation.
 # "model_assisted": reserved for a future scored/ML-assisted generator
-#   -- nothing in this phase produces this value yet (see
+# -- nothing produces this value yet (see
 #   CONFIDENCE_AND_SOURCE_RELIABILITY.md's "what this does NOT do").
 # "analyst_created": a human drew this link from nothing: the one kind
 #   of relationship EventCorrelation can never represent.

@@ -1,6 +1,6 @@
 """FusionJob. Tracks one explicit, authorized
 run of the fusion pipeline: correlation recompute + conflict detection,
-composed by `app/services/fusion_service.py`. Same spirit as Phase 2's
+composed by `app/services/fusion_service.py`. Same spirit as the
 `IngestionJob` -- a real, inspectable record of what a run actually did
 (counts, parameters, errors), never a silent background process.
 """

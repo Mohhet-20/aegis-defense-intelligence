@@ -10,17 +10,17 @@ from app.db.base import Base, OrgScopedMixin, TimestampMixin, UUIDPrimaryKeyMixi
 from app.db.types import UTCDateTime
 from app.models.mixins import GeoLocationMixin
 
-# Phase 1's original simple connectivity flag. Kept exactly as-is for
+# 's original simple connectivity flag. Kept exactly as-is for
 # backward compatibility with every existing route/test/seed row --
-# see `lifecycle_status` below for the richer Phase 6 state machine.
+# see `lifecycle_status` below for the richer state machine.
 # This field is NOT removed or repurposed; it continues to mean exactly
-# what it meant in Phase 1.
+# what it meant.
 SENSOR_STATUSES = ("active", "inactive", "fault", "unknown")
 
-# Phase 6 sensor lifecycle. Deliberately a SEPARATE field
+# Sensor lifecycle. Deliberately a SEPARATE field
 # from `status` above -- collapsing them would either break every
 # existing caller of `status` or silently redefine what "active" meant
-# for a Phase-1 sensor that never opted into the richer model.
+# for a original sensor that never opted into the richer model.
 #
 # Explicit, documented transition rules (enforced in
 # app/services/sensor_service.py / app/services/sensor_health_service.py,
@@ -55,7 +55,7 @@ SENSOR_LIFECYCLE_MANUAL_ONLY_TARGETS = ("maintenance", "retired")
 
 
 class Sensor(Base, UUIDPrimaryKeyMixin, TimestampMixin, OrgScopedMixin, GeoLocationMixin):
-    """Registry foundation extended in Phase 6 with the
+    """Registry foundation extended with the
     richer metadata/lifecycle fields docs/architecture/
     MULTISENSOR_CONTRACTS.md promised: category/subtype, manufacturer/
     model, configured measurement types and units, operating range,
@@ -81,11 +81,11 @@ class Sensor(Base, UUIDPrimaryKeyMixin, TimestampMixin, OrgScopedMixin, GeoLocat
 
     capability_metadata: Mapped[dict] = mapped_column(JSON, default=dict)
 
-    # --- Phase 6 additions (richer registry metadata) -----
+    # --- Additions (richer registry metadata) -----
 
-    # Broad grouping distinct from `sensor_type` (which Phase 1 already
+    # Broad grouping distinct from `sensor_type` (which already
     # uses as a free-text subtype, e.g. "camera"/"gps"/"environmental").
-    # Nullable -- an existing Phase 1 sensor has no category until an
+    # Nullable -- an existing sensor has no category until an
     # analyst sets one; never backfilled with a guess.
     category: Mapped[Optional[str]] = mapped_column(String(50), nullable=True, index=True)
     description: Mapped[Optional[str]] = mapped_column(String(2000), nullable=True)

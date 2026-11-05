@@ -1,5 +1,4 @@
-"""Normalized model outputs and their explanations (Phase 10,
-Sections 2 and 4). Read-only."""
+"""Normalized model outputs and their explanations (Sections 2 and 4). Read-only."""
 from __future__ import annotations
 
 from typing import Optional

@@ -1,6 +1,6 @@
 # Assessment Lifecycle
 
-Phase 3, Section 12. Implemented in `app/services/assessment_service.py`,
+Implemented in `app/services/assessment_service.py`,
 models `app/models/assessment.py` (`Assessment`,
 `AssessmentEvidenceLink`, `AssessmentRevision`).
 
@@ -126,7 +126,7 @@ unit-testable, but Section 12's "create a new version that supersedes
 an old one" workflow is only reachable today by an analyst creating a
 new `Assessment` and someone with direct service/future-route access
 calling `supersede_assessment()`; wiring a `POST
-/assessments/{id}/supersede` endpoint is reasonable Phase 4 follow-up,
+/assessments/{id}/supersede` endpoint is reasonable follow-up,
 documented here rather than silently assumed to exist. No deletion of
 an assessment or a revision -- both are permanent, append-only records.
 

@@ -43,8 +43,8 @@ def _normalize(value: Any) -> Any:
 
 
 def compare_source_local_identifiers(a: Event, b: Event) -> Optional[IdentifierComparison]:
-    """`Event.external_id` is only ever unique WITHIN a source (Phase
-    2's own `uq_events_source_external_id` constraint) -- comparing it
+    """`Event.external_id` is only ever unique WITHIN a source (
+    the data platform's own `uq_events_source_external_id` constraint) -- comparing it
     across two DIFFERENT sources would be exactly the mistake Section 7
     warns about ("never assume identical local IDs from different
     sources identify the same object"), so this only ever compares when

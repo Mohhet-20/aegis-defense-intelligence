@@ -1,4 +1,4 @@
-# DetectionResult Schema (Phase 4)
+# DetectionResult Schema
 
 `app/models/detection_result.py` -- table `detection_results`. One
 validated, normalized detected-object instance. Every row here has
@@ -62,6 +62,6 @@ pattern) and `tests/test_detection_review_and_evidence.py`.
   `MediaAsset` this detection references.
 - Never collapses `confidence` into any kind of "threat level" or
   interpretive score (Section 13's "five/eight separated evidentiary
-  concepts" discipline, carried over from Phase 3).
+  concepts" discipline, carried over).
 - Never implies a tracked identity across frames or across media
-  assets -- there is no `track_id` column, deliberately (Phase 5's job).
+  assets -- there is no `track_id` column, deliberately (the job).

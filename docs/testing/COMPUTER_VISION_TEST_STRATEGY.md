@@ -1,9 +1,7 @@
-# Computer Vision Test Strategy (Phase 4)
+# Computer Vision Test Strategy
 
 64 new backend tests across 8 files, all actually executed against this
-repository's real code (no mocked-out assertions) -- see
-`docs/implementation/history/PHASE_4_FINAL_REPORT.md` for the literal
-pytest command and output. Full suite: 291 tests (227 pre-existing +
+repository's real code (no mocked-out assertions). Full suite: 291 tests (227 pre-existing +
 64 new), 91% coverage, zero regressions.
 
 ## Test files and what each one actually proves
@@ -11,7 +9,7 @@ pytest command and output. Full suite: 291 tests (227 pre-existing +
 | File | Tests | Proves |
 |---|---|---|
 | `tests/test_media_security.py` | 11 | Signature sniffing rejects an unrecognized/mismatched file; duplicate upload is idempotent by content hash; filename path-traversal is sanitized to a bare name; size/dimension/duration limits are real and enforced; a corrupt video container is rejected; `storage._resolve()` refuses to escape the configured root. |
-| `tests/test_cv_model_registry.py` | 9 | The adapter allow-list only resolves the two shipped keys and raises a clean error for anything else; `register_cv_model()` rejects an unknown `adapter_key`/media type; registration is idempotent on `(name, version)`; the pre-existing Phase 1 `demo-risk-scorer` row is correctly excluded from the CV listing; the registration API is permission-gated and works end-to-end for an admin. |
+| `tests/test_cv_model_registry.py` | 9 | The adapter allow-list only resolves the two shipped keys and raises a clean error for anything else; `register_cv_model()` rejects an unknown `adapter_key`/media type; registration is idempotent on `(name, version)`; the pre-existing `demo-risk-scorer` row is correctly excluded from the CV listing; the registration API is permission-gated and works end-to-end for an admin. |
 | `tests/test_detection_postprocessing.py` | 12 | Every validation rule in `app/cv/postprocessing.py` individually: non-finite numbers rejected, out-of-range confidence rejected, a degenerate box (`x_min >= x_max`) rejected, a box exceeding frame bounds rejected, an unknown class label rejected, below-threshold detections dropped; **real NMS** collapses heavily-overlapping boxes to one but leaves non-overlapping boxes both intact; the per-frame detection cap is enforced; empty input returns empty output cleanly. |
 | `tests/test_image_inference.py` | 7 | A full image-detection job runs end-to-end with the mock adapter and produces real, persisted, schema-valid `DetectionResult` rows; the same image produces byte-identical detections across two separate runs (determinism); **the real `OpenCVHOGPersonAdapter` actually runs to completion without crashing** (asserted as "completes, schema-valid output" -- never a specific count, per the adapter's own documented limitation); duplicate submission with the same `idempotency_key` returns the same job, not a second one; a job/media type mismatch and an unsupported model are both rejected with `400`; a Viewer-role user cannot submit a job. |
 | `tests/test_video_inference.py` | 4 | A video job respects the configured `max_frames` cap; the sampling interval controls *exactly* which frame indices are sampled (asserted against known values, not just a count); **the `max_frames` over-large-request-is-clamped-not-rejected behavior** -- this test caught the real `le=500` schema bug described below; a video job submitted against an image-only model is rejected. |
@@ -47,7 +45,7 @@ pytest command and output. Full suite: 291 tests (227 pre-existing +
    in `backend/requirements.txt`.
 2. **`SubmitInferenceJobRequest.max_frames` had an upper schema bound
    (`le=500`) that rejected an over-large request with 422 instead of
-   letting the server clamp it**, the same anti-pattern Phase 3 found
+   letting the server clamp it**, the same anti-pattern found
    for `GET /fusion/graph`. Found by
    `test_video_max_frames_request_is_clamped_to_the_configured_ceiling`
    failing with `KeyError: 'status'` against a 422 error body. Fixed by
@@ -62,14 +60,14 @@ at all in this project, not an embarrassment to omit.
 ## What this does NOT cover
 
 - No load/performance testing of inference throughput -- out of scope;
-  this phase's execution model is explicitly synchronous and
+  this layer's execution model is explicitly synchronous and
   unoptimized for throughput (see `docs/ml/INFERENCE_PIPELINE.md`).
 - No frontend unit/component test suite was added for the 9 new CV
-  pages -- verification for the frontend in this phase was
+  pages -- verification for the frontend was
   `tsc -b --force` (typecheck), `eslint .` (lint), and `npm run build`
   (production build), all clean, consistent with the verification
-  depth of Phases 1-3's frontend work. Adding component tests for the
-  CV workspace is reasonable follow-up work, not something this phase
+  depth of the frontend work. Adding component tests for the
+  CV workspace is reasonable follow-up work, not something this layer
   claims to have done.
 - No test exercises a second, real deep-learning adapter (e.g.
   Ultralytics YOLO) -- none is installed in this environment; see

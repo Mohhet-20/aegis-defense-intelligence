@@ -4,7 +4,7 @@ for one tracker/configuration -- always against a deterministic
 SYNTHETIC multi-object fixture (app/tracking/synthetic_fixture.py),
 because no real, labelled, multi-object tracking dataset exists in
 this repository. Every row stamps `is_synthetic=True` for exactly the
-same honesty reason Phase 4's `ModelEvaluationRun` always does.
+same honesty reason the `ModelEvaluationRun` always does.
 
 HOTA/IDF1/MOTA are deliberately NOT computed here -- Section 13 permits
 them "only if a correct, documented implementation or trusted

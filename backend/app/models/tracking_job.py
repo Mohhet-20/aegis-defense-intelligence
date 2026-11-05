@@ -1,9 +1,9 @@
-"""TrackingJob (Phase 5, Section 3A/9). One explicit, authorized run of
+"""TrackingJob (Section 3A/9). One explicit, authorized run of
 one tracker algorithm over the already-persisted `DetectionResult` rows
-of exactly one completed Phase 4 `video_frame_analysis` InferenceJob.
+of exactly one completed `video_frame_analysis` InferenceJob.
 
-Same discipline as Phase 2's `IngestionJob`, Phase 3's `FusionJob`, and
-Phase 4's `InferenceJob`: a real, inspectable record of what a run
+Same discipline as the `IngestionJob`, the `FusionJob`, and
+the `InferenceJob`: a real, inspectable record of what a run
 actually did, status transitions that are never faked, and failure that
 is captured rather than swallowed.
 
@@ -59,7 +59,7 @@ class TrackingJob(Base, UUIDPrimaryKeyMixin, TimestampMixin, OrgScopedMixin):
 
     # A key into app/tracking/trackers/registry.py's closed allow-list --
     # same "never a dynamic import of an arbitrary string" discipline as
-    # Phase 4's ModelRecord.adapter_key ("keep algorithm-
+    # the ModelRecord.adapter_key ("keep algorithm-
     # specific code behind the tracker interface").
     tracker_key: Mapped[str] = mapped_column(String(50), nullable=False, index=True)
     tracker_version: Mapped[str] = mapped_column(String(20), nullable=False)

@@ -1,7 +1,7 @@
 """The tracker allow-list. A `TrackingJob.tracker_key`
 is just a string column; THIS map is what actually turns that string
 into Python code that runs -- the exact same closed-allow-list
-discipline as Phase 4's `app/cv/adapters/registry.py`, applied to
+discipline as the `app/cv/adapters/registry.py`, applied to
 trackers instead of CV model adapters. A key not already present here
 can never be executed, regardless of what a client requests.
 """

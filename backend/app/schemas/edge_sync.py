@@ -1,5 +1,4 @@
-"""The versioned edge synchronization protocol envelope (Phase 8,
-Section 9), plus the admin-facing shapes for inspecting the sync queue
+"""The versioned edge synchronization protocol envelope (Section 9), plus the admin-facing shapes for inspecting the sync queue
 and conflicts. These Pydantic models ARE the documented protocol --
 `app/edge/simulator.py` (the in-process simulated edge runtime, see
 docs/architecture/EDGE_ARCHITECTURE.md Section 2) imports the same

@@ -1,6 +1,6 @@
 """CV model registry. Thin CRUD/listing over the
-existing, Phase-1 `ModelRecord` table -- extended, not duplicated, with
-the `task_type`/`adapter_key`/`supported_media_types` columns Phase 4
+existing, original `ModelRecord` table -- extended, not duplicated, with
+the `task_type`/`adapter_key`/`supported_media_types` columns
 added (see app/models/model_record.py). A non-CV ModelRecord (NULL
 task_type, like the seeded "demo-risk-scorer" row) is simply never
 returned by `list_cv_models_query()`.
@@ -57,7 +57,7 @@ def register_cv_model(
 def get_cv_model(db: Session, model_record_id: str, organization_id: Optional[str] = None) -> Optional[ModelRecord]:
     """`organization_id`: when given, a version registered by a
     DIFFERENT organization through the MLOps API is treated as not found.
-    Platform-level rows (owner NULL, i.e. everything registered before Phase 15)
+    Platform-level rows (owner NULL, i.e. everything registered)
     stay visible to every organization, exactly as before."""
     model_record = db.get(ModelRecord, model_record_id)
     if model_record is None or model_record.task_type not in MODEL_TASK_TYPES:

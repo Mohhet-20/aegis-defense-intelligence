@@ -2,7 +2,7 @@
 -- validate, normalize, deduplicate, preserve provenance, persist --
 used by BOTH ingestion paths this platform supports:
 
-  * `run_ingestion()`      -- a one-shot JSON/CSV file upload (Phase 1's
+  * `run_ingestion()` -- a one-shot JSON/CSV file upload (the
                               original entry point; exact behavior
                               preserved, including the intra-batch
                               duplicate fix and its regression tests).
@@ -293,7 +293,7 @@ def run_ingestion(
     # A fully-unparseable upload (invalid JSON syntax, wrong top-level
     # shape, undecodable CSV bytes) produces zero records and at least
     # one connector error -- that is a job-level failure, not a
-    # per-record one, matching Phase 1's original "malformed upload ->
+    # per-record one, matching the original "malformed upload ->
     # failed job" contract.
     if not result.records and result.errors:
         job.status = "failed"

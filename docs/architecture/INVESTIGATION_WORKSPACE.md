@@ -1,4 +1,4 @@
-# Investigation Workspace, Evidence Provenance and Review (Phase 11)
+# Investigation Workspace, Evidence Provenance and Review
 
 Extends the existing `Investigation` and `Evidence` models. No parallel case or evidence model was created.
 The platform remains human-reviewed decision support; nothing here triggers an action.

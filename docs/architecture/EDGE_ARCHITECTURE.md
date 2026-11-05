@@ -1,23 +1,23 @@
-# Edge AI, Offline-First Operation, and Synchronization Architecture (Phase 8)
+# Edge AI, Offline-First Operation, and Synchronization Architecture
 
 **Status: IMPLEMENTED, tested, and live-verified in SIMULATION ONLY.** No
 physical edge hardware is available in this environment -- see Section 18.
 This document supersedes `docs/architecture/EDGE_SYNC_CONTRACTS.md`'s
 `PLANNED` sketch for everything actually built here; that file is left
-unmodified as the historical record, consistent with how Phase 4/5/6/7
+unmodified as the historical record, consistent with how the other layers
 treated their own superseded contract sketches.
 
 ## 1. Scope and non-scope, stated first
 
-Phase 8 delivers: device identity and lifecycle, local (simulated) offline
+Delivers: device identity and lifecycle, local (simulated) offline
 persistence, local (synthetic) AI inference, a durable idempotent sync
 protocol, a two-tier conflict policy, and an admin-facing Edge Operations
 surface (API + frontend). It does **not** deliver real edge hardware
-integration, a device fleet dashboard beyond what this phase needs for its
-own sync/conflict review (that is Phase 9's "Fleet Management and Device
+integration, a device fleet dashboard beyond what this layer needs for its
+own sync/conflict review (that is the "Fleet Management and Device
 Observability"), or automatic promotion of synced data into canonical
 `Event`/`Observation`/`Evidence` rows (Section 7 below). Strictly defensive
-scope, confirmed clean for this phase: no autonomous targeting, weapon
+scope, confirmed clean: no autonomous targeting, weapon
 control, engagement logic, or remote weapon interface exists anywhere in
 `app/edge/`, the device/sync models, or the new routes -- the one edge
 inference adapter is a synthetic brightness classifier, nothing resembling a
@@ -38,11 +38,11 @@ weapons system.
 | Frontend (Edge Operations) | `frontend/src/pages/edge/*` | Device registry/detail, sync queue, conflict review. |
 
 Reused, not duplicated: `Device` (a real registry + lifecycle + credential
-record as of this phase, extending the Phase 1 placeholder shape rather
+record currently, extending the placeholder shape rather
 than replacing it), `hash_password`/`verify_password` (the same bcrypt
 functions user passwords already use -- a device secret is just another
 secret, no second hashing scheme invented), `audit_service.record()` (every
-new state-changing function calls it, same pattern as every prior phase),
+new state-changing function calls it, same pattern as every earlier work),
 and the existing `Page[...]`/`require_permission` plumbing for every new
 admin route. Newly introduced: `SyncRecord`/`SyncConflict`/
 `DeviceHealthReport` models, the `app/edge/` simulated-runtime package, and
@@ -116,11 +116,11 @@ edge device sent and the central system durably accepted. It is
 **deliberately not** automatically materialized into a canonical `Event`,
 `Observation`, or `Evidence` row the moment it reaches `synced`. Promoting
 it into a first-class domain row is a reasonable, explicitly deferred
-Phase 9/17 follow-up (stated in `app/models/sync_record.py`'s own module
-docstring and in `docs/implementation/PROJECT_STATUS.md`), not a silent gap:
+Follow-up (stated in `app/models/sync_record.py`'s own module
+docstring), not a silent gap:
 doing that promotion correctly needs the record-type-specific validation,
 deduplication, and provenance rules each target table already has from
-Phases 1-7, and conflating that work into this phase's sync-protocol scope
+the earlier layers, and conflating that work into this layer's sync-protocol scope
 would have meant half-building both.
 
 ## 8. The honest synchronous-acceptance characteristic
@@ -138,7 +138,7 @@ central store, not a staging area for one.
 error happens during that single request (exercised in unit tests via
 fault-injection -- monkeypatching a DB commit to raise once). It was **not**
 reliably triggerable under real concurrent load during this session's live
-verification, because there is no downstream dependency in this phase for it
+verification, because there is no downstream dependency for it
 to fail against. This is correct, honest behavior given the architecture,
 not a bug -- but it has a real operational consequence worth stating
 plainly: **`pending_sync_count` on the device list stays near-zero under
@@ -164,8 +164,8 @@ Two independent sweeps exist, one per side of the protocol:
 - Edge (simulated): `LocalEdgeStore.recover_crashed()` does the identical
   thing to local outbox rows stuck in `syncing`.
 
-**There is no background scheduler anywhere in this project** -- every phase
-so far, including this one, is request/response only. Both sweeps are meant
+**There is no background scheduler anywhere in this project** -- every component
+so far is request/response only. Both sweeps are meant
 to be triggered by an operator or an external cron hitting the API, never an
 automatic in-process timer. State this plainly to anyone operating a real
 deployment: a device or a central process that genuinely crashed mid-sync
@@ -221,7 +221,7 @@ once, copyable, never re-shown). Routes: `/edge/devices`,
 
 ## 14. Database migration
 
-One Alembic migration, `f7c55967f675_phase8_edge_sync_offline_operation`,
+One Alembic migration, `f7c55967f675_edge_sync_offline_operation`,
 verified via a full upgrade/downgrade/upgrade round trip against a
 throwaway DB before being applied to the real dev DB. See
 `docs/operations/EDGE_TROUBLESHOOTING.md` for the two SQLite-specific fixes
@@ -245,30 +245,28 @@ against real running servers. Full detail: `docs/testing/EDGE_TESTING.md`.
   `DeviceHealthReport`/the local outbox -- see
   `docs/operations/LOCAL_STORAGE_AND_RETENTION.md`.
 - `retryable_failure` on the central side is real and tested but not
-  reliably reproducible under this phase's own live load (Section 8).
+  reliably reproducible under its own live load (Section 8).
 
-## 17. What this phase explicitly does NOT build (reserved for later phases)
+## 17. What this project explicitly does NOT build (reserved for later work)
 
 - Any autonomous targeting, weapon control, engagement decision, or remote
-  weapon interface -- not part of this project's scope at any phase.
-- Real fleet observability/dashboards beyond this phase's own device
-  registry and sync/conflict queues -- that is Phase 9's "Enterprise Edge
+  weapon interface -- not part of this project's scope at any point.
+- Real fleet observability/dashboards beyond its own device
+  registry and sync/conflict queues -- that is the "Enterprise Edge
   Fleet Management, Device Observability, Health Monitoring, Capability
   Inventory, Lifecycle Management, Operational Dashboards."
 - A second, trained edge-inference adapter -- see
   `docs/architecture/EDGE_INFERENCE.md`.
 - Any coordinate/location handling beyond what a captured record's own
-  `payload` carries -- if a future phase needs a device's own location,
-  the binding instruction (see `docs/implementation/PROJECT_STATUS.md`
-  Section 12) is to reuse Phase 7's `GeoLocationMixin`/`app/geo/`, not add
+  `payload` carries -- if later work needs a device's own location,
+  the design is to reuse the `GeoLocationMixin`/`app/geo/`, not add
   parallel location-handling logic.
 
 ## 18. Simulation-only honesty statement
 
 **This edge runtime has only ever run in simulation.** No physical edge
 hardware is available in this development environment. `app/edge/__init__.py`
-states this directly, and it is restated here and in
-`docs/implementation/history/PHASE_8_FINAL_REPORT.md` because it is the single most
+states this directly, and it is restated here because it is the single most
 important caveat on everything else in this document:
 `SimulatedEdgeNode` makes real HTTP calls (via `httpx`) to the real FastAPI
 application -- either a live `uvicorn` server or an in-process ASGI

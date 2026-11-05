@@ -1,4 +1,4 @@
-# Audit governance (Phase 14)
+# Audit governance
 
 ## What an audit record contains
 `audit_records`: `id` (event id), `created_at` (timestamp, UTC), `actor_user_id`, `organization_id`, `action`, `target_type` + `target_id` (resource), `outcome` (`success` | `failure` | `denied`), `request_id` (correlation id, also returned in the `X-Request-ID` header and in error bodies), `context_metadata` (JSON; before/after values where relevant, e.g. `user.update` stores `before`/`after`/`sessions_revoked`).
@@ -25,7 +25,7 @@ Authentication (`auth.login`, `auth.password_change`, `auth.sessions_revoked`), 
 ## Write-failure policy
 * Mutations write the audit row **in the same transaction** as the change. If the audit insert fails the exception propagates and the change is rolled back ("fail closed"). Verified for user create/update and lifecycle execute.
 * Exception: the `authz.denied` recorder is best-effort — failing to record a denial must not change a 403 into a 500; the failure is logged (`aegis.security`).
-* Some older services commit their own change before the route writes its audit row. Phase 14 converted user create/update; others retain the old ordering, so in those paths an audit failure after the commit can leave an unaudited change (it would surface as a 500). Remaining ones are listed in `KNOWN_RISKS.md`.
+* Some older services commit their own change before the route writes its audit row. The security-governance work converted user create/update; others retain the old ordering, so in those paths an audit failure after the commit can leave an unaudited change (it would surface as a 500). Remaining ones are listed in `KNOWN_RISKS.md`.
 
 ## Access
 `audit:read` is administrator-only; results are limited to the caller's organization. Filters: action (exact/prefix), outcome, actor, resource type/id, request id, time range; `page_size` ≤ 200. `GET /audit/actions` lists distinct actions for the UI. There is no audit export endpoint.

@@ -1,4 +1,4 @@
-"""Request-size limiting and security headers (Phase 14, Phase I).
+"""Request-size limiting and security headers.
 
 Pure ASGI middleware (not BaseHTTPMiddleware) so a body can be rejected
 while it streams, without buffering it first.

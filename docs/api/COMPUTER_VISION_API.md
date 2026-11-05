@@ -1,4 +1,4 @@
-# Computer Vision API (Phase 4)
+# Computer Vision API
 
 All routes below are mounted under `/api/v1` (see `app/main.py`). Every
 route requires authentication; the specific permission required is
@@ -24,7 +24,7 @@ permission grant table).
 | Route | Permission | Notes |
 |---|---|---|
 | `POST /cv/models` | `MODEL_MANAGE` (admin-only) | `{"name", "version", "adapter_key", "supported_media_types", "status"}`. `400` on an unknown `adapter_key` or media type. Idempotent on `(name, version)`. |
-| `GET /cv/models` | `MODEL_READ` | Paginated list -- **CV models only** (`task_type IS NOT NULL`); Phase 1's `demo-risk-scorer` never appears here. |
+| `GET /cv/models` | `MODEL_READ` | Paginated list -- **CV models only** (`task_type IS NOT NULL`); the `demo-risk-scorer` never appears here. |
 | `GET /cv/models/{id}` | `MODEL_READ` | |
 
 `CVModelResponse` fields: `id`, `name`, `version`, `task_type`,
@@ -83,10 +83,10 @@ Every write route above (`media.upload`/`upload_rejected`,
 `detection.review`/`promote_to_evidence`, `evaluation.run`) records an
 `audit_service.record()` entry with the actor, organization,
 target type/id, and a small `context_metadata` payload -- the same
-audit discipline every write route in Phases 1-3 already follows; no
+audit discipline every write route already follows; no
 new audit mechanism was introduced.
 
-## Error shapes (consistent with earlier phases)
+## Error shapes (consistent with earlier work)
 
 - `400` -- validation failure before any state was created
   (`MediaValidationError`, `InferenceSubmissionError`, a bad

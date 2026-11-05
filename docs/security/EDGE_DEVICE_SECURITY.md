@@ -1,4 +1,4 @@
-# Edge Device Security (Phase 8)
+# Edge Device Security
 
 **Status: IMPLEMENTED, tested.** Device identity, credentials, and the
 device-authentication scheme -- deliberately separate from the user-facing
@@ -146,6 +146,6 @@ user's JWT and the matching `Permission`, never a device credential.
   schedule.
 - No device-side secure storage model is specified or tested -- how a real
   device would protect its own plaintext key at rest is out of this
-  phase's scope (there is no physical device to specify it for).
+  layer's scope (there is no physical device to specify it for).
 - No mutual TLS / device-certificate scheme -- authentication is the
   `X-Device-Id`/`X-Device-Api-Key` header pair only.

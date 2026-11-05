@@ -6,7 +6,7 @@ import type {
 
 const json = (body: unknown) => JSON.stringify(body)
 
-/** Phase 14 governance API. Every call hits a real backend route; permissions are enforced server-side. */
+/** Governance API. Every call hits a real backend route; permissions are enforced server-side. */
 export const governanceApi = {
   audit: (filters: AuditFilters, page = 1, pageSize = 25) => {
     const s = new URLSearchParams({ page: String(page), page_size: String(pageSize) })

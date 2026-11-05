@@ -52,7 +52,7 @@ export function TrackingOverviewPage() {
           missing / reacquired / ended / rejected), image-space-only motion analytics in pixels, and custom-defined tracking
           evaluation metrics against a deterministic synthetic fixture. Consumes real{' '}
           <Link to="/cv/jobs" className="text-accent-400 hover:underline">
-            Phase 4 video_frame_analysis InferenceJob
+            Video_frame_analysis InferenceJob
           </Link>{' '}
           detections directly -- never a standalone demo.
         </p>

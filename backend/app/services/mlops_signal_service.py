@@ -10,7 +10,7 @@ automated operational action, and is created idempotently:
    duplicate, so a repeated scan cannot cause an alert storm.
  * A resolved signal stays resolved; if the condition recurs later a NEW row is
    created so the history shows each distinct episode (same convention as the
-   Phase 9 fleet alerts).
+   Fleet alerts).
  * Deduplication is enforced in the service layer, not by a DB unique
    constraint (a unique key would block recording a second episode). Two truly
    concurrent writers could still race; this is documented in KNOWN_RISKS.

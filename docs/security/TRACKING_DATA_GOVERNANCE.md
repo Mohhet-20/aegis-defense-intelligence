@@ -1,4 +1,4 @@
-# Tracking Data Governance (Phase 5, Section 9/15)
+# Tracking Data Governance (Section 9/15)
 
 ## Explicit prohibitions, enforced in code, not just policy
 
@@ -6,7 +6,7 @@
   geometric IoU between bounding boxes plus (optionally) the detector's own `class_label` --
   `TrackerDetectionInput` (the only shape the tracker ever sees) carries no pixel data, no
   embedding, nothing that could encode a face or biometric signature. See
-  `docs/architecture/COMPUTER_VISION_CONTRACTS.md` for the Phase 4 detector-side half of this
+  `docs/architecture/COMPUTER_VISION_CONTRACTS.md` detector-side half of this
   guarantee, which this tracker consumes but never re-derives.
 - **No cross-camera or cross-video identity matching.** A `Track` is scoped to exactly one
   `TrackingJob`, which is scoped to exactly one `InferenceJob`, which is scoped to exactly one
@@ -30,7 +30,7 @@
 | `TRACKING_EVALUATION_RUN` | yes | no | no | yes |
 | `TRACKING_EVALUATION_READ` | yes | yes | yes | yes |
 
-This mirrors Phase 4's `INFERENCE_RUN` vs. `DETECTION_REVIEW` split exactly: Investigator can
+This mirrors the `INFERENCE_RUN` vs. `DETECTION_REVIEW` split exactly: Investigator can
 review and annotate but cannot trigger new runs, the same "can look, can flag, cannot spend
 compute" boundary already established for detection review. Every route decides this
 server-side via `require_permission` -- never a frontend-only check, and the frontend's own

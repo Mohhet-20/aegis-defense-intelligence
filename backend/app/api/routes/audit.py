@@ -35,7 +35,7 @@ def list_audit_records(
 ) -> Page:
     """Restricted to AUDIT_READ (administrator by default). Strictly scoped
     to THIS organization: system-level rows (organization_id NULL) and other
-    organizations' rows are never returned (Phase 14 fixed a defect where
+    organizations' rows are never returned (fixed a defect where
     NULL-org rows were visible to every organization's administrator). The
     API is read-only -- there is no update or delete route for audit rows."""
     stmt = audit_service.build_query(

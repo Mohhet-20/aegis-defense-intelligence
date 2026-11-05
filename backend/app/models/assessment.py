@@ -1,7 +1,7 @@
 """Intelligence assessment. A bounded, versioned,
 explainable analytical write-up that must be traceable to the evidence
 it relies on via `AssessmentEvidenceLink` rows. This is a storage and
-review-workflow shape, same spirit as Phase 1's `RiskAssessment` --
+review-workflow shape, same spirit as the `RiskAssessment` --
 nothing here runs a model or fabricates a conclusion; it organizes
 evidence and uncertainty for human analysts.
 

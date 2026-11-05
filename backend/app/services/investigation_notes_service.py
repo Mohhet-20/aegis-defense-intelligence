@@ -1,4 +1,4 @@
-"""Notes and annotations (Phase 11, Phase F).
+"""Notes and annotations.
 
 Notes are separate rows that point at an investigation (and optionally an
 evidence item); they never modify the evidence or any model output. Every

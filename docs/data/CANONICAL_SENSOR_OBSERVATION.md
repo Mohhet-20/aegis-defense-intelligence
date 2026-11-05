@@ -1,6 +1,6 @@
-# Canonical Sensor Observation Schema (Phase 6)
+# Canonical Sensor Observation Schema
 
-**Status: REAL.** Phase 1's `Observation` storage shape plus the Phase 6
+**Status: REAL.** the `Observation` storage shape plus the
 (Section 4) extensions migrated in `e416c9a24fa4`. This supersedes
 `docs/architecture/MULTISENSOR_CONTRACTS.md`'s description of
 `quality_metadata` as "present, not yet populated by any real quality
@@ -20,21 +20,21 @@ already-stored row should be interpreted.
 | `source_id` | string, nullable | FK `data_sources.id` |
 | `observed_at` | datetime, tz-aware UTC | event time -- always a distinct column from `ingested_at` |
 | `observation_type` | string | doubles as the measurement-type identifier for numeric telemetry (e.g. `"temperature_c"`); no separate `measurement_type` column was added |
-| `payload` | JSON dict | the generic structured value Phase 1's non-numeric rows already used, plus (Phase 6) every field from an ingested record that isn't one of the dedicated columns below -- see `_RESERVED_KEYS` in `sensor_ingestion_service.py` |
+| `payload` | JSON dict | the generic structured value the non-numeric rows already used, plus every field from an ingested record that isn't one of the dedicated columns below -- see `_RESERVED_KEYS` in `sensor_ingestion_service.py` |
 | `quality_metadata` | JSON dict | `{"issues": [...], "ruleset_version": ...}` -- the full list of `QualityIssue` codes/messages produced for this row, not just the single `validation_status` that won |
 | `provenance` | JSON dict | `raw_record_id`, `connector_type`, `connector_version`, `schema_version`, `content_fingerprint`, `quality_ruleset_version` |
 | `processing_status` | string | `ingested` / `associated` / `archived` (`OBSERVATION_PROCESSING_STATUSES`) |
 | `data_origin` | string | `synthetic_demo` / `user_upload` -- never lets a synthetic record pass as a live feed |
-| `ingested_at` | datetime, tz-aware UTC, nullable | **Phase 6.** When this platform actually processed the record. Nullable at the DB level only so the three pre-existing Phase-1 seed rows stay valid without a backfill; the ingestion service always sets it for every row it creates. |
-| `measurement_value` | float, nullable | **Phase 6.** The explicit numeric value the statistics/anomaly engines operate on. `None` for a structured-only observation -- never a fabricated `0.0`. |
-| `unit` | string, nullable | **Phase 6.** The record's reported unit, or the sensor's configured unit for this measurement type if the record didn't supply one. |
-| `validation_status` | string | **Phase 6.** One of `OBSERVATION_VALIDATION_STATUSES` -- see "Validation statuses" below. Default `"valid"` (server-defaulted on migration for the 3 pre-existing seed rows). |
-| `quality_flags` | JSON list | **Phase 6.** Every `QualityIssue.code` produced for this record (e.g. `["stale_observation", "below_configured_minimum"]`) -- a record can carry multiple flags regardless of which single `validation_status` wins. |
-| `source_record_id` | string, nullable | **Phase 6.** FK `raw_records.id`, `ON DELETE SET NULL`. The `RawRecord` this observation was normalized from. `NULL` for the 3 Phase-1 seed rows and any future hand-created observation. |
-| `ingestion_job_id` | string, nullable | **Phase 6.** FK `ingestion_jobs.id`, `ON DELETE SET NULL`. |
-| `schema_version` | string | **Phase 6.** Default `"1.0"`. |
-| `calibration_metadata` | JSON dict, nullable | **Phase 6.** Populated only when the source itself supplied it (via `record["calibration_metadata"]`) or a documented, versioned unit conversion ran (`app/sensors/units.py`) -- never invented. |
-| `uncertainty_metadata` | JSON dict, nullable | **Phase 6.** Same policy -- both `None` unless the source documented them. |
+| `ingested_at` | datetime, tz-aware UTC, nullable | When this platform actually processed the record. Nullable at the DB level only so the three pre-existing original seed rows stay valid without a backfill; the ingestion service always sets it for every row it creates. |
+| `measurement_value` | float, nullable | The explicit numeric value the statistics/anomaly engines operate on. `None` for a structured-only observation -- never a fabricated `0.0`. |
+| `unit` | string, nullable | The record's reported unit, or the sensor's configured unit for this measurement type if the record didn't supply one. |
+| `validation_status` | string | One of `OBSERVATION_VALIDATION_STATUSES` -- see "Validation statuses" below. Default `"valid"` (server-defaulted on migration for the 3 pre-existing seed rows). |
+| `quality_flags` | JSON list | Every `QualityIssue.code` produced for this record (e.g. `["stale_observation", "below_configured_minimum"]`) -- a record can carry multiple flags regardless of which single `validation_status` wins. |
+| `source_record_id` | string, nullable | FK `raw_records.id`, `ON DELETE SET NULL`. The `RawRecord` this observation was normalized from. `NULL` for the 3 original seed rows and any future hand-created observation. |
+| `ingestion_job_id` | string, nullable | FK `ingestion_jobs.id`, `ON DELETE SET NULL`. |
+| `schema_version` | string | Default `"1.0"`. |
+| `calibration_metadata` | JSON dict, nullable | Populated only when the source itself supplied it (via `record["calibration_metadata"]`) or a documented, versioned unit conversion ran (`app/sensors/units.py`) -- never invented. |
+| `uncertainty_metadata` | JSON dict, nullable | Same policy -- both `None` unless the source documented them. |
 
 ## Validation statuses (`OBSERVATION_VALIDATION_STATUSES`)
 
@@ -92,7 +92,7 @@ thereby wrong, dangerous, or hostile.
 ## Timestamp normalization
 
 `check_timestamp()` delegates to `app/services/normalization_service.
-normalize_timestamp()` (the same function Phase 2's Event pipeline already
+normalize_timestamp()` (the same function the Event pipeline already
 uses): a value with explicit timezone/offset is converted to UTC as given; a
 naive value is assumed to already be UTC; epoch seconds (`int`/`float`) are
 unambiguous and parsed as UTC; anything that doesn't parse becomes
@@ -110,10 +110,10 @@ corresponding `Observation` is created **only if** `QualityOutcome.
 is_accepted` is `True`. A duplicate record (matched by `external_id`, either
 repeated earlier in the same batch or against a previously-ingested record
 for the same source) gets a `RawRecord` with `is_duplicate=True` and no
-`Observation` at all -- `RawRecord.is_duplicate` is Phase 6's duplicate
+`Observation` at all -- `RawRecord.is_duplicate` is the duplicate
 signal; `Observation.validation_status = "duplicate"` is a reserved value
 never actually written by the current pipeline. `RawRecord.event_id` always
-stays `NULL` for a sensor batch (that column exists for Phase 2's Event
+stays `NULL` for a sensor batch (that column exists for the Event
 pipeline); the sensor-specific link back is `Observation.source_record_id`.
 
 ```

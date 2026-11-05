@@ -1,4 +1,4 @@
-"""Unified investigation timeline (Phase 11, Phase E), computed on read from
+"""Unified investigation timeline, computed on read from
 existing persisted records -- nothing is stored or back-filled.
 
 Timestamp semantics

@@ -1,4 +1,4 @@
-# MLOps architecture (Phase 15)
+# MLOps architecture
 
 AEGIS extends the existing model registry (`ModelRecord`) and evaluation services instead of adding a parallel system.
 
@@ -18,7 +18,7 @@ Services only `flush`; routes commit. `organization_id` always comes from the au
 ## Registry and versions
 * **Family** is a derived view: versions sharing `name`. There is no family table.
 * **Version** = a `ModelRecord` registered through `POST /mlops/models`. It stores `owner_organization_id`, creator, task type, adapter or artifact reference, optional sha256 digest, schema versions, release notes. `(name, version)` is unique (index created by the migration unless legacy duplicates exist).
-* **Immutability:** identity columns of owned versions cannot change after insert (ORM `before_update` guard → `ModelImmutableError`). To change a model, register a new version. *Limitation:* legacy rows with no owner (platform-level, pre-Phase-15) are visible to every organization and are **not** guarded, because earlier code and tests legitimately edit them.
+* **Immutability:** identity columns of owned versions cannot change after insert (ORM `before_update` guard → `ModelImmutableError`). To change a model, register a new version. *Limitation:* legacy rows with no owner (platform-level, pre-original) are visible to every organization and are **not** guarded, because earlier code and tests legitimately edit them.
 * **Artifact references:** `adapter:<key>` (closed allow-list) or `artifact:<relative/path>` under `MLOPS_ARTIFACT_ROOT`. URLs, absolute paths, `..`, symlink escapes are rejected; files are only stat'ed/hashed, never loaded or executed. With no root configured, file artifacts are reported *unavailable*, not an error.
 
 ## Lifecycle

@@ -1,4 +1,4 @@
-# MediaAsset Schema (Phase 4)
+# MediaAsset Schema
 
 `app/models/media_asset.py` -- table `media_assets`. A securely-ingested
 image or video file. Every row here passed real file-signature

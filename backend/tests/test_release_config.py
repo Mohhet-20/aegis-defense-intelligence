@@ -1,4 +1,4 @@
-"""Phase 18: configuration is documented and production defaults are safe."""
+"""Configuration is documented and production defaults are safe."""
 from __future__ import annotations
 
 import os

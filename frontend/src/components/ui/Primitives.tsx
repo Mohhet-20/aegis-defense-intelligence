@@ -49,7 +49,7 @@ const STATUS_STYLES: Record<string, string> = {
   closed: 'bg-slate-500/15 text-slate-400 border-slate-500/30',
   dismissed: 'bg-slate-500/15 text-slate-400 border-slate-500/30',
   overridden: 'bg-status-serious/15 text-status-serious border-status-serious/30',
-  // Phase 8: edge AI / offline-first operation
+  // Edge AI offline-first operation
   online: 'bg-status-good/15 text-status-good border-status-good/30',
   offline: 'bg-status-warning/15 text-status-warning border-status-warning/30',
   suspended: 'bg-status-warning/15 text-status-warning border-status-warning/30',
@@ -64,7 +64,7 @@ const STATUS_STYLES: Record<string, string> = {
   cancelled: 'bg-slate-500/15 text-slate-400 border-slate-500/30',
   unresolved: 'bg-status-warning/15 text-status-warning border-status-warning/30',
   resolved: 'bg-status-good/15 text-status-good border-status-good/30',
-  // Phase 9: enterprise edge fleet management
+  // Enterprise edge fleet management
   maintenance: 'bg-status-warning/15 text-status-warning border-status-warning/30',
   decommissioned: 'bg-slate-500/15 text-slate-400 border-slate-500/30',
   stale: 'bg-status-warning/15 text-status-warning border-status-warning/30',

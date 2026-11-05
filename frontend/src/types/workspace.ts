@@ -1,4 +1,4 @@
-// Phase 11 investigation workspace types (mirror backend/app/schemas/investigation_workspace.py).
+// Investigation workspace types (mirror backend/app/schemas/investigation_workspace.py).
 export interface WorkspaceInvestigation {
   id: string
   organization_id: string

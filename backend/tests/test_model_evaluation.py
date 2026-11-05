@@ -1,9 +1,9 @@
-"""Phase 4, Section 10/17: model evaluation against a clearly-labelled
+"""/17: model evaluation against a clearly-labelled
 SYNTHETIC fixture (no real labelled operational dataset exists yet --
 see app/cv/synthetic_eval_fixture.py). Every assertion here is about the
 evaluation PIPELINE being correct (real IoU matching, real precision/
 recall/F1 arithmetic, full traceability) -- never about the mock
-adapter's "accuracy," which is not a claim this phase makes.
+adapter's "accuracy," which is not a claim this layer makes.
 """
 from __future__ import annotations
 

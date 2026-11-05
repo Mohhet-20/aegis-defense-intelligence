@@ -1,4 +1,4 @@
-# Media Upload Security (Phase 4, Section 3)
+# Media Upload Security (Section 3)
 
 Every control below runs, in order, for every upload, with no bypass
 path -- `app/services/media_service.ingest_media()` is the **only**
@@ -87,7 +87,7 @@ is used **only** for what the UI shows the analyst (`declared_filename`)
 ## What this does NOT do
 
 - Does not scan uploaded content for malware signatures -- out of scope
-  for this phase; this platform's own controls are signature sniffing,
+ this platform's own controls are signature sniffing,
   size/dimension bounds, and never executing uploaded content (media
   bytes are only ever decoded by `PIL`/`cv2`, never `exec`'d, imported,
   or shelled out to).
@@ -98,4 +98,4 @@ is used **only** for what the UI shows the analyst (`declared_filename`)
 - Does not virus-scan or sandbox video decoding -- `cv2.VideoCapture`
   runs against untrusted bytes with the standard risk profile of any
   OpenCV deployment; no additional isolation (a separate decode process,
-  a seccomp sandbox) was added in this phase.
+  a seccomp sandbox) was added.

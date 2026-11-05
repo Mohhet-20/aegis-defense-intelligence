@@ -1,6 +1,6 @@
-# Tracking Result Schema (Phase 5, Section 3/9)
+# Tracking Result Schema (Section 3/9)
 
-Five new tables. No existing Phase 1-4 table is altered.
+Five new tables. No existing table is altered.
 
 ## `tracking_jobs`
 
@@ -31,7 +31,7 @@ One sequence-scoped association of detections, produced by exactly one `tracking
 | `matched_observations_count`, `missed_frames_count` | Real counts, not estimates. |
 | `state` | One of `TRACK_STATES` -- see `docs/ml/TRACK_LIFECYCLE.md`. |
 | `quality_summary` | JSON: `mean_confidence`, `mean_association_cost`, `fragmentation_count`, `missed_sampled_frame_count`, `bbox_area_px_first/last` -- descriptive only, never a fabricated single "quality score." |
-| `lifecycle_events` | JSON list of `{frame_index, timestamp_seconds, from_state, to_state, reason}` -- kept as a column rather than a 6th table, the same "don't over-normalize a first vertical slice" judgment Phase 4 made for `DetectionResult.raw_model_output`. Every gap and reacquisition is reconstructable from this plus the track's own `TrackObservation` rows. |
+| `lifecycle_events` | JSON list of `{frame_index, timestamp_seconds, from_state, to_state, reason}` -- kept as a column rather than a 6th table, the same "don't over-normalize a first vertical slice" judgment made for `DetectionResult.raw_model_output`. Every gap and reacquisition is reconstructable from this plus the track's own `TrackObservation` rows. |
 
 ## `track_observations`
 
@@ -40,7 +40,7 @@ One frame's link from a `Track` to the `DetectionResult` it matched.
 | Column | Notes |
 |---|---|
 | `track_id`, `detection_result_id` (FK `RESTRICT`), `media_asset_id` | `detection_result_id` is `RESTRICT`, not `CASCADE` -- a detection with a tracking observation pointing at it can never be deleted out from under that lineage. |
-| `frame_index`, `frame_timestamp_seconds`, `bbox_*`, `class_label`, `confidence` | **Read-only mirrors** of the referenced `DetectionResult` at creation time -- the same denormalize-for-read-convenience judgment Phase 4 made putting `media_asset_id`/`model_record_id` directly on `DetectionResult`. Nothing in this platform ever edits these columns after creation; the original `DetectionResult` row remains the single source of truth. |
+| `frame_index`, `frame_timestamp_seconds`, `bbox_*`, `class_label`, `confidence` | **Read-only mirrors** of the referenced `DetectionResult` at creation time -- the same denormalize-for-read-convenience judgment made putting `media_asset_id`/`model_record_id` directly on `DetectionResult`. Nothing in this platform ever edits these columns after creation; the original `DetectionResult` row remains the single source of truth. |
 | `association_method` | e.g. `"iou_hungarian_v1"` or `"new_track"` for a track's first observation -- never `"unknown"`. |
 | `association_cost` | `1 - IoU` for a matched pair, or `NULL` for a track's first observation (there is no prior box to compare against) -- never fabricated when there was no real comparison. |
 | `observation_state` | Only ever `"matched"` today (`OBSERVATION_STATES = ("matched",)`). Deliberately **no** `"interpolated"` value exists -- Section 7 forbids silently interpolating a missing position into authoritative evidence, so a frame with no matched detection for a track simply has no row here for that frame/track at all. The column exists (rather than being omitted entirely) so a future, deliberate decision to add a distinguishable display-only interpolated value has somewhere to go without a migration. |
@@ -53,7 +53,7 @@ An analyst's note or flag about one track -- never a destructive edit.
 `fragmented_track`, `false_association`, `uncertain_association`, `note`).
 `supersedes_annotation_id` + `superseded_at`: correcting an earlier annotation creates a new
 row pointing back at the one it supersedes; the old row is marked `superseded_at` but never
-edited or deleted -- the same non-destructive history discipline Phase 3 established for
+edited or deleted -- the same non-destructive history discipline established for
 `AssessmentRevision`.
 
 ## `tracking_evaluation_runs`

@@ -1,6 +1,6 @@
 # Deduplication Policy
 
-Phase 2, Section 11. How this platform decides a record is a duplicate,
+How this platform decides a record is a duplicate,
 and -- just as important -- what it refuses to do about an updated record.
 
 ## Matching order (deterministic, never similarity-based)
@@ -29,8 +29,8 @@ feeds back into deduplication.)
 1. **In-batch**: `seen_external_ids`, a set built fresh for each
    connector batch -- catches two records in the SAME upload/fetch sharing
    an identifier before either is committed. (This set is exactly the fix
-   for the intra-batch `IntegrityError` bug found and fixed in Phase 1,
-   carried forward unchanged in behavior through this phase's rewrite.)
+   for the intra-batch `IntegrityError` bug found and fixed,
+   carried forward unchanged in behavior through this layer's rewrite.)
 2. **Cross-batch, pre-insert**: a `SELECT` against `Event` for
    `(source_id, external_id)` before attempting an insert.
 3. **The database constraint, as the real backstop**: `events` has
@@ -58,7 +58,7 @@ the race"`.
 A source resending the SAME `external_id` with DIFFERENT content (a
 corrected or updated report) is still flagged a duplicate, exactly like an
 exact repeat. **The existing stored event is never silently replaced.**
-This is the deliberate, documented policy for this phase: preserving
+This is the deliberate, documented policy: preserving
 original evidence takes priority over auto-applying an update. An
 "ignore exact repeat / update existing / create a new versioned record"
 three-way policy choice was considered (Section 11 explicitly asks for an
@@ -66,8 +66,8 @@ explicit policy here) -- the choice made is **ignore and flag**, the
 safest default, with the resend visible to an analyst via the duplicate's
 `RawRecord` row (which still preserves the new payload, even though no
 `Event` was created or modified from it). A dedicated "apply this
-correction" analyst action is a reasonable Phase 3+ feature; nothing in
-this phase implements one, and nothing silently behaves as if it does.
+correction" analyst action is a reasonable later feature; nothing in
+this layer implements one, and nothing silently behaves as if it does.
 Verified by
 `tests/test_provenance_and_dedup.py::test_updated_record_with_same_external_id_never_silently_overwrites`.
 

@@ -1,4 +1,4 @@
-"""Aggregated geospatial overview (Phase 7, Section 6 "Overview" tab).
+"""Aggregated geospatial overview (Section 6 "Overview" tab).
 Composes already-existing services into one summary object -- this
 module implements NO new counting or validation logic of its own; it
 only reads what geo_query_service, location_quality_service,

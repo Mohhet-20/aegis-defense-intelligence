@@ -1,4 +1,4 @@
-"""phase 14 security governance: token version, lifecycle requests, audit triggers
+"""Security governance: token version, lifecycle requests, audit triggers
 
 Revision ID: a14c0de5ec01
 Revises: 980f1f55cbaa

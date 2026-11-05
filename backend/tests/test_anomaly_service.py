@@ -1,5 +1,4 @@
-"""Service-level tests for app/services/anomaly_service.py (Phase 6,
-Section 9) -- runs real checks against real ingested Observation
+"""Service-level tests for app/services/anomaly_service.py (Section 9) -- runs real checks against real ingested Observation
 history and verifies idempotent persistence + the analyst review
 workflow's category mapping."""
 from __future__ import annotations

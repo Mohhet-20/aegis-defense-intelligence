@@ -1,4 +1,4 @@
-"""Request/response schemas for the Phase 15 MLOps routes. Requests are strict
+"""Request/response schemas MLOps routes. Requests are strict
 (unknown fields rejected, numbers must be finite); responses declare the shape
 the frontend relies on."""
 from __future__ import annotations

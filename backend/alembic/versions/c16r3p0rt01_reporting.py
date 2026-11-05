@@ -1,4 +1,4 @@
-"""phase 16 analytics and reporting: report_runs table and windowed-query indexes
+"""Analytics and reporting: report_runs table and windowed-query indexes
 
 Revision ID: c16r3p0rt01
 Revises: b15e0ps0001

@@ -1,4 +1,4 @@
-"""Bounded upload reads (Phase 14, Phase H). `UploadFile.read()` with no
+"""Bounded upload reads. `UploadFile.read()` with no
 argument buffers the whole body; this reads in chunks and aborts with 413 as
 soon as the limit is crossed."""
 from __future__ import annotations

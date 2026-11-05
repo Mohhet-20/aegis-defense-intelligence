@@ -143,7 +143,7 @@ export function FusionPage() {
           Fusion never merges or auto-resolves anything. A relationship it creates stays a &quot;candidate&quot; until an
           analyst confirms, rejects, or marks it uncertain. A conflict it detects stays &quot;unresolved&quot; until an
           analyst records a resolution and a rationale. Conflict detection is scoped to event pairs that already have a
-          Phase 2 correlation -- it is never an independent all-pairs scan of the whole dataset.
+          Correlation -- it is never an independent all-pairs scan of the whole dataset.
         </p>
       </Card>
     </div>

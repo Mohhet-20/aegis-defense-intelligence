@@ -1,4 +1,4 @@
-"""The durable, idempotent central sync pipeline (Phase 8, Sections
+"""The durable, idempotent central sync pipeline (Sections
 5-9). This module is the only place that ever writes `SyncRecord.sync_status`
 -- every transition goes through `_transition()`, which enforces
 `SYNC_RECORD_TRANSITIONS` ("prevent invalid state changes").
@@ -10,7 +10,7 @@ Durability model actually implemented here (documented honestly, see
 docs/architecture/EDGE_ARCHITECTURE.md Section 7): a logical record is
 durably accepted the moment its SyncRecord row commits with
 `sync_status="synced"`. There is no further downstream system in this
-phase -- the SyncRecord table itself IS the durable central store, not
+layer -- the SyncRecord table itself IS the durable central store, not
 a staging area for one. Promoting an accepted record into a canonical
 Event/Observation/Evidence row is an explicit, deferred follow-up (see
 the module docstring on app/models/sync_record.py), not a silent gap.
@@ -285,7 +285,7 @@ def _run_acceptance(db: Session, record: SyncRecord, settings: Settings) -> tupl
     bounded by EDGE_SYNC_MAX_RETRY_COUNT -- this is the one server-side
     failure mode this synchronous, single-process implementation can
     genuinely hit (there is no further downstream dependency to fail
-    against in this phase, see module docstring)."""
+    against, see module docstring)."""
     try:
         conflict_id = _accept_record(db, record)
         return conflict_id, None
@@ -425,7 +425,7 @@ def process_health_report(db: Session, device: Device, report: HealthReportReque
     db.commit()
     db.refresh(entry)
 
-    # Phase 9, Sections 7/9: capability discovery and infrastructure
+    # capability discovery and infrastructure
     # alerting are both derived from the same health-report data this
     # endpoint already accepts (Part 3's "reuse" instruction) -- never a
     # second, parallel ingestion path.

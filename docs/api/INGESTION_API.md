@@ -1,10 +1,10 @@
 # Ingestion & Data Platform API
 
-Phase 2's expanded `/api/v1` surface: source management, ingestion jobs
+the expanded `/api/v1` surface: source management, ingestion jobs
 (file-upload and connector-driven), raw-record provenance, data quality,
 correlation, and controlled export. All routes below sit under `/api/v1`
-and require a valid bearer token (see Phase 1's `AUTHENTICATION.md`) --
-this document only covers what's new/changed in Phase 2. Every route
+and require a valid bearer token (see the `AUTHENTICATION.md`) --
+this document only covers what's new/changed. Every route
 appears in the live OpenAPI docs at `/docs` (FastAPI's auto-generated
 schema; nothing here is hand-maintained separately from the actual route
 code, so if this doc and `/docs` ever disagree, `/docs` -- i.e. the code --
@@ -55,32 +55,32 @@ pipeline health, not evidentiary weight. See
 | `POST /correlation/recompute` | `CORRELATION_MANAGE` | **The one explicit entry point that produces correlations** (see `docs/analytics/EVENT_CORRELATION.md`) -- there is no background job. Optional `time_window_seconds` (default 1800) / `spatial_threshold_meters` (default 500) override the defaults for this run only. Idempotent: re-running with the same `rule_version` never duplicates existing rows. Audit-logged as `correlation.recompute` with the exact parameters and result counts. |
 | `POST /correlation/{id}/review` | `CORRELATION_MANAGE` | The only way `review_status` ever changes (`confirmed` or `rejected` -- never back to `candidate`, enforced by the schema). Audit-logged as `correlation.review`. |
 
-## Events (Phase 2 additions): `app/api/routes/events.py`
+## Events (additions): `app/api/routes/events.py`
 
 | Method & path | Permission | What it does |
 |---|---|---|
-| `GET /events` | `EVENT_READ` | Existing listing, extended with `source_id` and `data_origin` filters alongside Phase 1's `event_type`/`priority` |
+| `GET /events` | `EVENT_READ` | Existing listing, extended with `source_id` and `data_origin` filters alongside the `event_type`/`priority` |
 | `GET /events/export` | `DATA_EXPORT` | **Its own permission, separate from `EVENT_READ`** -- not every role that can read events may bulk-export them. `format=csv\|json` (default csv). Applies the same filters as the list endpoint. **Hard-refuses (400) if the filtered result exceeds `MAX_EXPORT_ROWS = 5000` rather than silently truncating** -- the caller must narrow filters. CSV values are guarded against formula injection (a leading `=`, `+`, `-`, `@`, tab, or carriage return is neutralized with a leading single quote) before being written. Only normalized `Event` fields are exported, never a raw payload. Every export is audit-logged (`event.export`) with format, row count, and the filters used. Registered **before** `/{event_id}` in route order so `"export"` is never swallowed as an `event_id` path parameter. |
-| `GET /events/{id}/raw-record` | `RAW_RECORD_READ` | Resolves an event to the `RawRecord` that produced it via `Event.provenance.raw_record_id`. 404 if the event predates Phase 2 (no linked raw record) or the id doesn't resolve. |
+| `GET /events/{id}/raw-record` | `RAW_RECORD_READ` | Resolves an event to the `RawRecord` that produced it via `Event.provenance.raw_record_id`. 404 if the event predates (no linked raw record) or the id doesn't resolve. |
 | `GET /events/{id}/correlations` | `CORRELATION_READ` | All correlation rows (any `review_status`) involving this event, either side of the pair. |
 
 ## Cross-cutting concerns
 
-- **Pagination**: every list endpoint uses the same `Page[...]`/`PageParams` pattern from Phase 1 (`page`, `page_size` query params) -- nothing new introduced for Phase 2's endpoints.
-- **Organization scoping**: every query in every service function above filters by `organization_id` from the authenticated token -- there is no endpoint in this phase that can read or act across organizations.
+- **Pagination**: every list endpoint uses the same `Page[...]`/`PageParams` pattern (`page`, `page_size` query params) -- nothing new introduced for the endpoints.
+- **Organization scoping**: every query in every service function above filters by `organization_id` from the authenticated token -- there is no endpoint that can read or act across organizations.
 - **Audit logging**: every mutating endpoint above (`enable`/`disable`/`reliability`/`run`/`recompute`/`review`/upload/`retry`/`export`) calls `audit_service.record()` in the same database transaction as the mutation, before `db.commit()` -- an audit entry can never exist without the action it describes actually having committed, and vice versa.
-- **Request size bounds**: the file-upload endpoint is subject to the same body-size limits as Phase 1's upload handling; the HTTP connector enforces its own response-size cap (see `docs/architecture/CONNECTOR_ARCHITECTURE.md`) independent of this.
+- **Request size bounds**: the file-upload endpoint is subject to the same body-size limits as the upload handling; the HTTP connector enforces its own response-size cap (see `docs/architecture/CONNECTOR_ARCHITECTURE.md`) independent of this.
 - **SSRF defense**: `POST /sources/{id}/run` and `POST /sources/{id}/check-connectivity` are the only two routes that can cause this server to make an outbound HTTP request on an analyst's behalf (for an `http_api` source) -- both go through `url_safety.py`'s validation before any request is attempted. See `docs/architecture/CONNECTOR_ARCHITECTURE.md`.
 - **OpenAPI docs**: `GET /docs` (Swagger UI) and `GET /openapi.json` reflect every route and schema above automatically -- generated from the same Pydantic schemas and FastAPI route declarations referenced in this document, not maintained separately.
 
-## What this phase does NOT add
+## What this layer does NOT add
 
 No webhook/callback endpoints for push-based ingestion (every connector in
-this phase is pull-based -- the server reaches out, nothing reaches in).
+this layer is pull-based -- the server reaches out, nothing reaches in).
 No bulk/batch job-submission endpoint (one `POST /ingestion/jobs` call is
 one file; one `POST /sources/{id}/run` call is one connector fetch). No
 endpoint to delete a `RawRecord`, an `Event`, or a correlation -- retention
-and deletion are explicitly out of scope for this phase (see
+and deletion are explicitly out of scope (see
 `docs/data/DEDUPLICATION_POLICY.md`'s retention note). No endpoint exposes
 cross-organization data under any role.
 
@@ -88,7 +88,7 @@ cross-organization data under any role.
 
 `backend/tests/test_connectors.py`, `test_provenance_and_dedup.py`,
 `test_correlation.py`, `test_quality_and_sources.py`,
-`test_security_phase2.py`, and `test_retry_and_correlation_api.py`
+`test_security_baseline.py`, and `test_retry_and_correlation_api.py`
 collectively exercise every route in this document, including permission
 gates (a role lacking the required permission gets 403), the export size
 limit, the disabled-source 409s, and the retry 400 for a non-retryable job

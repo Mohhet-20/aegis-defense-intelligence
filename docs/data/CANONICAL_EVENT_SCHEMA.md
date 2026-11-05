@@ -1,6 +1,6 @@
 # Canonical Event Schema
 
-Phase 2, Section 5. The normalized shape every ingested record is mapped
+The normalized shape every ingested record is mapped
 onto, regardless of source or connector. `SCHEMA_VERSION = "1.0"` (see
 `app/services/normalization_service.py`) -- bumped whenever a change here
 would affect how an already-stored row should be interpreted.
@@ -31,7 +31,7 @@ would affect how an already-stored row should be interpreted.
 | `ingestion_job_id` | string, nullable | which job produced this event |
 
 `source_severity`, `priority`, `confidence` are three DIFFERENT numbers,
-never collapsed into one field (carried over unchanged from Phase 1,
+never collapsed into one field (carried over unchanged,
 Section 7).
 
 ## Timestamp policy
@@ -63,7 +63,7 @@ Implemented in `normalization_service.normalize_coordinates()`:
 - A pair outside WGS84 decimal-degree range (`-90..90`, `-180..180`) is
   **rejected**, not clamped or silently corrected.
 - No coordinate-system metadata beyond WGS84 is modeled yet -- a future
-  phase introducing a different coordinate system must add that metadata
+  work introducing a different coordinate system must add that metadata
   explicitly, never assume WGS84 silently.
 
 ## Severity -> priority mapping
@@ -99,7 +99,7 @@ Every `Event` and `RawRecord` row records the `schema_version` and
 `normalization_version` that produced it, so a future schema change can
 distinguish rows normalized under the old rules from new ones without
 guessing. The schema is deliberately left room to grow: observation/
-tracking fields (Phase 5/6), geospatial precision/coordinate-system
-metadata (Phase 7), and computer-vision detection fields (Phase 4) all have
+tracking fields, geospatial precision/coordinate-system
+metadata, and computer-vision detection fields all have
 a natural home as additional nullable columns or `attributes`/`provenance`
 keys -- none of them require restructuring what already exists.

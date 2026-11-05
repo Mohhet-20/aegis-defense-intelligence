@@ -1,4 +1,4 @@
-# Observability (Phase 15)
+# Observability
 
 ## Health endpoints
 | Endpoint | Auth | Meaning |

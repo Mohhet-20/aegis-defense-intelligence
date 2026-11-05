@@ -1,4 +1,4 @@
-# Sensor Data Governance (Phase 6)
+# Sensor Data Governance
 
 Status: implemented, live-verified, backend suite 507 passed / 92% overall coverage; permission
 enforcement and tenant isolation confirmed by `tests/test_sensor_registry_api.py`,
@@ -21,11 +21,11 @@ enforcement and tenant isolation confirmed by `tests/test_sensor_registry_api.py
   anomaly-status explanation string is phrased verbatim as "a statistical observation, not a
   confirmed threat or fault," and no sensor-health signal, individually or combined, is ever
   surfaced as a hostility determination -- see `docs/analytics/SENSOR_HEALTH.md`'s "disclaimer-
-  language discipline" section for the full set of phrasings this phase treats as a binding
+  language discipline" section for the full set of phrasings this layer treats as a binding
   design rule, not incidental wording.
 - **No cross-sensor correlation or fusion.** An `ObservationAnomaly` is scoped to exactly one
   `(sensor_id, measurement_type)` pair; recognizing that two different sensors' observations
-  describe the same real-world event is still Phase 3 (`docs/architecture/MULTISENSOR_CONTRACTS.md`'s
+  describe the same real-world event is still (`docs/architecture/MULTISENSOR_CONTRACTS.md`'s
   "Cross-source association"), unimplemented. `POST /cross-source-comparison/compare` and
   `POST /cross-source-comparison/links` compare exactly two already-identified observations an
   analyst supplies -- they never search for or infer a match on their own.
@@ -45,7 +45,7 @@ enforcement and tenant isolation confirmed by `tests/test_sensor_registry_api.py
 | `RELATIONSHIP_MANAGE` (create a cross-source comparison link) | yes | yes | no | yes |
 
 This mirrors the exact "can look, can flag, cannot spend compute/cannot change the registry"
-boundary Phase 4/5 already drew for `INFERENCE_RUN`/`TRACKING_RUN`: Investigator can review and
+boundary already drew for `INFERENCE_RUN`/`TRACKING_RUN`: Investigator can review and
 annotate anomalies but cannot submit new batches or manage the sensor registry, even though it
 can read everything Analyst can. Every route decides this server-side via `require_permission`
 (`app/core/security.py`) -- confirmed per-route in `app/api/routes/sensors.py`,
@@ -71,7 +71,7 @@ to make it "used."
 Every sensor/observation/anomaly query filters by `organization_id`: `sensor_service.get_sensor()`,
 `observation_service.get_observation()`, `sensor_ingestion_service.get_job()`,
 `anomaly_service.get_anomaly()`, and every `*_query()` builder all take `organization_id` as a
-required argument, the same `OrgScopedMixin` discipline every prior phase's tables follow. A
+required argument, the same `OrgScopedMixin` discipline each layer's tables follow. A
 request for another organization's sensor, observation, ingestion job, or anomaly returns
 **`404`, never `403`** -- the same "don't even confirm it exists" rule every other resource in
 this codebase follows, so a cross-tenant probe cannot distinguish "not yours" from "doesn't
@@ -99,7 +99,7 @@ this at the HTTP layer.
 ## Non-destructive history and audit
 
 Every state-changing sensor/observation/anomaly action is recorded via the existing
-`audit_service.record()` mechanism, unchanged from prior phases: `sensor.create`,
+`audit_service.record()` mechanism, unchanged from earlier work: `sensor.create`,
 `sensor.update`, `sensor.lifecycle_status_recomputed`, `sensor_ingestion.run`,
 `sensor_ingestion.retry`, `anomaly.review`, and `cross_source_comparison.link` all capture the
 acting user, organization, target type/id, outcome, and relevant context metadata. This is

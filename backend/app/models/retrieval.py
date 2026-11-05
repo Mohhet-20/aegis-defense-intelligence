@@ -1,4 +1,4 @@
-"""Phase 12: retrieval index + copilot conversations.
+"""Retrieval index + copilot conversations.
 
 The index is a DERIVED, refreshable copy of text from authoritative records;
 it is never the source of truth and access is always re-checked against the

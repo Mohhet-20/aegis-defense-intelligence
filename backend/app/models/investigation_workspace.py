@@ -1,4 +1,4 @@
-"""Phase 11: investigation workspace tables.
+"""Investigation workspace tables.
 
 Everything here is org-scoped. History tables (status history, integrity
 checks, note revisions) are append-only: no service updates or deletes them.

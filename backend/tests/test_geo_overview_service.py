@@ -1,4 +1,4 @@
-"""Tests for app/services/geo_overview_service.py (Phase 7, Section 6
+"""Tests for app/services/geo_overview_service.py (Section 6
 "Overview")."""
 from __future__ import annotations
 

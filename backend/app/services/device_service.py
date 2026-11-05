@@ -40,9 +40,9 @@ class InvalidDeviceLifecycleTransitionError(ValueError):
 # device must be explicitly activated at least once before it can be
 # suspended (there is nothing meaningful to "pause" before that).
 #
-# Phase 9, Section 8 adds "maintenance" (a temporary, explicit,
+#, Section 8 adds "maintenance" (a temporary, explicit,
 # reversible administrative pause -- distinct from "suspended," which
-# is Phase 8's security-suspicion pause) and "decommissioned" (a
+# is the security-suspicion pause) and "decommissioned" (a
 # permanent, explicit end-of-life state reached BEFORE "revoked" --
 # decommissioning retires hardware; revoking invalidates a credential
 # as a security response. Both are legal from "decommissioned," since a
@@ -131,7 +131,7 @@ def register_device(
     db.commit()
     db.refresh(device)
 
-    # Phase 9, Section 7: a device's declared capabilities are
+    # A device's declared capabilities are
     # discoverable from the moment it registers, not only once it
     # first reports health.
     from app.services import fleet_capability_service
@@ -223,13 +223,13 @@ def revoke_device(db: Session, device: Device, *, actor_user_id: str, reason: Op
 
 
 def enter_maintenance(db: Session, device: Device, *, actor_user_id: str, reason: Optional[str] = None) -> Device:
-    """Phase 9, Section 8. Only legal from "active" -- a device that
+    """Only legal from "active" -- a device that
     isn't active has nothing to pause."""
     return transition_administrative_status(db, device, new_status="maintenance", actor_user_id=actor_user_id, reason=reason)
 
 
 def decommission_device(db: Session, device: Device, *, actor_user_id: str, reason: Optional[str] = None) -> Device:
-    """Phase 9, Section 8. Permanent end-of-life, legal from "active" or
+    """Permanent end-of-life, legal from "active" or
     "maintenance." Deliberately does NOT touch api_key_hash (unlike
     revoke()) -- a decommissioned device is already blocked from
     authenticating because authenticate_device() only accepts
@@ -242,7 +242,7 @@ def decommission_device(db: Session, device: Device, *, actor_user_id: str, reas
 
 
 def preview_lifecycle_transition(db: Session, device: Device, *, new_status: str) -> dict:
-    """Phase 9, Section 8: "confirmation previews for consequential
+    """"confirmation previews for consequential
     actions." Returns, without making any change, whether the
     transition is legal and what it will concretely affect -- read by
     the Fleet Operations Center before it shows a confirm dialog for
@@ -312,7 +312,7 @@ def authenticate_device(db: Session, device_identifier: str, plaintext_api_key: 
 
 def compute_pending_sync_count(db: Session, organization_id: str, device_id: str) -> int:
     """Live-computed, never read off a stale column (same discipline
-    Phase 7 established for location_validation_status) -- how many
+    Established for location_validation_status) -- how many
     SyncRecord rows for this device are currently in a non-terminal,
     still-moving-toward-synced state."""
     stmt = select(func.count()).select_from(SyncRecord).where(

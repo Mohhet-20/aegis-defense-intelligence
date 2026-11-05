@@ -1,4 +1,4 @@
-"""Phase 15 MLOps tables: lifecycle history, experiment runs, baselines,
+"""The MLOps layer MLOps tables: lifecycle history, experiment runs, baselines,
 monitoring snapshots and review signals.
 
 Design notes
@@ -6,10 +6,10 @@ Design notes
    duplicates it. A "model family" is the set of ModelRecord rows sharing a
    `name`, exposed as a view -- there is no second registry table.
  * `ExperimentRun` is the unified tracking ledger. It links to the underlying
-   Phase 4 / Phase 10 evaluation rows (`source_run_type` / `source_run_id`)
+   computer-vision / explainable-AI evaluation rows (`source_run_type` / `source_run_id`)
    instead of replacing them.
  * `ReviewSignal` is deliberately separate from `InfrastructureAlert` (fleet
-   health, Phase 9) and from intelligence Events: it is about MODEL quality and
+   health, the fleet layer) and from intelligence Events: it is about MODEL quality and
    MLOps subsystem health, and never about a real-world condition.
  * Everything except `ModelLifecycleEvent` is organization-scoped.
 """

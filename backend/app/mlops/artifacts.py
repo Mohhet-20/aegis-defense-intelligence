@@ -98,7 +98,7 @@ def check_artifact(artifact_reference: Optional[str], adapter_key: Optional[str]
     try:
         kind, value = validate_reference(ref)
     except MlopsValidationError:
-        # Legacy rows may hold free-text references from earlier phases; they are never dereferenced.
+        # Legacy rows may hold free-text references from earlier work; they are never dereferenced.
         return ArtifactStatus(kind="none", available=False, reason="legacy artifact reference is not a controlled reference and is not dereferenced")
     if kind == "adapter":
         from app.cv.adapters.registry import available_adapter_keys

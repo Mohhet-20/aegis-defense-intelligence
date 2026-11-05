@@ -1,4 +1,4 @@
-# Investigation Workspace API (Phase 11)
+# Investigation Workspace API
 
 Base `/api/v1`. All routes are organization-scoped; a record from another organization or a restricted investigation
 the caller cannot see returns 404. Errors use `{detail, request_id}`; conflicts (invalid transition, stale note version,

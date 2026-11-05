@@ -1,17 +1,17 @@
 # Spatial Correlation
 
-Phase 3, Section 6 (geospatial half). Covers how this codebase uses
+ (geospatial half). Covers how this codebase uses
 distance in TWO different, deliberately different-valued ways: finding
-candidates (Phase 2, `correlation_service.py`, unchanged) and flagging
-a conflict (Phase 3, `conflict_service.py`, new). Confusing these two
+candidates (`correlation_service.py`, unchanged) and flagging
+a conflict (`conflict_service.py`, new). Confusing these two
 thresholds would be a real correctness bug, so this document exists
 specifically to keep them separate.
 
-## The distance calculation (unchanged, Phase 2)
+## The distance calculation (unchanged,)
 
 `correlation_service._haversine_meters()` -- the standard great-circle
 distance formula over a spherical Earth-radius approximation
-(`EARTH_RADIUS_METERS = 6_371_000.0`). Nothing in Phase 3 touches this
+(`EARTH_RADIUS_METERS = 6_371_000.0`). Nothing touches this
 function; both the correlation threshold and the (new) conflict
 threshold are compared against the exact same distance value computed
 once per correlated pair (`EventCorrelation.spatial_delta_meters`).
@@ -20,7 +20,7 @@ once per correlated pair (`EventCorrelation.spatial_delta_meters`).
 
 | Threshold | Settings key | Default | Used by | What it means when exceeded |
 |---|---|---|---|---|
-| Correlation (match) threshold | `FUSION_SPATIAL_THRESHOLD_METERS_DEFAULT` (and Phase 2's own `DEFAULT_SPATIAL_THRESHOLD_METERS`, both 500.0) | 500m | `correlation_service._find_reasons()` | Distance is TOO FAR for `spatial_proximity` to contribute as a positive match signal -- this alone never means the two events disagree, only that proximity didn't help confirm they're related. |
+| Correlation (match) threshold | `FUSION_SPATIAL_THRESHOLD_METERS_DEFAULT` (and the own `DEFAULT_SPATIAL_THRESHOLD_METERS`, both 500.0) | 500m | `correlation_service._find_reasons()` | Distance is TOO FAR for `spatial_proximity` to contribute as a positive match signal -- this alone never means the two events disagree, only that proximity didn't help confirm they're related. |
 | Conflict threshold | `FUSION_SPATIAL_CONFLICT_THRESHOLD_METERS` | 5000m (10x the match threshold) | `conflict_service._spatial_conflict()` | Distance is far enough that, for two events ALREADY correlated via some OTHER signal (not spatial_proximity itself), the disagreeing locations are now flagged as a real, reportable conflict. |
 
 The conflict threshold is deliberately much LARGER than the match
@@ -74,13 +74,13 @@ the inconclusive middle band described above.
 
 ## What this does NOT do
 
-No spatial clustering, heatmaps, or geofencing (Phase 7's job, not this
-phase's). No reverse geocoding or named-location resolution -- every
+No spatial clustering, heatmaps, or geofencing (the job, not this
+layer's). No reverse geocoding or named-location resolution -- every
 distance here is a raw coordinate-pair calculation, never enriched with
 an address or region name. No per-event-type spatial threshold override
 (unlike the temporal window -- see `docs/analytics/
 TEMPORAL_CORRELATION.md`'s per-type mechanism, which has no spatial
-equivalent in this phase). No "this is clearly the same physical
+equivalent). No "this is clearly the same physical
 location despite GPS drift" smoothing -- the raw haversine distance is
 always what's compared, with no tolerance band beyond the two
 documented thresholds above.
@@ -94,6 +94,6 @@ and `test_full_conflict_detection_and_resolution_workflow` (the
 field, while the module's spatial guard conditions are covered
 directly by the "no coordinates" test and by inspection of
 `_spatial_conflict()`'s four guard conditions above, each independently
-testable). Phase 2's own `test_correlation.py` continues to cover the
+testable). the own `test_correlation.py` continues to cover the
 match-threshold half (`test_nearby_compatible_events_are_flagged_as_candidates`,
 `test_distant_events_are_never_correlated`) unchanged.

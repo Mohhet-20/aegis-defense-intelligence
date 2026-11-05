@@ -1,4 +1,4 @@
-"""Bounded GeoJSON/CSV export of located records (Phase 7, Section
+"""Bounded GeoJSON/CSV export of located records (Section
 12). Mirrors app/services/export_service.py's existing discipline --
 a hard row/feature ceiling (never a silent unbounded dump), explicit
 `truncated` reporting rather than a misleading "complete" export, and

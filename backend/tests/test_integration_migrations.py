@@ -1,4 +1,4 @@
-"""Phase 17 Phase 9: the migration chain builds a database that matches the
+"""The migration chain builds a database that matches the
 ORM. Uses a throwaway SQLite file under tmp_path; the configured DATABASE_URL
 is restored afterwards and no existing database is touched."""
 from __future__ import annotations

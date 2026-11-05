@@ -1,4 +1,4 @@
-"""The device's own durable local outbox (Phase 8, Section 4: "offline-
+"""The device's own durable local outbox (Section 4: "offline-
 first local persistence appropriate to the actual architecture"). Raw
 `sqlite3` against its OWN separate `.db` file -- deliberately NOT the
 central app's SQLAlchemy session/engine, so "local vs. central

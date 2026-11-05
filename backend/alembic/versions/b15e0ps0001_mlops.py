@@ -1,4 +1,4 @@
-"""phase 15 mlops: model lifecycle columns, experiment runs, baselines, monitoring snapshots, review signals
+"""Mlops: model lifecycle columns, experiment runs, baselines, monitoring snapshots, review signals
 
 Revision ID: b15e0ps0001
 Revises: a14c0de5ec01
@@ -54,7 +54,7 @@ def upgrade() -> None:
 
     duplicates = op.get_bind().execute(sa.text("SELECT COUNT(*) FROM (SELECT name, version FROM model_records GROUP BY name, version HAVING COUNT(*) > 1) d")).scalar()
     if duplicates:
-        log.warning("phase 15: %s duplicate (name, version) pair(s) exist in model_records; %s NOT created. "
+        log.warning("mlops migration: %s duplicate (name, version) pair(s) exist in model_records; %s NOT created. "
                     "The registry service still rejects new duplicates.", duplicates, UNIQUE_INDEX)
     else:
         op.create_index(UNIQUE_INDEX, "model_records", ["name", "version"], unique=True)

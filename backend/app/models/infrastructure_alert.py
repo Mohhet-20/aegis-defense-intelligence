@@ -4,8 +4,8 @@ candidates, and `RiskAssessment`/threat records -- this table is about
 the HEALTH OF THE FLEET ITSELF (a device went offline, a config drifted
 from baseline, disk is nearly full), never about a sensed real-world
 condition. The two concerns never share a table, a service, or a review
-queue, the same deliberate separation Phase 8 drew between
-`SyncConflict` (sync-protocol concern) and Phase 3's `Conflict`
+queue, the same deliberate separation drew between
+`SyncConflict` (sync-protocol concern) and the `Conflict`
 (event-fusion concern). See docs/operations/INFRASTRUCTURE_ALERTS.md.
 
 Deduplication is enforced in the SERVICE layer, not by a DB unique

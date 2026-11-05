@@ -1,4 +1,4 @@
-"""Logging setup (Phase 15 extends the original text logger).
+"""Logging setup (extends the original text logger).
 
 Default behaviour is unchanged (``LOG_FORMAT=text``). Setting
 ``LOG_FORMAT=json`` switches to one JSON object per line with standard fields:

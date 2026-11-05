@@ -1,4 +1,4 @@
-"""Phase 5, Section 5/16: detection-to-track association. Pure, DB-free
+"""/16: detection-to-track association. Pure, DB-free
 tests of app/tracking/association.py's `associate()` -- a cost matrix
 (1 - IoU) solved by scipy's Hungarian algorithm, never a hand-rolled
 greedy sort, with a `min_iou_threshold` post-filter that can reject even

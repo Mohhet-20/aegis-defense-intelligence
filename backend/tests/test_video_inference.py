@@ -1,4 +1,4 @@
-"""Phase 4, Section 8/17: bounded video frame analysis. Confirms real
+"""/17: bounded video frame analysis. Confirms real
 frame sampling (interval + max_frames bounds are actually respected),
 frame_index/timestamp preservation, and that this is explicitly
 point-in-time, bounded sampling -- never "every frame," never
@@ -82,7 +82,7 @@ def test_video_max_frames_request_is_clamped_to_the_configured_ceiling(client, t
     assert job["status"] == "completed"
     # settings.CV_VIDEO_MAX_FRAMES_PER_JOB (30 by default) wins no
     # matter what the client requests -- same "server always clamps"
-    # discipline Phase 3's evidence-graph caps established.
+    # discipline the evidence-graph caps established.
     assert job["frames_processed"] <= 30
     assert job["parameters"]["max_frames"] <= 30
 

@@ -15,7 +15,7 @@ class SensorCreateRequest(GeoLocationFields):
     source_id: Optional[str] = None
     capability_metadata: dict = Field(default_factory=dict)
 
-    # --- Phase 6 additions --------------------------------
+    # --- Additions --------------------------------
     category: Optional[str] = Field(default=None, max_length=50)
     description: Optional[str] = Field(default=None, max_length=2000)
     manufacturer: Optional[str] = Field(default=None, max_length=200)

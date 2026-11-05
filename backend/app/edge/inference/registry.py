@@ -36,7 +36,7 @@ class UnknownEdgeAdapterError(ValueError):
 
 class DeterministicSyntheticAdapter:
     """A SYNTHETIC, deterministic adapter -- explicitly NOT a trained
-    model, same honest precedent as Phase 4's
+    model, same honest precedent as the
     app/cv/adapters/mock_adapter.py. Given `{"brightness": float}` (or
     any dict with a numeric `"brightness"` key), it deterministically
     classifies "bright" vs "dim" by a fixed threshold. Exists so the

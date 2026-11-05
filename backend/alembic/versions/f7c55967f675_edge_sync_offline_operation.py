@@ -4,17 +4,17 @@ Revision ID: f7c55967f675
 Revises: 7cafe0cb4340
 Create Date: 2026-10-14 17:21:52.162135
 
-Adds the Phase 8 edge/offline-sync subsystem: 3 new tables
+Adds the edge/offline-sync subsystem: 3 new tables
 (sync_records -- the durable central inbox/state-machine,
 sync_conflicts, device_health_reports) and 16 new columns on the
-existing Device registry placeholder (Phase 1), giving it a real
+existing Device registry placeholder, giving it a real
 credential, lifecycle, and capability shape for the first time.
 
-Hand-fixed after autogeneration (same discipline as Phase 6's
+Hand-fixed after autogeneration (same discipline as the
 migration): autogenerate produced NOT NULL `ADD COLUMN`s with no
 server-side default, which fails against any existing non-empty
 `devices` table (there are zero rows in this project's own dev DB
-today, since Device had no API surface before this phase, but the
+today, since Device had no API surface beforehand, but the
 migration must still be correct for any other deployment's data). Safe
 server defaults were added for every NOT NULL column instead, matching
 each column's Python-side default on the model. The unnamed
@@ -148,7 +148,7 @@ def upgrade() -> None:
     op.create_index(op.f('ix_devices_device_identifier'), 'devices', ['device_identifier'], unique=False)
     # SQLite has no ALTER-based "add a foreign key to an existing
     # table" -- batch mode (copy-and-move) is required, same fix
-    # Phase 6's migration needed for its own new-table constraints.
+    # the migration needed for its own new-table constraints.
     with op.batch_alter_table('devices') as batch_op:
         batch_op.create_foreign_key('fk_devices_registered_by_user_id_users', 'users', ['registered_by_user_id'], ['id'], ondelete='SET NULL')
     # ### end Alembic commands ###

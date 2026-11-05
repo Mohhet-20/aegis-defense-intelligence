@@ -1,4 +1,4 @@
-# Image-Space Motion Analytics (Phase 5, Section 7)
+# Image-Space Motion Analytics (Section 7)
 
 `app/tracking/motion.py`'s `compute_motion_summary()` is purely descriptive statistics derived
 from a track's own **observed** bounding boxes. Section 7 sets three central prohibitions,
@@ -45,7 +45,7 @@ thing in the first place, not by a flag that could be turned off:
   figure invites exactly the "this looks like a real measurement" misreading this module is
   built to avoid.
 - **A predicted position** -- there is no Kalman filter or any other motion-prediction model in
-  this phase (Section 8 was deliberately deferred; see `docs/ml/TRACKER_ADAPTERS.md`). There
+  this layer (Section 8 was deliberately deferred; see `docs/ml/TRACKER_ADAPTERS.md`). There
   is consequently no "predicted vs. observed" comparison to make, and no field on `MotionStep`
   that could ever hold one.
 
@@ -55,8 +55,7 @@ Building the synthetic evaluation fixture (`app/tracking/synthetic_fixture.py`) 
 a per-frame displacement relative to box size initially produced a fixture that fragmented
 catastrophically against the tracker's own default `min_iou_threshold` -- the fix (reducing
 the per-frame step, worked out from the same IoU-vs-displacement arithmetic this module's
-`fragmentation_count` is built to surface) is documented in
-`docs/implementation/history/PHASE_5_FINAL_REPORT.md`. The module did exactly what it should: it
+`fragmentation_count` is built to surface) was caught by the tests. The module did exactly what it should: it
 never silently smoothed over the bad fixture, it reported real fragmentation that pointed
 straight at the actual bug.
 

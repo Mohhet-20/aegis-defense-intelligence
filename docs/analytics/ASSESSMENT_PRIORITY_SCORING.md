@@ -1,4 +1,4 @@
-# Assessment Review-Priority Scoring (Phase 10)
+# Assessment Review-Priority Scoring
 
 Rule `review_priority_v1` (version `1`), `app/analytics/scoring.py`.
 

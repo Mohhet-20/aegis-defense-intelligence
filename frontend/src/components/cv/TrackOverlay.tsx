@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { TrackObservation } from '../../types/api'
 
-// Phase 5: the multi-track analogue of BoundingBoxOverlay --
+// The multi-track analogue of BoundingBoxOverlay --
 // same ResizeObserver-on-the-media-element discipline, so the overlay
 // stays correct under responsive resizing, but drawn over a <video>
 // element instead of an <img>, and over MULTIPLE tracks' boxes for

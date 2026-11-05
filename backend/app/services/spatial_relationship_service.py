@@ -1,5 +1,4 @@
-"""Automated spatial-relationship candidate generation (Phase 7,
-Section 11). Produces "spatially_associated" EvidenceRelationship rows
+"""Automated spatial-relationship candidate generation (Section 11). Produces "spatially_associated" EvidenceRelationship rows
 between Event/Observation pairs that are BOTH close in space (<=
 a configurable distance threshold) AND close in time (<= a configurable
 time window) -- never auto-merges them, never claims they describe the
@@ -8,14 +7,14 @@ whose coordinates are already classified "valid" by app/geo/validation.py
 are ever compared.
 
 `EvidenceRelationship.RELATIONSHIP_TYPES` has reserved the
-"spatially_associated" value since Phase 3, unused until now -- this
+"spatially_associated" value, unused until now -- this
 module is what finally produces it, rather than inventing a new string.
 
 Deliberately out of scope (documented here, not silently dropped):
   * Determining whether two spatially/temporally close records
     describe the SAME real-world event/object ("location conflict
-    requiring review", "spatially inconsistent duplicate") is Phase
-    3's app/services/conflict_service.py's job. generate_candidates()
+    requiring review", "spatially inconsistent duplicate") is
+    the fusion layer's app/services/conflict_service.py's job. generate_candidates()
     below creates an EXPLAINABLE ASSOCIATION, never a merge and never a
     conflict finding, and never calls into conflict_service. An
     analyst who reviews a candidate and judges the two records to be
@@ -127,7 +126,7 @@ def _as_relationship_ref(db: Session, organization_id: str, candidate: _Candidat
     `("event", "evidence")`) so it is wrapped as a "sensor_observation"
     Evidence item first -- the exact pattern
     app/services/cross_source_comparison_service.py established in
-    Phase 6, now shared via evidence_service.get_or_create_observation_evidence."""
+    the multi-sensor layer, now shared via evidence_service.get_or_create_observation_evidence."""
     if candidate.record_type == "event":
         return "event", candidate.record_id
     evidence = evidence_service.get_or_create_observation_evidence(db, organization_id, candidate.row, created_by_user_id=created_by_user_id)

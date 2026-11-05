@@ -60,7 +60,7 @@ fails on routes missing from the navigation.
   loading, empty and error states; reuse `components/ui/Primitives.tsx`.
 - **Tests:** synthetic fixtures and isolated databases only. Add a regression test with every
   bug fix. Never weaken an assertion to make a test pass.
-- **Docs:** update `docs/implementation/PROJECT_STATUS.md`, `CHANGELOG.md` and
+- **Docs:** update `CHANGELOG.md` and
   `docs/security/KNOWN_RISKS.md` when behaviour, verification status or risks change.
 
 ## Commits

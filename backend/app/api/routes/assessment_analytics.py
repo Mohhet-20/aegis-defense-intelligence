@@ -1,5 +1,4 @@
-"""Advisory scoring and human review of assessments (Phase 10,
-Sections 5-6). Extends the Phase 3 assessment routes without touching
+"""Advisory scoring and human review of assessments (Sections 5-6). Extends the assessment routes without touching
 them."""
 from __future__ import annotations
 

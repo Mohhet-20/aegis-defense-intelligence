@@ -1,4 +1,4 @@
-# Sensor Health (Phase 6, Section 10)
+# Sensor Health (Section 10)
 
 Status: implemented, live-verified, `app/services/sensor_health_service.py` at 97% test
 coverage in the 507-test backend suite (92% overall).
@@ -121,5 +121,5 @@ transitions an analyst enters and exits deliberately (`POST /sensors/{id}/lifecy
 them.
 
 See also `docs/api/SENSOR_API.md` for the full route table, and
-`docs/analytics/SOURCE_RELIABILITY.md` for the parallel discipline this phase follows for
+`docs/analytics/SOURCE_RELIABILITY.md` for the parallel discipline this layer follows for
 evidentiary (rather than operational) concepts.

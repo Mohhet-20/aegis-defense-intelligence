@@ -1,4 +1,4 @@
-"""Evidence CRUD (Phase 3, Section 3B) and EvidenceRelationship CRUD +
+"""Evidence CRUD (Section 3B) and EvidenceRelationship CRUD +
 review workflow (Sections 3D, 11). Section 17 requires: valid
 relationship creation, invalid references, self-link behavior,
 duplicate submission, relationship provenance, analyst review

@@ -2,7 +2,7 @@
 fully explainable candidate-relationship detection for analyst review --
 this is explicitly NOT a certainty claim, a fusion engine, or a merge
 of two events into one. Advanced probabilistic fusion is out of scope
-here and belongs to Phase 3; this module only ever produces
+here and belongs to the fusion layer; this module only ever produces
 EventCorrelation rows an analyst can inspect, confirm, or reject.
 
 Every correlation this module creates:
@@ -39,7 +39,7 @@ RULE_VERSION = "1.0"
 DEFAULT_TIME_WINDOW_SECONDS = 30 * 60  # 30 minutes
 DEFAULT_SPATIAL_THRESHOLD_METERS = 500.0
 
-# Phase 7: the haversine implementation itself now lives in
+# The haversine implementation itself now lives in
 # app/geo/distance.py as the one shared, public, documented, tested
 # distance function for the whole codebase -- this module no longer
 # defines its own copy (it used to, as a private `_haversine_meters`
@@ -127,7 +127,7 @@ def recompute(
     this rule_version. Returns a summary of what this run did -- never
     silently merges or mutates an existing event.
 
-    `time_window_seconds_by_type` (Phase 3, `settings.
+    `time_window_seconds_by_type` (`settings.
     fusion_time_window_seconds_by_type`) is an optional per-event-type
     override layered on top of `time_window_seconds`: when either side
     of a pair has a `event_type` listed in this mapping, the LARGER of

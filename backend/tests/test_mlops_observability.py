@@ -1,4 +1,4 @@
-"""Phase 15 -- metrics registry, structured logging/redaction, error
+"""Metrics registry, structured logging/redaction, error
 classification, health separation and observability access control."""
 from __future__ import annotations
 

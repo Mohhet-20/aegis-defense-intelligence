@@ -1,4 +1,4 @@
-"""Unified evidence registry (Phase 11, Phases C-D) built on the existing
+"""Unified evidence registry built on the existing
 `Evidence` model.
 
 Evidence rows are REFERENCES to existing records (aegis://<type>/<id> URIs

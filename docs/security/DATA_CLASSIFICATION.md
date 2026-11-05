@@ -1,4 +1,4 @@
-# Data Classification and Handling (Phase 14)
+# Data Classification and Handling
 
 This is a handling scheme for AEGIS data. It is **documentation plus a small number of enforced controls**. Only
 `Evidence.access_classification` (default `internal`) exists as a stored classification field; no other table carries
@@ -27,7 +27,7 @@ Exports require their own permission (export is separate from read). Media conte
 
 ## External model providers
 External providers are used only when explicitly configured through the existing copilot/provider settings
-(see COPILOT_PRIVACY.md). Nothing in Phase 14 enables a provider by default.
+(see COPILOT_PRIVACY.md). Nothing enables a provider by default.
 
 ## Remaining work
 - Use classification labels to drive policy (filter, export, retention) beyond `Evidence`.

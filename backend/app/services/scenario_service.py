@@ -1,4 +1,4 @@
-"""Phase 13: scenario definitions, bounded synchronous runs, comparison,
+"""Scenario definitions, bounded synchronous runs, comparison,
 sensitivity analysis and synthetic datasets.
 
 Rules enforced here:

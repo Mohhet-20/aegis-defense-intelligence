@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-// Phase 7 (geospatial intelligence): the map tile source is
+// Geospatial intelligence: the map tile source is
 // deliberately NOT hardcoded -- see docs/operations/MAP_PROVIDER_CONFIGURATION.md
 // and MapExplorerPage.tsx's own fallback when this is unset. Setting
 // it to a provider that requires an API key means putting that key in

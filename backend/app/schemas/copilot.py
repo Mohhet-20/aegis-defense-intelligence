@@ -1,4 +1,4 @@
-"""Phase 12 request/response schemas for retrieval search and the copilot."""
+"""Request/response schemas for retrieval search and the copilot."""
 from __future__ import annotations
 
 from datetime import datetime

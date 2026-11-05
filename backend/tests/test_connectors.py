@@ -136,7 +136,7 @@ def test_validate_url_rejects_embedded_credentials():
 def mock_json_server():
     """A plain stdlib HTTP server bound to 127.0.0.1 -- Section 4's
     "test against a local mock server" requirement. This is the only
-    network endpoint any Phase 2 test talks to; no real external
+    network endpoint any test talks to; no real external
     source is ever contacted."""
     payload = {
         "items": [

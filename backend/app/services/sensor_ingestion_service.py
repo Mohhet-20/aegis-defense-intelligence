@@ -1,5 +1,5 @@
 """Sensor observation batch ingestion. Reuses
-the SAME `IngestionJob`/`RawRecord` tables Phase 2's Event pipeline
+the SAME `IngestionJob`/`RawRecord` tables the Event pipeline
 uses -- `RawRecord.event_id` simply stays NULL for every row this
 module creates, and `IngestionJob.job_type` gets new sensor-specific
 values ("sensor_json_batch", "sensor_csv_batch", "sensor_synthetic").

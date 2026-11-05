@@ -1,5 +1,5 @@
 """Analyst review of a DetectionResult, and promotion into the Evidence
-layer (Phase 4, Section 9/14's required lineage: "... -> Detection
+layer (Section 9/14's required lineage: "... -> Detection
 result -> Derived observation/evidence reference -> Analyst review").
 
 The one rule this entire module exists to enforce: a DetectionResult is

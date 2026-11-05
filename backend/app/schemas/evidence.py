@@ -48,7 +48,7 @@ class EvidenceResponse(BaseModel):
     external_reference_uri: Optional[str]
     integrity_hash: Optional[str]
     detection_result_id: Optional[str] = None
-    # Phase 11 (additive)
+    # Additive
     media_asset_id: Optional[str] = None
     source_id: Optional[str] = None
     integrity_hash_algorithm: Optional[str] = None

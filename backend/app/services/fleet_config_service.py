@@ -1,12 +1,11 @@
 """Device configuration management: version/baseline assignment,
-optimistic-concurrency config updates, and drift detection (Phase 9,
-Section 8). See app/models/device_config_baseline.py.
+optimistic-concurrency config updates, and drift detection (Section 8). See app/models/device_config_baseline.py.
 
 Drift is only ever evaluated against an EXPLICIT, assigned baseline --
 a device with no baseline assigned returns `evaluated=False`,
 `has_drift=None`, never a fabricated "no drift" (Part 8, binding: "a
 missing baseline is not an absence of drift," the same discipline
-Phase 7's GeoLocationMixin established for missing coordinates).
+the GeoLocationMixin established for missing coordinates).
 """
 from __future__ import annotations
 

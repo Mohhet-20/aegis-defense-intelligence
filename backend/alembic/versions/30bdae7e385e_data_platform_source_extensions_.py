@@ -1,4 +1,4 @@
-"""phase 2 data platform: source extensions, raw records, correlation
+"""Data platform: source extensions, raw records, correlation
 
 Revision ID: 30bdae7e385e
 Revises: bad1c4e06482

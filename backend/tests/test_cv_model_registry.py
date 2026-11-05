@@ -1,5 +1,5 @@
-"""Phase 4, Section 4/17: the CV model registry -- extending the
-Phase 1 `ModelRecord` table rather than a parallel `CVModel` table.
+"""/17: the CV model registry -- extending the
+The foundation `ModelRecord` table rather than a parallel `CVModel` table.
 """
 from __future__ import annotations
 

@@ -1,4 +1,4 @@
-"""Phase 13: scenario definitions, runs and synthetic datasets.
+"""Scenario definitions, runs and synthetic datasets.
 
 Definitions (Scenario) are kept apart from execution results (ScenarioRun);
 a run stores an immutable config snapshot so history is never overwritten.

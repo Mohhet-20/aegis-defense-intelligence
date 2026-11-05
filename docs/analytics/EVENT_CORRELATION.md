@@ -1,10 +1,10 @@
 # Event Correlation
 
-Phase 2, Section 14. A deterministic, rule-based, fully-explainable
+A deterministic, rule-based, fully-explainable
 candidate-relationship detector for analyst review. **This is not a
 certainty claim, not a fusion engine, and never a merge of two events
 into one.** Advanced probabilistic fusion across sources is explicitly
-out of scope here -- that is Phase 3's job.
+out of scope here -- that is the job.
 
 Implemented in `app/services/correlation_service.py`, model
 `app/models/event_correlation.py`.
@@ -52,7 +52,7 @@ source and nothing else never clear the 2-reason bar.
 
 Explicit source relationships (pre-declared trust/lineage between two
 sources) and free-form documented attribute matches beyond asset/type are
-not implemented in this phase -- `reasons` is an extensible list, and
+not implemented -- `reasons` is an extensible list, and
 adding a new signal means adding one more check to `_find_reasons()`, not
 restructuring the model.
 
@@ -106,9 +106,9 @@ which:
   fully supported -- correlation only records a relationship exists, not
   that the two events agree.
 
-## Phase 3 addition: per-event-type window override
+## Addition: per-event-type window override
 
-`recompute()` gained one new optional parameter in Phase 3,
+`recompute()` gained one new optional parameter,
 `time_window_seconds_by_type` (wired from `settings.
 fusion_time_window_seconds_by_type`, see
 `docs/analytics/TEMPORAL_CORRELATION.md`) -- everything above is

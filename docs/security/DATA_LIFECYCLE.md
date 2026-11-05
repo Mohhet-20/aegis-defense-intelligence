@@ -1,4 +1,4 @@
-# Data Lifecycle and Retention (Phase 14)
+# Data Lifecycle and Retention
 
 Implemented in `app/services/lifecycle_service.py`, `app/models/lifecycle.py`, routes under `/api/v1/lifecycle`.
 UI: Admin > Lifecycle.

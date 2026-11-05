@@ -9,12 +9,12 @@ treating degree differences as though they were a globally accurate
 physical distance.
 
 This function was originally a private helper (`_haversine_meters`)
-duplicated nowhere else -- Phase 2's `app/services/correlation_service.py`
-had its own copy for Event<->Event spatial correlation. Phase 7
+duplicated nowhere else -- the `app/services/correlation_service.py`
+had its own copy for Event<->Event spatial correlation. The geospatial layer
 promotes it here as the one shared, public implementation and
 `correlation_service.py` now imports it instead of defining its own
 copy, with zero behavior change (same formula, same constant, verified
-by Phase 2/3's existing correlation tests still passing unchanged).
+by the existing correlation tests still passing unchanged).
 """
 from __future__ import annotations
 
@@ -23,7 +23,7 @@ import math
 # Mean Earth radius in meters (the WGS84 "authalic" mean radius is
 # commonly quoted as ~6,371,008.8m; this project uses the simpler,
 # widely-used round figure 6,371,000m, consistent with the value
-# correlation_service.py has used since Phase 2). This is a SPHERICAL
+# correlation_service.py has used). This is a SPHERICAL
 # approximation of an ellipsoidal planet -- see the module docstring's
 # "Assumptions and limitations" note below.
 EARTH_RADIUS_METERS = 6_371_000.0

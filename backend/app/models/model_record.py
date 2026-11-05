@@ -10,20 +10,20 @@ from app.db.base import Base, TimestampMixin, UUIDPrimaryKeyMixin
 MODEL_RECORD_STATUSES = ("registered", "active", "deprecated", "retired")
 
 # which task a registered model actually performs.
-# NULL (the Phase 1 default, unchanged for the seeded "demo-risk-scorer"
+# NULL (the default, unchanged for the seeded "demo-risk-scorer"
 # row) means "not a task this registry has a real pipeline for yet" --
-# exactly the Phase 10 placeholder the row already was. Only
+# exactly the placeholder the row already was. Only
 # "object_detection" rows are ever offered to the CV inference pipeline
 # (app/cv/registry.py); nothing here assumes every ModelRecord is a CV
 # model.
 MODEL_TASK_TYPES = ("object_detection",)
 
-# Phase 15: tasks the MLOps registry can track. "object_detection" is the only
+# Tasks the MLOps registry can track. "object_detection" is the only
 # task the CV inference pipeline runs; "classification" is registry/evaluation
 # only (AEGIS scores predictions a caller supplies; it does not execute the model).
 MLOPS_TASK_TYPES = ("object_detection", "classification")
 
-# Phase 15 governance lifecycle. Evaluation status ("none/running/passed/failed/
+# Governance lifecycle. Evaluation status ("none/running/passed/failed/
 # stale") is DERIVED from experiment runs at read time, never stored, so it
 # cannot drift from the evidence. The legacy `status` column still decides CV
 # inference eligibility; see model_registry_lifecycle for the mapping.
@@ -44,15 +44,15 @@ class ModelImmutableError(RuntimeError):
 
 class ModelRecord(Base, UUIDPrimaryKeyMixin, TimestampMixin):
     """Platform-level model registry row -- see
-    docs/architecture/AI_ANALYTICS_CONTRACTS.md (Phase 10's eventual
+    docs/architecture/AI_ANALYTICS_CONTRACTS.md (the eventual
     owner for non-CV models) and docs/ml/MODEL_REGISTRY.md (this
-    phase's real consumer). Not organization-scoped: a model version is
+    layer's real consumer). Not organization-scoped: a model version is
     a platform-level artifact, referenced by (not owned by) any
     organization's RiskAssessment/InferenceJob/DetectionResult rows.
 
-    Phase 1 shipped this as an inert placeholder (`adapter_key`/
+    Shipped this as an inert placeholder (`adapter_key`/
     `task_type`/`supported_media_types` did not exist; nothing read
-    `evaluation_metadata`). Phase 4 extends it -- rather than building a
+    `evaluation_metadata`). The computer-vision layer extends it -- rather than building a
     parallel `CVModel` table -- with exactly the columns the real CV
     inference pipeline needs to resolve a row to a runnable adapter. All
     three additions are nullable with no backfill required: the existing
@@ -91,7 +91,7 @@ class ModelRecord(Base, UUIDPrimaryKeyMixin, TimestampMixin):
     # --- MLOps registry. All nullable / defaulted, so every
     # pre-existing row is valid unchanged. ---------------------------------------
     # Organization that registered this version through the MLOps API. NULL = a
-    # platform-level / pre-Phase-15 row, visible to every organization (as before).
+    # platform-level pre-original row, visible to every organization (as before).
     # Non-NULL rows are visible only to the owning organization.
     owner_organization_id: Mapped[Optional[str]] = mapped_column(String(36), nullable=True, index=True)
     created_by_user_id: Mapped[Optional[str]] = mapped_column(String(36), nullable=True)
@@ -107,8 +107,8 @@ class ModelRecord(Base, UUIDPrimaryKeyMixin, TimestampMixin):
 @event.listens_for(ModelRecord, "before_update")
 def _guard_immutable_columns(mapper, connection, target) -> None:  # noqa: ARG001
     # Applies to versions registered through the MLOps API (they carry an owner
-    # organization). Pre-Phase-15 / platform-level rows (owner NULL) keep their
-    # original Phase 4 behaviour: existing code and tests legitimately edit them,
+    # organization). Pre-original platform-level rows (owner NULL) keep their
+    # original behaviour: existing code and tests legitimately edit them,
     # so immutability is NOT enforced for those rows (documented limitation).
     if target.owner_organization_id is None:
         return

@@ -1,4 +1,4 @@
-# Tracker Adapters (Phase 5, Section 4)
+# Tracker Adapters (Section 4)
 
 ## The reusable interface
 
@@ -20,7 +20,7 @@ active at sequence end, and is idempotent (a second call returns the same alread
 list rather than re-ending anything). `app/services/tracking_service.py` has no
 algorithm-specific code anywhere -- it only ever calls through this interface.
 
-## The one tracker this phase ships: `iou_hungarian_v1`
+## The one tracker this layer ships: `iou_hungarian_v1`
 
 `app/tracking/trackers/iou_tracker.py`'s `IoUHungarianTracker` computes per-frame IoU between
 every active track's last known box and every current frame's detections, assigns pairs via
@@ -62,7 +62,7 @@ settings default -- the same lineage discipline `InferenceJob.parameters` alread
   honestly (see `docs/ml/TRACKING_EVALUATION.md`).
 - **No motion prediction.** A track's "last known box" is its most recent **observed** box,
   never a predicted position (Section 8 was deliberately deferred). A fast-moving object that
-  leaves its own IoU neighborhood between Phase 4's already-sparse sampled frames may fail to
+  leaves its own IoU neighborhood between the already-sparse sampled frames may fail to
   re-associate and will instead end one track and start a new one.
 
 ## The allow-list (`app/tracking/trackers/registry.py`)
@@ -70,7 +70,7 @@ settings default -- the same lineage discipline `InferenceJob.parameters` alread
 `TrackingJob.tracker_key` is a plain string column. The registry's `_FACTORIES` dict is what
 actually turns that string into executable Python -- a key not already present there can
 never be executed, regardless of what a client requests. This is the exact same closed
-allow-list discipline as Phase 4's `app/cv/adapters/registry.py`, applied to trackers instead
+allow-list discipline as the `app/cv/adapters/registry.py`, applied to trackers instead
 of CV model adapters. Adding a second tracker later means writing a new class against the
 `ObjectTracker` protocol and adding one line to this dict -- never touching the service or API
 layer.

@@ -1,4 +1,4 @@
-"""A deterministic, in-process simulated edge device (Phase 8, Section
+"""A deterministic, in-process simulated edge device (Section
 4/13/18): `SimulatedEdgeNode` captures records into its own
 `LocalEdgeStore`, then genuinely sends them over HTTP (via `httpx`) to
 whatever `base_url` it's given -- the real FastAPI application, either
@@ -8,7 +8,7 @@ never wired to the service layer directly -- the whole point is to
 exercise the actual device-authenticated HTTP endpoints exactly as a
 physical device would.
 
-Honestly stated (see app/edge/__init__.py and the Phase 8 final
+Honestly stated (see app/edge/__init__.py and the final
 report): this has only ever been run against this simulated transport,
 never against real edge hardware or a real network.
 """

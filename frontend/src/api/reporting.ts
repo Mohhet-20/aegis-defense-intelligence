@@ -13,7 +13,7 @@ const qs = (f: Partial<Filters>) => {
   return out ? `?${out}` : ''
 }
 
-/** Phase 16 analytics/reporting API: every call hits a real route; authorization is enforced server-side. */
+/** Analytics/reporting API: every call hits a real route; authorization is enforced server-side. */
 export const reportingApi = {
   metrics: () => request<MetricCatalog>('/reporting/metrics'),
   section: (name: string, f: Partial<Filters>) => request<SectionEnvelope>(`/reporting/analytics/${name}${qs(f)}`),

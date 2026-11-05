@@ -3,7 +3,7 @@ No real, labelled, multi-object tracking
 dataset exists in this repository, so this module generates one
 deterministically at evaluation time -- never from a downloaded or
 externally-fetched dataset (same "no unrestricted remote fetching"
-discipline Phase 4's own synthetic_eval_fixture.py already follows).
+discipline the own synthetic_eval_fixture.py already follows).
 
 Two fixed, named sequences, each with known ground truth:
 
@@ -30,7 +30,7 @@ from dataclasses import dataclass
 FRAME_COUNT = 20
 FPS = 10.0
 BBOX_HALF_SIZE = 0.03
-GROUND_TRUTH_CLASS_LABEL = "mock_object"  # reuses Phase 4's reserved synthetic label -- never a real detector's class
+GROUND_TRUTH_CLASS_LABEL = "mock_object"  # reuses the reserved synthetic label -- never a real detector's class
 
 
 @dataclass(frozen=True)
@@ -119,7 +119,7 @@ _SEQUENCES: dict[str, SyntheticSequence] = {
 
 def generate() -> list[SyntheticSequence]:
     """Always returns both named sequences, in a fixed order -- there is
-    no `sequence_count` parameter because, unlike Phase 4's single-image
+    no `sequence_count` parameter because, unlike the single-image
     fixture, these two sequences are each individually meaningful
     (one sanity check, one stress test), not interchangeable repeats of
     the same scenario."""

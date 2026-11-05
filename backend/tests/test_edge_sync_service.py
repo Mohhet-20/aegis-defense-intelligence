@@ -1,4 +1,4 @@
-"""Unit tests for app/services/edge_sync_service.py (Phase 8, Sections
+"""Unit tests for app/services/edge_sync_service.py (Sections
 5-9): idempotent batch ingestion, the two-tier conflict policy
 (immutable quarantine / mutable revision-conflict), the explicit state
 machine + its transition enforcement, retry/backoff, crash recovery,

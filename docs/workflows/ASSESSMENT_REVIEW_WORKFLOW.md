@@ -1,4 +1,4 @@
-# Human Review of Assessments (Phase 10)
+# Human Review of Assessments
 
 Decisions: `accepted`, `rejected`, `further_review_requested`. Reviewers may also
 flag information as `insufficient_information` and/or `conflicting_information`.

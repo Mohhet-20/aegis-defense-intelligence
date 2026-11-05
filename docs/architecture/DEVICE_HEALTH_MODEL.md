@@ -1,4 +1,4 @@
-# Device Health-Finding Rule Engine (Phase 9, Section 4)
+# Device Health-Finding Rule Engine (Section 4)
 
 **Status: IMPLEMENTED, tested.** This document is the detailed companion
 to `docs/architecture/FLEET_MANAGEMENT.md` Section 5 -- it covers
@@ -110,8 +110,8 @@ identical across rules.
 - It never collapses multiple findings into one aggregate "health
   score" -- every finding is returned as its own entry in the list,
   the same "never collapse genuinely separate concepts" discipline
-  Phase 6's four-signal sensor-health model established and Section 3
-  of `docs/architecture/FLEET_MANAGEMENT.md` restates for this phase.
+  the four-signal sensor-health model established and Section 3
+  of `docs/architecture/FLEET_MANAGEMENT.md` restates.
 - It never phrases a finding as a threat, hostile-intent, or
   equipment-fault *determination* -- every `explanation` string is a
   plain statement of a measured value against a configured threshold

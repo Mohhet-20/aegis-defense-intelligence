@@ -1,4 +1,4 @@
-// Phase 14 governance types -- mirror backend/app/schemas/{audit,lifecycle}.py and
+// Governance types -- mirror backend/app/schemas/{audit,lifecycle}.py and
 // app/core/security_config.py. Nothing here is computed client-side.
 export interface RoleInfo { role: string; permissions: string[]; permission_count: number }
 export interface RoleMatrix { roles: RoleInfo[]; all_permissions: string[] }

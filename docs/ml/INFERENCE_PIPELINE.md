@@ -1,4 +1,4 @@
-# Inference Pipeline (Phase 4)
+# Inference Pipeline
 
 `app/services/inference_service.py`. Submits and runs one
 `InferenceJob` -- image detection (one frame) or bounded video frame
@@ -12,7 +12,7 @@ pending --(submit)--> running --(success)--> completed
                             +--(exception)--> failed --(retry, up to 3x)--> pending (new job)
 ```
 
-Same four-state shape as Phase 2's `IngestionJob` and Phase 3's
+Same four-state shape as the `IngestionJob` and the
 `FusionJob` -- no new lifecycle vocabulary invented.
 
 ## Execution model -- stated plainly
@@ -26,7 +26,7 @@ response is returned. There is **no background worker, no task queue,
 no polling** -- the client gets the final job status in the response
 to its own `POST /inference/jobs` call. This is the exact same
 discipline `ingestion_service.run_ingestion()` and
-`fusion_service.run_fusion_job()` already established; Phase 4 does
+`fusion_service.run_fusion_job()` already established; the computer-vision layer does
 not pretend to add real async job execution where none exists.
 
 ## Submission validation (before any job row is created)
@@ -99,9 +99,9 @@ decides the real cap, applied unconditionally by
 frames gets a `200` with the real (smaller) number of frames actually
 processed, never a `422`. **This exact bug -- an upper `le=500` on the
 schema field, which rejected an over-large request instead of clamping
-it -- was found and fixed during this phase's own test-writing pass**
+it -- was found and fixed during its own test-writing pass**
 (`tests/test_video_inference.py::test_video_max_frames_request_is_clamped_to_the_configured_ceiling`
-failed with a 422 before the fix), the same anti-pattern Phase 3 found
+failed with a 422 before the fix), the same anti-pattern found
 and fixed for `GET /fusion/graph`.
 
 ## What this does NOT do
@@ -111,7 +111,7 @@ and fixed for `GET /fusion/graph`.
   concurrency" here means bounded *work per job*, not a worker-pool
   limit on how many jobs run in parallel. A true async job runner with
   real concurrency control is reasonable follow-up work, not something
-  this phase claims to have built.
+  this layer claims to have built.
 - No job cancellation endpoint -- a running job runs to completion
   (bounded by the frame/detection caps) or fails; there is nothing to
   cancel mid-flight because nothing runs long enough, by design, to

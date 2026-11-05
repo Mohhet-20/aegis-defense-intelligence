@@ -17,7 +17,7 @@ def test_readiness_reports_database_ok(client):
 
 
 def test_readiness_reports_tracker_runtime_ok(client):
-    """Phase 5: confirms scipy's Hungarian-assignment dependency is
+    """Confirms scipy's Hungarian-assignment dependency is
     actually importable and callable in this process -- not just that
     the API process is up (an available process is never,
     by itself, proof that tracking works)."""

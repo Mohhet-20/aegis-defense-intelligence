@@ -1,4 +1,4 @@
-"""Phase 5, Section 7/16: image-space-only motion analytics. Pure,
+"""/16: image-space-only motion analytics. Pure,
 DB-free tests of app/tracking/motion.py -- every value here must be
 pixels on the source video's own stored resolution, never a
 physical-world unit, never a fabricated/interpolated position.

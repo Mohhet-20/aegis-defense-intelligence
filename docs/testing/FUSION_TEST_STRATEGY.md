@@ -1,12 +1,12 @@
 # Fusion Test Strategy
 
-Phase 3, Section 17's required scenario list, mapped to the actual
+'s required scenario list, mapped to the actual
 tests that cover it. Four new test files, 55 new tests, all against a
 real FastAPI app via `TestClient` and/or a real (in-memory SQLite)
 session -- never a mock of the service layer itself. Combined with
-Phase 1/2's unchanged 172 tests, the full suite is **227 tests, 90%
-line coverage**, all passing as of this phase's final verification
-pass (see `docs/implementation/PROJECT_STATUS.md`).
+the unchanged 172 tests, the full suite is **227 tests, 90%
+line coverage**, all passing currently's final verification
+pass.
 
 ## File-by-file
 
@@ -20,7 +20,7 @@ pass (see `docs/implementation/PROJECT_STATUS.md`).
 ## Section 17's scenario checklist
 
 Reproduced here with the exact test that satisfies each one, so this
-document can be checked against the spec directly rather than taken on
+document can be checked against the design directly rather than taken on
 faith:
 
 **Identifier/attribute comparison**: matching source-local IDs
@@ -86,11 +86,11 @@ directly, which is appropriate for service-level logic (e.g.
 `identifier_service`'s pure comparison functions) that doesn't need an
 HTTP round-trip to be meaningfully tested.
 
-## Honesty check: the one real gap found and fixed during this phase
+## Honesty check: the one real gap found and fixed
 
 `settings.FUSION_TIME_WINDOW_SECONDS_BY_TYPE` was added to
 `config.py` with a parsing property but was NOT consumed by any service
-until this was caught during this phase's own verification pass --
+until this was caught during its own verification pass --
 exactly the "file exists but isn't wired in" trap Section 19 warns
 against. It was fixed (see `docs/analytics/TEMPORAL_CORRELATION.md`)
 and the fix is covered by a dedicated test,
@@ -105,11 +105,10 @@ No load/performance testing of the fusion pipeline at scale (Section
 13's performance safeguards -- `FUSION_MAX_EVENTS_PER_RUN`,
 `FUSION_GRAPH_MAX_NODES`/`MAX_DEPTH` -- are implemented and unit-tested
 for correctness of the CAP itself, but no test here measures actual
-wall-clock performance against a large synthetic dataset; see
-`docs/implementation/PROJECT_STATUS.md`'s known-limitations section).
+wall-clock performance against a large synthetic dataset).
 No browser-driven end-to-end test of the new frontend fusion workspace
 pages -- `npx tsc -b --force`, `npx eslint .`, and `npm run build` all
-pass clean (see `docs/implementation/PROJECT_STATUS.md`), confirming
+pass clean, confirming
 the pages compile and build correctly against the real API client
 types, but no Playwright/Selenium smoke test was run against a live
 server + browser for these specific pages in this pass.

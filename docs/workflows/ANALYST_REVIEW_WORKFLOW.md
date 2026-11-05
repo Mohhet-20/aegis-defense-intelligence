@@ -1,6 +1,6 @@
 # Analyst Review Workflow
 
-Phase 3, Section 11. One shared discipline across two different
+One shared discipline across two different
 tables -- `EvidenceRelationship` review and `Conflict` resolution --
 documented together here because they share the same underlying
 pattern: a machine-produced or analyst-produced candidate state that
@@ -22,7 +22,7 @@ only ever changes through an explicit, audited, human decision.
    state change it describes actually having happened, and vice versa.
 4. History is queryable per-record via the SAME append-only
    `AuditRecord` table the rest of the platform already uses --
-   `audit_service.list_for_target()` (new this phase) rather than a
+   `audit_service.list_for_target()` (new this layer) rather than a
    second, parallel history table.
 5. A later decision never silently erases an earlier one -- it's a new
    `AuditRecord` row, and for relationships, an explicit `reverse`
@@ -68,7 +68,7 @@ unresolved ------------------------------------------------------------> {explai
 - `resolve_conflict()` (-> `POST /conflicts/{id}/resolve`) validates
   `review_status` against the full `CONFLICT_REVIEW_STATUSES` tuple
   (any other string is a 400 -- `test_invalid_resolution_status_is_rejected`).
-- There is no separate "reverse" action for a conflict in this phase
+- There is no separate "reverse" action for a conflict
   -- `resolve_conflict()` can itself be called again to move a conflict
   into a different resolved state (including, if ever genuinely
   needed, calling it with `review_status="unresolved"` again, since

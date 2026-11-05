@@ -1,15 +1,15 @@
-# Model Registry (Phase 4)
+# Model Registry
 
-Extends `app/models/model_record.py`'s `ModelRecord` table (Phase 1) --
+Extends `app/models/model_record.py`'s `ModelRecord` table --
 there is no parallel `CVModel` table. `app/services/
 model_registry_service.py` is the CV-specific CRUD/listing surface over
 it.
 
 ## Why extend, not duplicate
 
-Phase 1's `docs/architecture/COMPUTER_VISION_CONTRACTS.md` already
+the `docs/architecture/COMPUTER_VISION_CONTRACTS.md` already
 named `ModelRecord` as the future CV registry row: *"ModelRecord
-(already exists as a Phase 1 model/table, unused by any real inference
+(already exists as a model/table, unused by any real inference
 yet)"*. Building a separate `CVModel` table would have ignored that and
 duplicated an entity this project's own standing rule forbids
 duplicating.
@@ -36,7 +36,7 @@ same name+version twice returns the existing row.
 |---|---|---|---|
 | `mock-object-detector` | `mock_detector_v1` | No -- deterministic, hash-derived | image, video |
 | `opencv-hog-person-detector` | `opencv_hog_person_v1` | **Yes** -- real OpenCV HOG+SVM | image, video |
-| `demo-risk-scorer` (Phase 1, unchanged) | n/a (`task_type IS NULL`) | n/a | n/a -- not a CV model at all |
+| `demo-risk-scorer` (unchanged) | n/a (`task_type IS NULL`) | n/a | n/a -- not a CV model at all |
 
 Seeded by `backend/scripts/seed.py`.
 

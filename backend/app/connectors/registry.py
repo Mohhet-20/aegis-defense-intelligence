@@ -15,7 +15,7 @@ from app.connectors.json_connector import JSONFileConnector
 from app.connectors.synthetic_connector import SyntheticDemoConnector
 
 # The recommended source-type taxonomy. Not a hard DB
-# constraint -- Phase 1 already seeded sources with looser values
+# constraint -- already seeded sources with looser values
 # ("manual", "synthetic_generator") and breaking those would violate
 # "preserve existing records." New sources should use these names.
 RECOMMENDED_SOURCE_TYPES = (
@@ -36,7 +36,7 @@ RECOMMENDED_SOURCE_TYPES = (
 _CONNECTOR_CLASSES: dict[str, type[BaseConnector]] = {
     "http_api": HttpApiConnector,
     "synthetic_demo": SyntheticDemoConnector,
-    # Legacy Phase-1 seed value, kept working rather than renamed.
+    # Legacy original seed value, kept working rather than renamed.
     "synthetic_generator": SyntheticDemoConnector,
 }
 

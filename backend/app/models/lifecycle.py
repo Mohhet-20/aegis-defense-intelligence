@@ -1,4 +1,4 @@
-"""Data-lifecycle requests (Phase 14, Phase G).
+"""Data-lifecycle requests.
 
 One row per requested archive/delete of a lifecycle-managed record. The row
 is the approval workflow state AND the durable outcome record; it never

@@ -1,6 +1,6 @@
 # Data Provenance
 
-Phase 2, Section 6. Every record that reaches the ingestion engine --
+Every record that reaches the ingestion engine --
 accepted, rejected, quarantined, or flagged a duplicate -- gets a
 `RawRecord` row (`app/models/raw_record.py`). This is deliberate: an
 analyst can inspect exactly what a source sent, even for a record this
@@ -27,7 +27,7 @@ The original payload is never overwritten during normalization -- a
 If retention policy ever required deleting a raw payload, the metadata
 columns above (everything except `payload`) could be preserved to keep an
 audit trail while discarding the sensitive body; **no such deletion path
-is implemented in this phase** -- see `DEDUPLICATION_POLICY.md`'s
+is implemented** -- see `DEDUPLICATION_POLICY.md`'s
 retention note.
 
 ## The raw <-> normalized link
@@ -56,7 +56,7 @@ Endpoints gated this way:
 ## What this does NOT do
 
 There is no cryptographic chain-of-custody / tamper-evidence (hash
-chaining, signing) over raw records in this phase -- `content_fingerprint`
+chaining, signing) over raw records -- `content_fingerprint`
 is a content-identity hash for deduplication, not a tamper-evidence
-mechanism. If that requirement arises in a later phase, it is a new,
+mechanism. If that requirement arises in later work, it is a new,
 explicit feature, not something to assume already exists here.

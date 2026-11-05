@@ -1,4 +1,4 @@
-"""Phase 16: tenant isolation, restricted-record handling, section permissions, audit."""
+"""Tenant isolation, restricted-record handling, section permissions, audit."""
 from __future__ import annotations
 
 import pytest

@@ -1,4 +1,4 @@
-"""Password policy + timing-equalisation helper (Phase 14, Phase D).
+"""Password policy + timing-equalisation helper.
 
 The policy is deliberately modest and documented: minimum length, at
 least one letter and one digit, not a trivially guessable value derived

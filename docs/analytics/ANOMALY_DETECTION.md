@@ -1,4 +1,4 @@
-# Anomaly Detection (Phase 6, Section 9)
+# Anomaly Detection (Section 9)
 
 ## Status
 
@@ -76,7 +76,7 @@ newly persisted anomaly and is changed to anything else **only** through that sa
 review action -- never computed automatically by any detection method or background process.
 Reviewing an anomaly corrects an analyst's interpretation of it, not the underlying measurement:
 the originating `Observation` row is never rewritten, mirroring the review-field pattern already
-established by `RiskAssessment` (Phase 1) and `EvidenceRelationship` (Phase 3).
+established by `RiskAssessment` and `EvidenceRelationship`.
 
 `run_checks()` is idempotent per `(observation_id, detection_method)` pair -- re-running checks
 against an unchanged series never creates a duplicate row (`_existing_candidate` short-circuits
@@ -115,7 +115,7 @@ via a real crash running anomaly checks against a sensor with real ingested hist
 with a small `_as_aware_utc()` helper (a no-op if `tzinfo` is already set, otherwise it attaches
 UTC) duplicated in `anomaly_service.py`, `sensor_ingestion_service.py`, and
 `sensor_health_service.py` -- the same pattern already established in `user_service.py` from an
-earlier phase. In `anomaly_service.py` specifically, `check_missing_heartbeat` compares a
+earlier work. In `anomaly_service.py` specifically, `check_missing_heartbeat` compares a
 DB-read `last_valid_observed_at` against a freshly computed `now`; without the fix, every missed
 heartbeat check against a sensor with any real history would have crashed rather than correctly
 reporting elapsed time.

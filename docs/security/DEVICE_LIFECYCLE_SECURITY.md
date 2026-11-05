@@ -1,9 +1,9 @@
-# Device Lifecycle Security (Phase 9, Section 8)
+# Device Lifecycle Security (Section 8)
 
 **Status: IMPLEMENTED, tested.** This document extends
-`docs/security/EDGE_DEVICE_SECURITY.md` (Phase 8) -- the credential
+`docs/security/EDGE_DEVICE_SECURITY.md` -- the credential
 model, device-auth header scheme, and least-privilege design described
-there are unchanged. This document covers only what Phase 9 adds: the
+there are unchanged. This document covers only what adds: the
 two new administrative states, the confirmation-preview mechanism, the
 historical-evidence-preservation guarantee, device-reported-metadata
 discipline for the new capability/health surfaces, and the heartbeat
@@ -29,15 +29,15 @@ Every transition is validated against this table inside
 `InvalidDeviceLifecycleTransitionError` (surfaced as HTTP 400) on an
 illegal move -- there is no code path that sets
 `Device.administrative_status` directly without going through this
-check. `revoked` remains terminal, unchanged from Phase 8: nothing is
+check. `revoked` remains terminal, unchanged: nothing is
 legal from `revoked`, and a revoked device is re-enrolled as a
 brand-new row, never resurrected.
 
 ## 2. Why `maintenance`/`decommissioned` are separate from `suspended`/`revoked`
 
-Phase 8 established `suspended` (a pause triggered by *security
+Established `suspended` (a pause triggered by *security
 suspicion*) and `revoked` (a *permanent security response* that
-immediately invalidates the credential). Phase 9 adds two states that
+immediately invalidates the credential). The fleet layer adds two states that
 are superficially similar -- both also stop a device from
 authenticating -- but represent a **genuinely different category of
 reason**:
@@ -57,7 +57,7 @@ reason**:
   end-of-life path for hardware that is simply being retired --
   nothing security-relevant happened. `revoked` is specifically a
   security response: the credential itself is the problem, and it is
-  invalidated immediately (`api_key_hash = None`, same as Phase 8).
+  invalidated immediately (`api_key_hash = None`, same as).
   `decommission_device()` **deliberately does not touch
   `api_key_hash`** -- a decommissioned device is already blocked from
   authenticating because `authenticate_device()` only accepts
@@ -70,7 +70,7 @@ reason**:
   security concern is discovered along the way.
 
 This mirrors the same "two superficially similar fields that are
-genuinely separate concerns" discipline Phase 6 established for
+genuinely separate concerns" discipline established for
 `Sensor.lifecycle_status` adding `maintenance`/`retired` as states
 reachable only by deliberate analyst action, never inferred from data.
 
@@ -126,9 +126,9 @@ unchanged afterward.
 
 ## 5. Device-reported metadata is untrusted input, everywhere
 
-The same discipline Phase 8 established for `Device.capabilities`/
+The same discipline established for `Device.capabilities`/
 `connectivity_state` (self-reported, advisory, never used for
-authorization) extends to every new Phase 9 surface that ingests
+authorization) extends to every new surface that ingests
 device-reported data:
 
 - `DeviceCapability.supported`/`installed`/`available_and_ready` are
@@ -155,16 +155,16 @@ device-reported data:
   (`datetime.now(timezone.utc)`), the same "central/server-authoritative
   clock, never a device's own clock" discipline
   `edge_sync_service._get_current_accepted()` already established for
-  sync-record ordering in Phase 8. This matters concretely: a device
+  sync-record ordering. This matters concretely: a device
   with a skewed or malicious clock cannot make its liveness look more
   current than it actually is, and cannot move the server's
   authoritative view of its own liveness backwards by replaying an
   older claimed timestamp.
 - Nothing a device self-reports (capabilities, health metrics,
   heartbeat timing, config) is ever used to grant it a `Permission` or
-  change its own `administrative_status` -- exactly as Phase 8's
+  change its own `administrative_status` -- exactly as the
   "a device has no Role or Permission at all" discipline already
-  established, unchanged by this phase. Every state-changing action
+  established, unchanged. Every state-changing action
   described in this document requires a real user's JWT and the
   matching `Permission`, never a device credential.
 
@@ -186,8 +186,8 @@ state.
 
 This is stated here as a **known limitation**, not hidden as a silent
 gap: the single-process limiter is correct and fully tested for this
-project's current single-process deployment model (unchanged from
-every other phase -- there is no load balancer or multi-worker
+project's current single-process deployment model (unchanged across
+the platform -- there is no load balancer or multi-worker
 deployment anywhere in this project's actual configuration), and a real
 distributed limiter (e.g. a Redis-backed sliding window) is a
 reasonable, explicitly-flagged follow-up if this backend is ever
@@ -198,18 +198,18 @@ helper to clear this module-level state between test functions that
 reuse the same `device_identifier`/device id -- it is never called from
 any production code path.
 
-## 7. What is explicitly NOT claimed (extending Phase 8's own list)
+## 7. What is explicitly NOT claimed (extending the own list)
 
 - No change to the credential model, device-auth header scheme, or
   least-privilege design described in
   `docs/security/EDGE_DEVICE_SECURITY.md` -- that document remains the
   authoritative source for those properties.
-- No weapon interface of any kind, consistent with every prior phase's
+- No weapon interface of any kind, consistent with each layer's
   own statement -- nothing in the new lifecycle states, capability
   discovery, configuration management, or alerting issues a command to,
   or receives a command from, any weapon, targeting, or engagement
   system.
-- No claim that the heartbeat rate limiter, or any other new Phase 9
+- No claim that the heartbeat rate limiter, or any other new
   component, has been exercised under real multi-process or
   multi-replica load -- it has been tested only against the
   single-process model this project actually runs (Section 6).

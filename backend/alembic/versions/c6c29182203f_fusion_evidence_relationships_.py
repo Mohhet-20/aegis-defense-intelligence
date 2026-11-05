@@ -209,8 +209,8 @@ def upgrade() -> None:
     op.add_column('investigations', sa.Column('purpose', sa.String(length=2000), nullable=True))
     op.add_column('investigations', sa.Column('scope', sa.String(length=2000), nullable=True))
     # server_default='[]' is required here, not optional: every existing
-    # Phase 1/2 investigation row must backfill to a real empty JSON
-    # list on this NOT NULL column, the same lesson Phase 2's own
+    # Investigation row must backfill to a real empty JSON
+    # list on this NOT NULL column, the same lesson the own
     # migration already learned the hard way (see
     # 30bdae7e385e_...py). Dropped again below once the backfill has
     # happened, on dialects where ALTER COLUMN is actually supported.

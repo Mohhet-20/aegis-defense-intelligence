@@ -1,5 +1,5 @@
 """SSRF defenses for the HTTP connector (Section 4 / Section 17 of the
-Phase 2 spec). Every outbound URL -- the configured endpoint AND every
+Spec). Every outbound URL -- the configured endpoint AND every
 redirect hop -- goes through `validate_url()` before a request is
 made. This is deliberately conservative: when in doubt, reject.
 """

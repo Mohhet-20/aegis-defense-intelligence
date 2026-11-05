@@ -12,7 +12,7 @@ only through the API/UI (the Fleet Operations Center's Alert Center)
 and the audit trail.
 
 `evaluate_alerts_for_device` is idempotent and safe to call on every
-health-report submission (Phase 8's existing ingestion path) -- it
+health-report submission (the existing ingestion path) -- it
 never creates a duplicate open alert for an already-open condition
 (see `_get_open_alert`'s dedup_key lookup), and it auto-resolves an
 alert once its underlying condition is no longer observed, always
@@ -29,7 +29,7 @@ never compute "stale"/"offline" at that exact moment. A device that
 has gone genuinely silent produces no inbound request of any kind, so
 nothing would ever re-evaluate it. `evaluate_alerts_for_all_devices`
 below exists specifically to close this gap: an explicit,
-operator/scheduler-triggered sweep (the same pattern Phase 8's
+operator/scheduler-triggered sweep (the same pattern the
 `edge_sync_service.recover_stale_syncing_records` already established
 for its own "detect the absence of an expected update" problem,
 exposed the same way via `POST /fleet/alerts/evaluate-sweep`) that
@@ -37,7 +37,7 @@ evaluates every device's presence/health/drift state regardless of
 whether it has reported recently. A real deployment would schedule
 this sweep on an interval (e.g. every few minutes) via an external
 cron hitting that endpoint -- this project has no in-process background
-scheduler (deliberately; see Phase 8's own "no duplicate concurrent
+scheduler (deliberately; see the own "no duplicate concurrent
 workers" discipline), so no code here invents one.
 """
 from __future__ import annotations

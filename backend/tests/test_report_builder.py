@@ -1,4 +1,4 @@
-"""Phase 16: report generation, export hardening, storage, retention, audit."""
+"""Report generation, export hardening, storage, retention, audit."""
 from __future__ import annotations
 
 import csv

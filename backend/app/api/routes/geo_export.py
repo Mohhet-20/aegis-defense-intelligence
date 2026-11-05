@@ -1,6 +1,6 @@
 """Bounded GeoJSON/CSV export API. Gated by
 GEOSPATIAL_EXPORT specifically -- not GEOSPATIAL_READ -- mirroring
-Phase 2's existing DATA_EXPORT split: being able to view the map is
+the existing DATA_EXPORT split: being able to view the map is
 not the same permission as being able to bulk-export its data."""
 from __future__ import annotations
 

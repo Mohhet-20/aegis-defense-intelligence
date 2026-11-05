@@ -18,7 +18,7 @@ RISK_SCORE_SCALE = "0-100 (uncalibrated; see docs/architecture/AI_ANALYTICS_CONT
 
 
 class RiskAssessment(Base, UUIDPrimaryKeyMixin, TimestampMixin, OrgScopedMixin):
-    """Storage + review-workflow shape only in Phase 1. Seed data
+    """Storage + review-workflow shape only. Seed data
     creates rows with method="seed_example_v0" -- there is no real
     scoring model yet. See docs/architecture/AI_ANALYTICS_CONTRACTS.md."""
 

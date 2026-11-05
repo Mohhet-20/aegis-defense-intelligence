@@ -1,6 +1,6 @@
 # Evidence Graph
 
-Phase 3, Section 10. Implemented in `app/services/graph_service.py`
+Implemented in `app/services/graph_service.py`
 (backend), `GET /api/v1/fusion/graph` (`app/api/routes/fusion.py`), and
 `frontend/src/pages/EvidenceGraphPage.tsx` (an SVG rendering + an
 always-present accessible table, never SVG-only).
@@ -29,7 +29,7 @@ nonsensical negative/zero values early; they are deliberately NOT the
 real cap (an earlier version of this route used `le=10`/`le=1000`,
 which caused the API to REJECT an over-large request with a 422 instead
 of CLAMPING it -- the wrong behavior for a "bounded no matter what the
-client asks" guarantee. Fixed before this phase's final report; see
+client asks" guarantee. Fixed beforehand's final report; see
 `backend/tests/test_fusion_and_graph.py::
 test_graph_max_depth_is_clamped_server_side`, which asserts a request
 for `max_depth=999&max_nodes=999999` comes back `200` with the response
@@ -64,7 +64,7 @@ bundle small and the behavior fully inspectable).
 
 | Edge type | Backed by | Appears between |
 |---|---|---|
-| `correlation` | `EventCorrelation` (Phase 2, read-only here) | event <-> event |
+| `correlation` | `EventCorrelation` (read-only here) | event <-> event |
 | `relationship` | `EvidenceRelationship` | event/evidence <-> event/evidence |
 | `conflict` | `Conflict` | event <-> event |
 | `assessment_link` | `AssessmentEvidenceLink` | assessment <-> event/evidence |

@@ -1,4 +1,4 @@
-"""Phase 15 -- model registry: validation, immutability, lifecycle governance,
+"""Model registry: validation, immutability, lifecycle governance,
 organization visibility, derived evaluation status, artifact verification."""
 from __future__ import annotations
 

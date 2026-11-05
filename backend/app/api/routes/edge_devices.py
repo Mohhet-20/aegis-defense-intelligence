@@ -145,8 +145,8 @@ def enter_device_maintenance(
     current_user: AuthenticatedUser = Depends(require_permission(Permission.DEVICE_MANAGE)),
     db: Session = Depends(get_db),
 ) -> DeviceResponse:
-    """Phase 9, Section 8 -- a temporary, explicit, reversible
-    administrative pause, distinct from Phase 8's `suspend` (a
+    """ -- a temporary, explicit, reversible
+    administrative pause, distinct from the `suspend` (a
     security-suspicion pause)."""
     device = _get_device_or_404(db, current_user.organization_id, device_id)
     try:
@@ -164,8 +164,8 @@ def decommission_device(
     current_user: AuthenticatedUser = Depends(require_permission(Permission.DEVICE_MANAGE)),
     db: Session = Depends(get_db),
 ) -> DeviceResponse:
-    """Phase 9, Section 8 -- permanent end-of-life, distinct from
-    Phase 8's `revoke` (a security response). Never deletes historical
+    """ -- permanent end-of-life, distinct from
+    the `revoke` (a security response). Never deletes historical
     sync/health/audit rows."""
     device = _get_device_or_404(db, current_user.organization_id, device_id)
     try:
@@ -182,7 +182,7 @@ def preview_device_lifecycle_transition(
     current_user: AuthenticatedUser = Depends(require_permission(Permission.DEVICE_READ)),
     db: Session = Depends(get_db),
 ) -> dict:
-    """Phase 9, Section 8: "confirmation previews for consequential
+    """"confirmation previews for consequential
     actions" -- read-only, makes no change. The Fleet Operations Center
     calls this before showing a confirm dialog for any consequential
     lifecycle action."""

@@ -212,7 +212,7 @@ def main() -> int:
     record("GitHub Actions run", "NOT RUN", "workflow is authored; it runs only after the branch is pushed", mandatory=False)
     has_license = any((ROOT / n).exists() for n in ("LICENSE", "LICENSE.md", "LICENSE.txt"))
     record("license file present", "PASS" if has_license else "BLOCKED",
-           "" if has_license else "owner must choose a license (docs/operations/LICENSE_DECISION.md)")
+           "" if has_license else "add a LICENSE file")
 
     shutil.rmtree(tmp, ignore_errors=True)
     counts = {s: sum(1 for r in RESULTS if r[1] == s) for s in ("PASS", "FAIL", "NOT RUN", "BLOCKED", "NOT APPLICABLE")}

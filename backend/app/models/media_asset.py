@@ -5,7 +5,7 @@ app/cv/media_validation.py), stored under a content-addressed name on a
 private, non-web-served filesystem root (app/cv/storage.py), and
 referenced everywhere else by this row's id, never by a raw path.
 
-This is NOT the same idea as Phase 3's `Evidence.external_reference_uri`
+This is NOT the same idea as the `Evidence.external_reference_uri`
 -- Evidence points at content that lives somewhere else and is never
 fetched. A MediaAsset is content this platform itself received, validated,
 and is now responsible for storing safely. A MediaAsset is promoted into

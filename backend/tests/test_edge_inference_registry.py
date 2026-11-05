@@ -1,4 +1,4 @@
-"""Unit tests for app/edge/inference/registry.py (Phase 8, Section
+"""Unit tests for app/edge/inference/registry.py (Section
 10): the closed adapter allow-list, availability states, provenance
 linkage, and the explicit separation from synchronization state (a
 result dict is never itself a SyncRecord)."""

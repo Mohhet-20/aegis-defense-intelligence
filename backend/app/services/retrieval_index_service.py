@@ -1,4 +1,4 @@
-"""Phase 12: idempotent indexing of authoritative records into the derived
+"""Idempotent indexing of authoritative records into the derived
 retrieval tables.
 
 Rules:

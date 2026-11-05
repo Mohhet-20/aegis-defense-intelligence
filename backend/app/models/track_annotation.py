@@ -1,8 +1,8 @@
-"""TrackAnnotation (Phase 5, Section 3E). An analyst's note or flag
+"""TrackAnnotation (Section 3E). An analyst's note or flag
 about one Track -- attributed, timestamped, and NEVER destructively
 edited: correcting an earlier annotation creates a new row pointing
 back at the one it supersedes (`supersedes_annotation_id`), the same
-non-destructive-history discipline Phase 3 established for
+non-destructive-history discipline established for
 `AssessmentRevision` and relationship review history.
 
 An annotation never edits the Track or any TrackObservation it

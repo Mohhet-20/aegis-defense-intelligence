@@ -1,4 +1,4 @@
-"""Phase 14 -- audit governance, data lifecycle, configuration security,
+"""Audit governance, data lifecycle, configuration security,
 request-size limits, upload hardening."""
 from __future__ import annotations
 

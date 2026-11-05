@@ -12,8 +12,7 @@ class SubmitTrackingJobRequest(BaseModel):
     min_iou_threshold: Optional[float] = Field(default=None, ge=0.0, le=1.0)
     # Deliberately no upper bound on max_missed_frames/min_hits_to_confirm
     # here -- same "clamp server-side, never reject the request" lesson
-    # Phase 3/4 already learned (docs/implementation/PROJECT_STATUS.md
-    # Section 9); there is no settings-level clamp needed for these two
+    # Already learned; there is no settings-level clamp needed for these two
     # because they are per-job configuration choices, not a resource
     # bound, but ge=0/ge=1 still rejects nonsensical negative input.
     max_missed_frames: Optional[int] = Field(default=None, ge=0)

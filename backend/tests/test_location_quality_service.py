@@ -1,5 +1,4 @@
-"""Tests for app/services/location_quality_service.py (Phase 7,
-Section 17 "Provenance and uncertainty")."""
+"""Tests for app/services/location_quality_service.py (Section 17 "Provenance and uncertainty")."""
 from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone

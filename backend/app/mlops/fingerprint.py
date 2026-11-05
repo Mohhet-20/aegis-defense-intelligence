@@ -37,7 +37,7 @@ def reproducibility_info(*, seed_description: str, fixture_version: str, metrics
         "fingerprint_version": FINGERPRINT_VERSION,
         "python_version": sys.version.split()[0],
         "platform": platform.platform(),
-        "application_version": "1.0.0-phase1",
+        "application_version": "1.0.0",
         "git_commit": get_settings().APP_GIT_COMMIT or None,
         "execution_backend": execution_backend,
         "random_seed": seed_description,

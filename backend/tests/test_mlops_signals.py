@@ -1,4 +1,4 @@
-"""Phase 15 -- review signals: dedup, escalation, lifecycle, access."""
+"""Review signals: dedup, escalation, lifecycle, access."""
 from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone

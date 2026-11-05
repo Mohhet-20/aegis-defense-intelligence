@@ -1,4 +1,4 @@
-"""HTTP-shaped errors raised by the Phase 11 workspace services.
+"""HTTP-shaped errors raised workspace services.
 
 Subclassing HTTPException means the existing app-wide handler already
 renders them in the platform's {detail, request_id} error shape."""

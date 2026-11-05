@@ -1,11 +1,11 @@
-# Multisensor Contracts — Planned (Phase 3, Phase 6)
+# Multisensor Contracts — Planned
 
 **Status: PLANNED for the correlation/fusion/quality logic. The
-underlying `Sensor` and `Observation` storage shapes are REAL (Phase 1
+underlying `Sensor` and `Observation` storage shapes are REAL (the foundation
 ships working tables and registry endpoints) — what's planned is
 everything that reasons *across* observations.**
 
-## What Phase 1 actually ships
+## What actually ships
 
 - `Sensor`: identity, type, source/device association, operational
   status, `last_seen_at`, optional location, optional capability
@@ -17,10 +17,10 @@ everything that reasons *across* observations.**
   `/api/v1/observations`; populated only via seed data for
   demonstration.
 
-## What Phase 6 (Sensor and Observation Analytics) will add
+## What (Sensor and Observation Analytics) will add
 
 - **Sensor health computation** from `last_seen_at` + a configured
-  heartbeat expectation — not implemented in Phase 1 (there is no
+  heartbeat expectation — not implemented (there is no
   real sensor sending heartbeats yet).
 - **Observation-quality scoring** — the `quality_metadata` JSON field
   exists on the model now specifically so this can be added without a
@@ -30,10 +30,10 @@ everything that reasons *across* observations.**
 - **Cross-source association** — recognizing that two observations from
   different sensors likely describe the same real-world object/event.
 
-## What Phase 3 (Multisource Intelligence Fusion) will add
+## What (Multisource Intelligence Fusion) will add
 
 - **Source reliability** as a configured, queryable property of
-  `DataSource` (the column exists; Phase 1 does not compute or display
+  `DataSource` (the column exists; the foundation does not compute or display
   a derived reliability score from ingestion history).
 - **Fusion services** that combine correlated observations into a
   higher-confidence conclusion, with explicit conflict-resolution logic
@@ -42,7 +42,7 @@ everything that reasons *across* observations.**
 - **Evidence lineage** — every fused conclusion must be traceable back
   to the specific observations/events that produced it.
 
-## Binding principles (apply from Phase 3/6 onward)
+## Binding principles (apply onward)
 
 - Do not silently fuse observations reported in incompatible units,
   coordinate systems, or timestamp formats. A fusion step that can't
@@ -52,12 +52,12 @@ everything that reasons *across* observations.**
   evidence that multiplies confidence — that overstates certainty.
   Correlation must be assessed before confidence is combined.
 - A missing location is `None`/absent, never `(0.0, 0.0)` — this
-  applies to `Asset`, `Sensor`, and `Event` already in Phase 1's
+  applies to `Asset`, `Sensor`, and `Event` already in the
   schema (all location fields are nullable, with no default
   coordinate), and will apply identically to any future observation or
   fused-track location.
 
-## What Phase 1 does NOT do
+## What does NOT do
 
 No correlation, fusion, or cross-sensor reasoning runs anywhere in this
 codebase yet. `Observation.quality_metadata` and `DataSource`'s

@@ -20,9 +20,8 @@ class SubmitInferenceJobRequest(BaseModel):
     # inference_service.submit_inference_job()'s own min() clamp
     # regardless of what a client requests. An upper `le` here would
     # make the API *reject* an over-large request instead of
-    # *clamping* it -- exactly the bug Phase 3 found and fixed for
-    # GET /fusion/graph's max_depth/max_nodes (see
-    # docs/implementation/PROJECT_STATUS.md Section 9, item 2).
+    # *clamping* it -- exactly the bug found and fixed for
+    # GET /fusion/graph's max_depth/max_nodes.
     max_frames: Optional[int] = Field(default=None, ge=1)
     idempotency_key: Optional[str] = Field(default=None, max_length=128)
 

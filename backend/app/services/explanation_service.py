@@ -1,5 +1,4 @@
-"""Builds an explanation for one stored model output (Phase 10,
-Section 4). Computed on demand and deterministic -- nothing is
+"""Builds an explanation for one stored model output (Section 4). Computed on demand and deterministic -- nothing is
 persisted, so an explanation can never drift from the output it
 describes."""
 from __future__ import annotations

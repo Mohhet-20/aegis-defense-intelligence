@@ -98,7 +98,7 @@ Four fixed roles; the role→permission table is defined in code and is **not** 
 ## Notes
 
 * **Read / create / modify / export / admin are separate permissions** where the data warrants it: e.g. `event:read` vs `data:export`, `geospatial:read` vs `geospatial:export`, `investigation:manage` vs `investigation:export`, `media:read` vs `media:manage`, `scenario:read`/`write`/`run`.
-* Phase 14 added `security:read` (security-configuration report) and `lifecycle:read`/`request`/`approve`; all four are administrator-only by default.
+* Added `security:read` (security-configuration report) and `lifecycle:read`/`request`/`approve`; all four are administrator-only by default.
 * `audit:read` and `user:manage` are administrator-only. `user:read` is held by every role (list/get users **in the caller's organization** only).
 * A permission never widens *record* access: per-record rules (organization scope, restricted investigations, retrieval re-authorization) still apply on top.
 * Device endpoints do not use roles at all; they authenticate with `X-Device-Id` + `X-Device-Api-Key` (see `EDGE_DEVICE_SECURITY.md`).

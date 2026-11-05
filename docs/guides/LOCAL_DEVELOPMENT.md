@@ -54,7 +54,7 @@ If the browser talks to the backend directly (not through the Vite proxy), add i
 - Always `alembic upgrade head` first. `scripts/seed.py` refuses to run on a database that is not
   at the migration head (it used to create tables itself, which broke later migrations).
 - After pulling new code, run `alembic upgrade head` again. Upgrading an existing development
-  database from the Phase 14 schema (`a14c0de5ec01`) to head (`c16r3p0rt01`) was tested on a
+  database schema (`a14c0de5ec01`) to head (`c16r3p0rt01`) was tested on a
   copy of a real local database: all rows preserved.
 - `alembic check` on a migrated database must report "No new upgrade operations detected".
 - To start fresh, use a new SQLite file (`DATABASE_URL=sqlite:///./aegis-fresh.db`) or delete the

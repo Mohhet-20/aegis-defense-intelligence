@@ -4,7 +4,7 @@ Extends the existing `ModelRecord` registry -- it does not create a second one.
 
  * Visibility: rows registered through this API are owned by one organization
    (`owner_organization_id`) and are invisible to others (404, same as any
-   other-organization record). Rows with a NULL owner (seed data, the Phase 4
+   other-organization record). Rows with a NULL owner (seed data, the
    CV registrations) remain platform-level and visible to everyone, exactly as
    before. A governance transition on a platform-level row is therefore a
    platform-wide change; this is recorded in docs/security/KNOWN_RISKS.md.
@@ -16,7 +16,7 @@ Extends the existing `ModelRecord` registry -- it does not create a second one.
    automatic and is not inferred from metrics.
  * "Approved" is registry metadata. There is NO serving/activation environment
    in this application, so approval does not deploy anything. The only legacy
-   effect is that deprecate/archive set the Phase 4 `status` to deprecated/
+   effect is that deprecate/archive set the `status` to deprecated/
    retired, which already stops NEW CV inference jobs (inference_service checks
    `status in (registered, active)`); historical jobs and results are untouched.
 """

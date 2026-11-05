@@ -11,7 +11,7 @@ interface ConversationPage {
   page_size: number
 }
 
-/** Phase 12 retrieval + copilot API. Every call goes to the real backend. */
+/** Retrieval + copilot API. Every call goes to the real backend. */
 export const copilotApi = {
   capabilities: () => request<Capabilities>('/retrieval/capabilities'),
   search: (p: SearchParams) => {

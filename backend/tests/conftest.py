@@ -27,7 +27,7 @@ os.environ.setdefault("SECRET_KEY", "test-only-secret-not-for-production-use")
 # the production default in config.py is untouched.
 os.environ.setdefault("RATE_LIMIT_AUTH", "100000/minute")
 os.environ.setdefault("RATE_LIMIT_REFRESH", "100000/minute")
-# Phase 4: every CV test writes real media bytes through the real
+# Every CV test writes real media bytes through the real
 # app/cv/storage.py -- isolated to a throwaway directory for this test
 # process rather than the dev backend/media_storage/ directory, same
 # "never touch real data/files" discipline as the in-memory test DB
@@ -190,7 +190,7 @@ def auth_header():
 
 @pytest.fixture()
 def png_bytes():
-    """A tiny real PNG -- used across Phase 4's CV tests as a valid
+    """A tiny real PNG -- used across the CV tests as a valid
     image upload. Built with Pillow, not hand-crafted bytes, so it is
     a genuinely valid, decodable PNG, not just a signature prefix."""
     import io
@@ -251,7 +251,7 @@ def cv_hog_model(db, org):
 
 @pytest.fixture()
 def active_device_factory(db, org, seeded_users):
-    """Phase 8: registers + activates a Device in one call, through
+    """Registers + activates a Device in one call, through
     the real device_service (never a bare ORM insert, so its
     administrative_status/api_key_hash are set exactly as registration
     actually sets them). Returns a callable `_make(device_identifier=None)
@@ -309,11 +309,11 @@ def tracking_source_factory(db, org, cv_mock_model):
     """Builds a real `MediaAsset` + a completed `video_frame_analysis`
     `InferenceJob` with hand-crafted, SMOOTHLY-MOVING `DetectionResult`
     rows inserted directly -- deliberately bypassing the real CV adapter
-    pipeline (Phase 4's `app/cv/adapters/mock_adapter.py` derives each
+    pipeline (the `app/cv/adapters/mock_adapter.py` derives each
     detection's box from a sha256 hash of the ENTIRE frame's pixel
     bytes, so with the existing `mp4_bytes` fixture's uniform-color
     frames, box positions jump unpredictably frame-to-frame -- fine for
-    exercising Phase 4's own pipeline, useless for testing Phase 5's
+    exercising the own pipeline, useless for testing the
     tracking logic, which needs predictable motion to produce a
     meaningful, non-fragmented track). This reuses the same kind of
     linear-motion construction already proven correct in
@@ -420,7 +420,7 @@ def tracking_source_factory(db, org, cv_mock_model):
     return _make
 
 
-# ---- Phase 15 helpers -------------------------------------------------------
+# ---- Helpers -------------------------------------------------------
 @pytest.fixture()
 def org_b(db, test_password):
     """A second organization with one administrator (`badmin`)."""

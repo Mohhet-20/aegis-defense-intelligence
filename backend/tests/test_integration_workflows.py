@@ -1,4 +1,4 @@
-"""Phase 17: cross-module end-to-end workflows A-H.
+"""Cross-module end-to-end workflows A-H.
 
 Every test drives the real HTTP API (FastAPI TestClient, in-memory
 SQLite, mock adapters, synthetic fixtures) from the first request to the

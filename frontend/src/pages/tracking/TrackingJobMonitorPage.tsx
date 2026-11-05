@@ -26,7 +26,7 @@ export function TrackingJobMonitorPage() {
     <div>
       <PageHeader
         title="Tracking Job Monitor"
-        description="Every tracking job runs synchronously inside its own API request, exactly like Phase 4's inference jobs -- there is still no background worker in this build. See docs/operations/TRACKING_OPERATIONS.md."
+        description="Every tracking job runs synchronously inside its own API request, exactly like the inference jobs -- there is still no background worker in this build. See docs/operations/TRACKING_OPERATIONS.md."
       />
 
       <div className="mb-4 max-w-xs">

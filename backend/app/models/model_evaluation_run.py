@@ -4,7 +4,7 @@ dataset -- precision/recall/F1/mean IoU, always traceable to the exact
 dataset name+version and model_record_id+version that produced them
 ("metrics always traceable to exact dataset+model
 versions"). Never a bare number with no attribution, same principle
-Phase 1's AI_ANALYTICS_CONTRACTS.md already states for RiskAssessment.
+the AI_ANALYTICS_CONTRACTS.md already states for RiskAssessment.
 
 `is_synthetic=True` means the dataset is a clearly-labelled synthetic
 fixture built for this repository (see

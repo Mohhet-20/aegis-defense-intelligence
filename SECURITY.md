@@ -5,7 +5,7 @@
 | Version | Supported |
 |---|---|
 | `1.0.0-rc.3` (branch `release/final-stabilization`) | yes -- current release candidate |
-| `1.0.0-rc.1` and anything older (build snapshots, `main` = phase 14 baseline) | no |
+| `1.0.0-rc.1` and anything older (build snapshots, `main` = the security-governance baseline) | no |
 
 ## Reporting a vulnerability
 

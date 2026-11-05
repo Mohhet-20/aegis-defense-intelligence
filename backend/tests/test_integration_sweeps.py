@@ -1,4 +1,4 @@
-"""Phase 17: exhaustive route sweeps driven by the live OpenAPI schema (not a hand-picked sample).
+"""Exhaustive route sweeps driven by the live OpenAPI schema (not a hand-picked sample).
 
 * every protected operation rejects an unauthenticated call (401);
 * the set of public operations is an explicit allowlist (a newly public route fails this test);

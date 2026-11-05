@@ -1,4 +1,4 @@
-"""Phase 12 routes: authorized retrieval search, indexing, the evidence-grounded
+"""Routes: authorized retrieval search, indexing, the evidence-grounded
 copilot, citation verification, conversations and the synthetic evaluation.
 
 Every handler applies RBAC at the route, and per-record authorization in the

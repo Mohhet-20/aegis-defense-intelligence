@@ -6,7 +6,7 @@ from typing import Optional
 from sqlalchemy import Float, String
 from sqlalchemy.orm import Mapped, mapped_column
 
-# Phase 7, Section 3A: the only coordinate reference system any real
+#, Section 3A: the only coordinate reference system any real
 # connector or seed script in this project actually produces. A value
 # outside this tuple is never silently treated as WGS84 -- see
 # app/geo/validation.py's "unsupported_crs" finding -- because Section 3
@@ -18,13 +18,13 @@ SUPPORTED_COORDINATE_REFERENCE_SYSTEMS = ("WGS84",)
 
 # Section 3A: where a stored coordinate actually came from. "source_reported"
 # is the default for anything a connector/seed script supplies directly
-# (matches every pre-Phase-7 row's implicit meaning); "validated" means
+# (matches every pre-original row's implicit meaning); "validated" means
 # app/geo/validation.py has checked it and found no issue; "derived"/
 # "estimated"/"inferred" are reserved for a future capability that
 # computes a location FROM other records rather than receiving one
-# directly -- nothing in Phase 7 writes these three yet (see
+# directly -- nothing writes these three yet (see
 # docs/data/LOCATION_PROVENANCE_AND_UNCERTAINTY.md's "what this does NOT
-# do" section), but the vocabulary exists now so a future phase never
+# do" section), but the vocabulary exists now so later work never
 # has to overload "source_reported" to mean something it doesn't.
 LOCATION_ORIGINS = ("source_reported", "validated", "derived", "estimated", "inferred")
 
@@ -40,7 +40,7 @@ ALTITUDE_REFERENCES = ("wgs84_ellipsoid", "msl", "agl")
 
 
 class GeoLocationMixin:
-    """Optional WGS84 decimal-degree coordinates, extended in Phase 7
+    """Optional WGS84 decimal-degree coordinates, extended
     with the provenance/uncertainty metadata
     needed to distinguish a source-reported location from a validated,
     derived, or missing one. Section 7's original rule still
@@ -58,7 +58,7 @@ class GeoLocationMixin:
     across every table" is satisfied by every table sharing this ONE
     mixin definition (a schema/behavior change here applies identically
     everywhere), while avoiding the join-heavy rewrite a separate table
-    would force on every existing query in Phases 1-6. See
+    would force on every existing query. See
     docs/architecture/GEOSPATIAL_INTELLIGENCE_ARCHITECTURE.md for the
     full reasoning."""
 
@@ -66,7 +66,7 @@ class GeoLocationMixin:
     longitude: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
 
     # Stated, never assumed (Section 3A). Defaults to "WGS84" because
-    # every coordinate ever written in this codebase before Phase 7 was
+    # every coordinate ever written in this codebase was
     # implicitly WGS84; the column exists so a future non-WGS84 source
     # has somewhere honest to say so rather than being silently
     # mis-read.

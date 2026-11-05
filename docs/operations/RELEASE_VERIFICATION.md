@@ -1,7 +1,7 @@
 # Release verification and assessment
 
 Records, newest first: **1.0.0-rc.3**, 1.0.0-rc.2, the consolidation pass, the final stabilization pass and
-the original Phase 18 record. Where they differ, the newest reflects the current code.
+the original record. Where they differ, the newest reflects the current code.
 
 ## 1.0.0-rc.3 -- public-showcase release, 2026-10-19
 
@@ -165,11 +165,11 @@ directories), except one read-only copy test of the developer's local database.
 7. Duplicate React key on model output detail.
 8. CI PostgreSQL job would fail immediately (`-n0` without pytest-xdist).
 9. React Router 6 runtime advisories (upgraded to 7.18.4).
-10. UX: 70 ungrouped sidebar links, no phone layout, stale "Phase 6"/"Phases 1-4 ... not
+10. UX: 70 ungrouped sidebar links, no phone layout, stale "stage"/"not-yet-built ... not
     implemented yet" texts, admin forms shown to non-admins, "real upload" origin label.
 
 ### Not verified in this pass
-Containers (no Docker here), PostgreSQL (verified in the Phase 18 sandbox only), GitHub
+Containers (no Docker here), PostgreSQL (verified sandbox only), GitHub
 Actions, Python 3.12/3.13 locally, macOS/Linux instructions (CI covers Linux), real hardware,
 real model weights, multi-process deployment, form-by-form UI interaction beyond the scripted
 journeys.
@@ -192,7 +192,7 @@ be chosen before publication.
 
 ---
 
-## Phase 18 record (Linux sandbox)
+## Record (Linux sandbox)
 
 Environment: Linux x86_64 sandbox, 2 CPUs, Python 3.13, Node 22, PostgreSQL 16 server installed locally, Docker CLI + daemon present but **Docker Hub and other registries unreachable** (HTTP 403 from the egress policy), no GitHub Actions. All data synthetic; all databases disposable.
 
@@ -200,7 +200,7 @@ Environment: Linux x86_64 sandbox, 2 CPUs, Python 3.13, Node 22, PostgreSQL 16 s
 | # | Check | Result | Evidence |
 |---|---|---|---|
 | 1 | Fresh environment configuration | Verified | generated `CONFIGURATION_REFERENCE.md` covers all 160 settings (test enforces); production start refused for placeholder/short secret and wildcard CORS (4 tests) |
-| 2 | Dependency installation | Partially | `pip install -r requirements.txt` / `npm ci` used throughout this phase's environment; a clean-room install was not repeated |
+| 2 | Dependency installation | Partially | `pip install -r requirements.txt` `npm ci` used throughout this layer's environment; a clean-room install was not repeated |
 | 3 | Database initialization / migration | Verified | `alembic upgrade head` from empty on **SQLite and PostgreSQL 16**; downgrade -1 / upgrade on both; single head `c16r3p0rt01`; ORM-vs-migration comparison on PostgreSQL: 2 known accepted differences, 0 unexpected |
 | 4 | Backend startup | Verified | production mode on PostgreSQL: ready in 2.6 s, ~190 MB RSS idle / ~205 MB after the smoke test; graceful shutdown on SIGTERM; restart keeps data |
 | 5 | Frontend production build | Verified | `npm run build` OK; no source maps; no localhost URLs in `dist/assets`; `tsc -b` clean; eslint 0 errors / 2 pre-existing warnings |
@@ -218,9 +218,9 @@ Environment: Linux x86_64 sandbox, 2 CPUs, Python 3.13, Node 22, PostgreSQL 16 s
 | 17 | CI configuration | **Unverified remotely** | YAML parses; each step's commands were executed locally (SQLite tests, ruff, PostgreSQL migrations + drift + integration subset + production smoke, frontend lint/build, bandit, pip-audit, npm audit) |
 | 18 | Existing regression tests | See counts | SQLite full suite: **1381 passed, 0 failed**, 94% line coverage. PostgreSQL full suite (serial, 17 min): **1352 passed, 27 failed** — 26 tests insert fabricated foreign-key values that SQLite ignores, 1 asserts SQLite's naive datetimes (KNOWN_RISKS 44); the one real PostgreSQL defect found (sensor filter) was fixed and re-verified (13/13 on PostgreSQL). Integration/sweep/workflow subset on PostgreSQL: 36 passed. |
 
-Also executed: production-mode smoke test **23/23** against PostgreSQL (docs disabled, 401s, ingestion + duplicate, media round trip, report integrity, error sanitization); browser checks for the error boundary and session expiry **8/8**; Phase 16 browser E2E **21/21** re-run on the final code.
+Also executed: production-mode smoke test **23/23** against PostgreSQL (docs disabled, 401s, ingestion + duplicate, media round trip, report integrity, error sanitization); browser checks for the error boundary and session expiry **8/8**; the reporting layer browser E2E **21/21** re-run on the final code.
 
-### Defects found and fixed in this phase
+### Defects found and fixed
 1. `GET /sensors?measurement_type=` → HTTP 500 on PostgreSQL (`json LIKE`). Fixed (cast); PostgreSQL-dialect regression test.
 2. Intermittent false 503 from `/health/ready` under concurrent probes (shared probe file). Fixed; regression test fails on the old code.
 3. No way to create the first administrator in production. Added `scripts/bootstrap_admin.py` (found a crash in its first CLI version through the real production run; fixed + regression test).
@@ -238,7 +238,7 @@ Also executed: production-mode smoke test **23/23** against PostgreSQL (docs dis
 | Info | Single-process design: per-process rate limits/metrics, synchronous jobs, local-disk storage, no HA (risks 37, 47) | state clearly to operators; do not run multiple backend processes against one storage root without understanding this |
 
 ### Not tested
-Large datasets and PostgreSQL performance beyond the SQLite benchmark; TLS/reverse-proxy deployment; backup of a live (writing) system; restore across PostgreSQL versions; real model weights, GPUs, edge hardware; external copilot providers; image scanning; the `nginx.conf` itself (no nginx binary available); upgrade from a pre-Phase-17 database containing real data.
+Large datasets and PostgreSQL performance beyond the SQLite benchmark; TLS/reverse-proxy deployment; backup of a live (writing) system; restore across PostgreSQL versions; real model weights, GPUs, edge hardware; external copilot providers; image scanning; the `nginx.conf` itself (no nginx binary available); upgrade from a pre-original database containing real data.
 
 ### Release assessment: **Conditionally ready**
 Basis: for the verified scope — a single host running the backend natively against PostgreSQL 16 with the built frontend behind a TLS reverse proxy — migrations, startup validation, authentication/authorization/tenant isolation, core workflows, private artifacts, error handling, graceful shutdown and backup/restore were exercised and passed, and no unresolved release blocker was found. It is *conditional* because (a) the container deployment and the CI pipeline have not been executed anywhere, (b) the PostgreSQL full-suite run has 27 fixture-related failures, (c) the hardening items above (token storage/CSP) are open, and (d) the system is single-process by design. It is not "release-ready" without those caveats, and nothing here supports claims of high availability, horizontal scalability or tested large-scale throughput.

@@ -1,4 +1,4 @@
-# Classification and Probability Evaluation (Phase 10)
+# Classification and Probability Evaluation
 
 Implemented in `app/analytics/metrics.py`; persisted by
 `classification_evaluation_service` as `ClassificationEvaluationRun`.

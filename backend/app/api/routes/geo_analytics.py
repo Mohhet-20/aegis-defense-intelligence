@@ -1,5 +1,5 @@
 """Spatial/temporal analytics API: per-record-type temporal gaps and a
-fixed-size spatial grid of located-record counts (Phase 7, Section
+fixed-size spatial grid of located-record counts (Section
 9/13). Both are counts of THIS project's own stored data -- never a
 causal or threat conclusion drawn from co-occurrence or density
 (Section 20's prohibited-scope list)."""

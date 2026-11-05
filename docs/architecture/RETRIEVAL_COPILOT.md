@@ -1,4 +1,4 @@
-# Retrieval and the Evidence-Grounded Copilot (Phase 12)
+# Retrieval and the Evidence-Grounded Copilot
 
 This document describes what is actually implemented. Nothing here claims capabilities that are not in the code.
 

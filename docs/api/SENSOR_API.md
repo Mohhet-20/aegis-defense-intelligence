@@ -1,8 +1,8 @@
-# Sensor & Observation Analytics API (Phase 6, Section 10-11)
+# Sensor & Observation Analytics API (Section 10-11)
 
 All routes are under `/api/v1`, and every one requires a bearer token and a specific
-`Permission` checked server-side via `require_permission` -- same pattern as every prior
-phase's routes (`docs/api/TRACKING_API.md`, `docs/security/TRACKING_DATA_GOVERNANCE.md`).
+`Permission` checked server-side via `require_permission` -- same pattern as the other
+modules' routes (`docs/api/TRACKING_API.md`, `docs/security/TRACKING_DATA_GOVERNANCE.md`).
 Backed by `app/api/routes/sensors.py`, `app/api/routes/sensor_ingestion.py`,
 `app/api/routes/sensor_analytics.py`, and `app/api/routes/cross_source_comparison.py`. Full
 backend suite: 507 passed, 92% overall coverage, with `app/services/sensor_health_service.py`
@@ -29,7 +29,7 @@ at 97% and `app/services/cross_source_comparison_service.py` at 93%.
 | `GET /sensor-ingestion/batches` | `OBSERVATION_READ` | Paginated, filterable by `source_id`. |
 | `GET /sensor-ingestion/batches/{id}` | `OBSERVATION_READ` | `404` if not found or not in the caller's organization. |
 | `GET /sensor-ingestion/batches/{id}/records` | `RAW_RECORD_READ` | Paginated, filterable by `validation_status`. Gated by the separate raw-record permission -- same split `docs/analytics/SOURCE_RELIABILITY.md` documents for `RawRecord` detail elsewhere in this codebase. |
-| `POST /sensor-ingestion/batches/{id}/retry` | `OBSERVATION_INGEST` | `400` unless `job.status` is `failed` or `completed_with_errors`. Creates a brand-new `IngestionJob` row (the existing Phase 2 model, reused rather than a separate sensor-specific table -- `SensorIngestionJobResponse` is only the Pydantic response shape) with the same `job_type`; audit-logged (`sensor_ingestion.retry`) recording `retried_from_job_id`. |
+| `POST /sensor-ingestion/batches/{id}/retry` | `OBSERVATION_INGEST` | `400` unless `job.status` is `failed` or `completed_with_errors`. Creates a brand-new `IngestionJob` row (the existing model, reused rather than a separate sensor-specific table -- `SensorIngestionJobResponse` is only the Pydantic response shape) with the same `job_type`; audit-logged (`sensor_ingestion.retry`) recording `retried_from_job_id`. |
 
 ## Sensor analytics (`app/api/routes/sensor_analytics.py`)
 
@@ -65,14 +65,14 @@ Every route above resolves its sensor/batch/anomaly/observation through an org-s
 (`sensor_service.get_sensor()`, `sensor_ingestion_service.get_job()`,
 `anomaly_service.get_anomaly()`, `observation_service.get_observation()`), each filtered by
 `current_user.organization_id`. A request for a real row in another organization returns `404`,
-never `403` -- the same discipline every prior phase's routes follow, chosen specifically so
+never `403` -- the same discipline each layer's routes follow, chosen specifically so
 a response never confirms whether a given ID exists outside the caller's own organization.
 
 ## Known gap: `SENSOR_QUALITY_REVIEW` is a dead permission
 
 `Permission.SENSOR_QUALITY_REVIEW` (`"sensor_quality:review"`) is defined in
 `app/core/security.py` and granted to both the `ANALYST` and `INVESTIGATOR` roles, alongside
-`ANOMALY_READ`/`ANOMALY_REVIEW`, as part of this phase's permission additions. No route in the
+`ANOMALY_READ`/`ANOMALY_REVIEW`, as part of this layer's permission additions. No route in the
 codebase requires it: a repository-wide search for `SENSOR_QUALITY_REVIEW` turns up exactly
 three matches, all inside `app/core/security.py` itself (the enum member and its two role-table
 entries) -- zero usages in any `require_permission(...)` call anywhere under
@@ -82,9 +82,9 @@ the closest real thing is anomaly review (`POST /sensor-analytics/anomalies/{id}
 which is gated by `ANOMALY_REVIEW` instead.
 
 This is documented here honestly rather than silently: it is a genuine spec-vs-implementation
-gap from this phase, not a security hole (nothing is under-protected -- a permission nobody
+gap from this layer, not a security hole (nothing is under-protected -- a permission nobody
 checks can only be more permissive than intended documentation would suggest, never less), and
-not a route that was supposed to exist and got dropped from this list. If a future phase adds a
+not a route that was supposed to exist and got dropped from this list. If later work adds a
 dedicated quality-finding-review endpoint separate from anomaly review, it should bind to this
 already-provisioned permission rather than minting a new one; until then, treat
 `SENSOR_QUALITY_REVIEW` as reserved but unused.

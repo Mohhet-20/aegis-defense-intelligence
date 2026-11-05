@@ -1,4 +1,4 @@
-# Analytics API (Phase 10) - base `/api/v1`
+# Analytics API - base `/api/v1`
 
 | Method & path | Permission | Notes |
 |---|---|---|

@@ -11,8 +11,7 @@ SyncRecord is NOT automatically materialized into a canonical `Event`/
 `Observation`/`Evidence` row. It is itself the durable, auditable,
 queryable record of what the edge device sent and the central system
 durably accepted -- promoting it into a first-class domain row is a
-reasonable, explicitly deferred Phase 9/17 follow-up, not a silent gap
-(see docs/implementation/PROJECT_STATUS.md Section 9).
+reasonable, explicitly deferred follow-up, not a silent gap.
 """
 from __future__ import annotations
 
@@ -53,7 +52,7 @@ SYNC_RECORD_TRANSITIONS: dict[str, tuple[str, ...]] = {
     "cancelled": (),
 }
 
-# Record types this phase's protocol actually accepts. "annotation" is
+# Record types this layer's protocol actually accepts. "annotation" is
 # the one MUTABLE, revisioned type -- every other
 # type is treated as append-only/immutable.
 SYNC_RECORD_TYPES = ("observation_capture", "event_capture", "annotation", "inference_output")

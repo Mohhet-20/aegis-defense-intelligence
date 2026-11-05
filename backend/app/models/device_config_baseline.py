@@ -3,7 +3,7 @@ A baseline is what a device's `current_config` is EXPECTED to match --
 drift detection (fleet_config_service.compute_drift()) is always a
 comparison against an explicit, versioned baseline a human authorized,
 never an implicit "whatever the device last reported." Distinct from
-`Device.software_version`/`protocol_version` (Phase 8, self-reported
+`Device.software_version`/`protocol_version` (self-reported
 build identity) -- a baseline is administrative INTENT, those columns
 are self-reported FACT.
 

@@ -1,4 +1,4 @@
-"""Phase 14 -- authentication, session revocation, password policy,
+"""Authentication, session revocation, password policy,
 account-administration safety, and route-level authorization coverage."""
 from __future__ import annotations
 

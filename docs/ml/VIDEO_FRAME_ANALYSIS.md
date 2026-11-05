@@ -1,4 +1,4 @@
-# Video Frame Analysis (Phase 4, Section 8)
+# Video Frame Analysis (Section 8)
 
 `app/cv/video_sampling.py`. Bounded, point-in-time frame sampling --
 **explicitly not continuous real-time surveillance.**
@@ -59,16 +59,16 @@ interval).
 - **Not cross-camera re-identification.** Each `InferenceJob` is
   scoped to exactly one `MediaAsset`; nothing here compares a detection
   in one video to a detection in a different video, and there is no
-  `track_id`-like concept anywhere in this schema (Phase 5's job, not
+  `track_id`-like concept anywhere in this schema (the job, not
   this one -- see `docs/architecture/COMPUTER_VISION_CONTRACTS.md`'s
   still-untouched `TrackIdentifier`/`TrackObservation` contracts).
 - **No frame thumbnail/image extraction endpoint.** The frontend's
   Video Analysis Workspace shows detections as a data table
   (frame index, timestamp, class, confidence) rather than a visual
   bounding-box overlay on an extracted frame image -- building that
-  would require a new "serve me frame N's pixels" endpoint this phase
+  would require a new "serve me frame N's pixels" endpoint this layer
   deliberately did not add, since every actual requirement (bounded
   sampling, preserved frame identity, persisted/queryable results) is
   already met without it. Reasonable follow-up work for a future
-  phase, not a gap this one is silent about.
+  work, not a gap this one is silent about.
 - No audio processing of any kind.

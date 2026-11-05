@@ -141,7 +141,7 @@ def list_links(db: Session, investigation: Investigation) -> list[InvestigationL
 
 def effective_records(db: Session, investigation: Investigation) -> list[dict]:
     """All records tied to the investigation: explicit links plus the legacy
-    JSON id lists (Phase 1-3 `linked_event_ids` / `evidence_refs`). Legacy
+    JSON id lists (earlier `linked_event_ids` / `evidence_refs`). Legacy
     ids that do not resolve in this org are skipped (and counted by callers
     via `unresolved_legacy_refs`). Each item: {link, row, record_type, origin}."""
     out: list[dict] = []

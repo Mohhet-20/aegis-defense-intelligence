@@ -1,4 +1,4 @@
-"""Deterministic fixtures for Phase 16 analytics tests.
+"""Deterministic fixtures analytics tests.
 
 Window under test: W = [2026-01-10T00:00Z, 2026-01-13T00:00Z) (72 h -> hourly buckets).
 The expected numbers below are derived BY HAND from the rows seeded here, never by

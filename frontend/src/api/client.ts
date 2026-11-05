@@ -406,7 +406,7 @@ export const api = {
     },
     get: (id: string) => request<Observation>(`/observations/${id}`),
   },
-  // --- Phase 6: multi-sensor data platform ---------------------------
+  // --- Multi-sensor data platform ---------------------------
   sensorIngestion: {
     submitSynthetic: (payload: {
       source_id: string
@@ -843,7 +843,7 @@ export const api = {
     },
     get: (id: string) => request<ModelEvaluationRun>(`/evaluation/runs/${id}`),
   },
-  // --- Phase 5: object tracking --------------------------------------
+  // --- Object tracking --------------------------------------
   tracking: {
     config: () => request<TrackerConfigDefaults>('/tracking/config'),
     submit: (payload: {
@@ -900,7 +900,7 @@ export const api = {
     },
     get: (id: string) => request<TrackingEvaluationRun>(`/tracking/evaluation/runs/${id}`),
   },
-  // --- Phase 7: geospatial intelligence -------------------------------
+  // --- Geospatial intelligence -------------------------------
   geospatial: {
     overview: (recordTypes?: GeoRecordType[]) => {
       const search = new URLSearchParams()
@@ -1011,7 +1011,7 @@ export const api = {
       since?: string; until?: string; max_features?: number
     }) => fetchGeoExport('/geospatial/export/csv', params),
   },
-  // --- Phase 8: edge AI / offline-first operation --------------------
+  // --- Edge AI offline-first operation --------------------
   // JWT-authenticated admin surface only (the Edge Operations Center).
   // The device-authenticated submission endpoints
   // (/edge/sync/batch, /edge/sync/health) are a separate protocol used
@@ -1063,7 +1063,7 @@ export const api = {
     assignBaseline: (id: string, baseline_id: string) =>
       request<DeviceConfigState>(`/devices/${id}/config/baseline`, { method: 'POST', body: JSON.stringify({ baseline_id }) }),
   },
-  // --- Phase 10: explainable AI, evaluation, scoring and review -------
+  // --- Explainable AI, evaluation, scoring and review -------
   analytics: {
     evaluations: {
       overview: (params: { page?: number; page_size?: number; model_record_id?: string } = {}) => {
@@ -1097,7 +1097,7 @@ export const api = {
       ) => request<AssessmentReviewRecord>(`/assessments/${assessmentId}/reviews`, { method: 'POST', body: JSON.stringify(payload) }),
     },
   },
-  // --- Phase 9: enterprise edge fleet management ---------------------
+  // --- Enterprise edge fleet management ---------------------
   fleetSites: {
     list: () => request<FleetSite[]>('/fleet/sites'),
     get: (id: string) => request<FleetSite>(`/fleet/sites/${id}`),

@@ -1,4 +1,4 @@
-"""API-level tests for Phase 10: model evaluation, model outputs +
+"""API-level tests: model evaluation, model outputs +
 explanations, assessment scoring, human review. Covers permissions,
 validation/error responses, version tracking, history preservation,
 audit events and organization isolation."""

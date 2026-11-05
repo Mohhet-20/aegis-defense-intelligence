@@ -1,5 +1,4 @@
-"""JWT-authenticated admin view of the central sync queue (Phase 8,
-Section 15) -- the Edge Operations Center's "Sync Queue" page reads
+"""JWT-authenticated admin view of the central sync queue (Section 15) -- the Edge Operations Center's "Sync Queue" page reads
 from this. See app/api/routes/edge_sync.py for the device-authenticated
 submission endpoints these records are created by.
 """
@@ -99,7 +98,7 @@ def recover_stale_syncing_records(
 ) -> dict:
     """Manually triggers the crash-recovery sweep for this
     organization. This project has no background job scheduler (every
-    phase so far is request/response only -- see
+    component so far is request/response only -- see
     docs/operations/EDGE_TROUBLESHOOTING.md), so an operator (or a
     scheduled external call to this endpoint) is how the sweep actually
     runs in this deployment; it is NOT run automatically on a timer."""

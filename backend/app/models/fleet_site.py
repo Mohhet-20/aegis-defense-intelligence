@@ -3,12 +3,12 @@ an organizational grouping of devices -- "the warehouse sensor cluster,"
 "forward base alpha" -- distinct from `Device.deployment_label` (a
 free-text self-description a device reports about itself) the same way
 `Sensor.lifecycle_status` stayed distinct from `Sensor.status` in
-Phase 6: two genuinely different concerns that happen to live on
+Two genuinely different concerns that happen to live on
 related rows never collapse into one field.
 
-Deliberately reuses `GeoLocationMixin` (Phase 7) for optional
+Deliberately reuses `GeoLocationMixin` for optional
 coordinates rather than inventing a second latitude/longitude pair --
-Phase 9 Part 6 explicitly says "reuse the existing geospatial module...
+explicitly says "reuse the existing geospatial module...
 never duplicate." A site with no coordinates is simply a logical
 grouping with no map position, never defaulted to (0, 0) -- see
 GeoLocationMixin's own docstring.

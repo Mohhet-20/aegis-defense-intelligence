@@ -1,7 +1,7 @@
-# Security Baseline — AEGIS, Phase 1
+# Security Baseline — AEGIS,
 
-What's actually implemented and verified in this phase, versus what's
-planned for Phase 14 (Security and Governance). Every claim below is
+What's actually implemented and verified, versus what's
+planned (Security and Governance). Every claim below is
 checked against the actual code in this repository, not aspirational.
 
 ## Authentication
@@ -29,7 +29,7 @@ checked against the actual code in this repository, not aspirational.
   that call routes directly with a token for a role that should be
   rejected, and assert a `403`, not just by inspecting the code.
 - **NOT IMPLEMENTED**: per-row/tenant authorization (see
-  "Tenant isolation" in `ARCHITECTURE_DECISIONS.md` — Phase 14).
+  "Tenant isolation" in `ARCHITECTURE_DECISIONS.md` — the security-governance work).
 
 ## Secret management
 
@@ -38,7 +38,7 @@ checked against the actual code in this repository, not aspirational.
   read from environment/`.env`, never hardcoded in a way that would
   reach source control.
 - **NOT IMPLEMENTED**: an external secrets manager (Vault/KMS) — not
-  justified at this phase's single-instance, local-dev-by-default
+  justified at this layer's single-instance, local-dev-by-default
   scope.
 
 ## Input validation
@@ -104,8 +104,8 @@ checked against the actual code in this repository, not aspirational.
 ## Data retention, backup strategy
 
 - **NOT IMPLEMENTED** beyond noting the gap: no retention policy
-  enforcement, no automated backup. Reserved for Phase 14 (governance)
-  and Phase 18 (production readiness/backup documentation). Recorded
+  enforcement, no automated backup. Reserved (governance)
+  and (production readiness/backup documentation). Recorded
   here rather than silently absent.
 
 ## Least privilege / production configuration
@@ -123,12 +123,12 @@ checked against the actual code in this repository, not aspirational.
   silently) the generated password once, with a clear
   "development only" label.
 
-## What's reserved for Phase 14
+## What's reserved
 
 Advanced authorization (attribute-based or row-level), formal retention
 policy enforcement, a documented backup/restore procedure, and a
 broader security hardening pass (dependency scanning, a documented
-threat model) are explicitly Phase 14's scope, not silently dropped.
+threat model) are explicitly the scope, not silently dropped.
 
-## Phase 14 update
+## Update
 Authorization, isolation, audit governance, lifecycle, environment and known-risk documentation now lives in the other files of this directory; start with `KNOWN_RISKS.md`.

@@ -1,14 +1,14 @@
 """Fusion pipeline orchestration. Composes
-Phase 2's `correlation_service.recompute()` (temporal/spatial/
+the `correlation_service.recompute()` (temporal/spatial/
 identifier candidate generation, steps 1-8 and 10 of Section 4's
-sequence) with this phase's `conflict_service.detect_conflicts()`
+sequence) with this layer's `conflict_service.detect_conflicts()`
 (step 8's contradiction-detection half), and records the whole run as
 one inspectable `FusionJob` row (step 12: "update derived analytical
 summaries without modifying original source observations" -- a
 FusionJob never touches an Event row, only counts them).
 
 This is the ONE explicit, authorized entry point that runs the fusion
-pipeline -- same discipline as Phase 2's `recompute()`: there is no
+pipeline -- same discipline as the `recompute()`: there is no
 background job, a run only happens because someone with
 `FUSION_MANAGE` asked for one.
 """

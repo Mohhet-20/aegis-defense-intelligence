@@ -6,7 +6,7 @@ import type {
 
 const json = (body: unknown) => JSON.stringify(body)
 
-/** Phase 13 scenario simulation API. Every call goes to the real backend; all results are simulated. */
+/** Scenario simulation API. Every call goes to the real backend; all results are simulated. */
 export const scenarioApi = {
   simulators: () => request<SimulatorsResponse>('/simulation/simulators'),
   templates: () => request<{ templates: TemplateDoc[] }>('/simulation/templates'),
