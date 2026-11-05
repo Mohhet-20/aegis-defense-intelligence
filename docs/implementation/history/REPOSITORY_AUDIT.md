@@ -4,7 +4,7 @@ Performed at the start of Phase 1, before any implementation.
 
 ## Starting condition
 
-The working folder (`/home/claude/defense-platform`) was **empty except
+The working folder (`/workspace/defense-platform`) was **empty except
 for an initialized, empty git repository** (one prior placeholder commit
 with a status note, no source code). There was no existing frontend, no
 existing backend, no database, no migrations, no tests, and no
