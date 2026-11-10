@@ -260,15 +260,18 @@ jobs:
           import httpx
           c = httpx.Client(base_url="http://127.0.0.1:7860/api/v1", timeout=60)
           demo = c.get("/demo").json()
-          assert demo["enabled"] and len(demo["accounts"]) == 4, demo
-          token = c.post("/auth/login", json={"username_or_email": "admin", "password": demo["password"]}).json()["access_token"]
-          h = {"Authorization": f"Bearer {token}"}
+          assert demo["enabled"] and "password" not in demo and "accounts" not in demo, demo  # nothing to sign in with
+          session = c.post("/demo/session")
+          assert session.status_code == 200, session.text
+          h = {"Authorization": f"Bearer {session.json()['access_token']}"}
+          me = c.get("/auth/me", headers=h).json()
+          assert me["role"] != "administrator", me  # the guest is an analyst, never an administrator
           runs = c.get("/evaluation/runs", headers=h).json()["items"]
           real = [r for r in runs if not r["is_synthetic"]]
           assert real and real[0]["metrics_detail"]["map50"] > 0.4, runs
           viewer = next(u for u in c.get("/users", headers=h).json() if u["username"] == "viewer")
           assert c.patch(f"/users/{viewer['id']}", json={"role": "administrator"}, headers=h).status_code == 403
-          print("demo OK: real-photo mAP@0.5", real[0]["metrics_detail"]["map50"])
+          print("demo OK: guest session, real-photo mAP@0.5", real[0]["metrics_detail"]["map50"])
           PY
       - name: Logs on failure
         if: failure()
