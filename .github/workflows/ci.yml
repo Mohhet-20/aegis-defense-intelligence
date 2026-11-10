@@ -196,6 +196,13 @@ jobs:
           export AEGIS_DB_PASSWORD="$(python3 -c 'import secrets;print(secrets.token_hex(16))')"
           export AEGIS_SECRET_KEY="$(python3 -c 'import secrets;print(secrets.token_urlsafe(48))')"
           export AEGIS_BOOTSTRAP_PASSWORD="$(python3 -c 'import secrets;print("A1-"+secrets.token_urlsafe(24))')"
+          # Throwaway CI values, recorded before anything can fail so the later steps (persistence check, logs,
+          # tear down) can run docker compose too.
+          for v in AEGIS_DB_PASSWORD AEGIS_SECRET_KEY AEGIS_BOOTSTRAP_PASSWORD; do
+            echo "::add-mask::${!v}"
+            echo "$v=${!v}" >> "$RUNNER_TEMP/ci.env"
+            echo "$v=${!v}" >> "$GITHUB_ENV"
+          done
           docker compose up -d db
           docker compose run --rm migrate
           docker compose run --rm -e AEGIS_BOOTSTRAP_PASSWORD backend python scripts/bootstrap_admin.py --organization "CI Org" --username admin --email admin@ci.example.org
@@ -203,9 +210,6 @@ jobs:
           for i in $(seq 1 60); do curl -sf http://127.0.0.1:8080/api/v1/health/ready && break; sleep 2; done
           pip install httpx
           AEGIS_SMOKE_PASSWORD="$AEGIS_BOOTSTRAP_PASSWORD" python3 backend/scripts/smoke_test.py --base-url http://127.0.0.1:8080 --username admin --expect-docs-disabled
-          echo "AEGIS_BOOTSTRAP_PASSWORD=$AEGIS_BOOTSTRAP_PASSWORD" >> "$RUNNER_TEMP/ci.env"
-          echo "AEGIS_DB_PASSWORD=$AEGIS_DB_PASSWORD" >> "$RUNNER_TEMP/ci.env"
-          echo "AEGIS_SECRET_KEY=$AEGIS_SECRET_KEY" >> "$RUNNER_TEMP/ci.env"
       - name: Security headers served by the frontend container
         run: |
           curl -sI http://127.0.0.1:8080/ | tee "$RUNNER_TEMP/headers.txt"
