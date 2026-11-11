@@ -14,7 +14,7 @@ email-validator==2.3.0
 # Postgres driver -- only loaded if DATABASE_URL points at postgresql+psycopg2://.
 # SQLite (the default) needs no extra driver. See docker-compose.yml, which
 # runs the backend against a real Postgres to exercise this path.
-psycopg2-binary==2.9.11
+psycopg2-binary==2.9.13
 pytest==9.1.1
 pytest-cov==7.1.0
 httpx==0.28.1
